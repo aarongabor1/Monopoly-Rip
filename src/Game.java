@@ -10,11 +10,10 @@ public class Game {
     }
 
     public void addPlayer(String name, String piece){
-        Player p = new Player(name, new Piece(piece, board.getSquare(0)), board);
+        Player p = new Player(name, board);
         players.add(p);
     }
 
     public void play(){
-
     }
 }

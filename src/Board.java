@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Board {
     private List<Square> squares;
-    private final int numSquares = 10;
+    private final int numSquares = 40;
 
     public Board(){
         squares = new ArrayList<>();
@@ -10,7 +10,7 @@ public class Board {
     }
 
     private void createBoard() {
-        squares.add(new Property("Ottawa", 0, 100));
+        squares.add(new Property("Empty", 0, -1));
         squares.add(new Property("Toronto", 1, 100));
         squares.add(new Property("Quebec City", 2, 100));
         squares.add(new Property("Montreal", 3, 100));
@@ -35,8 +35,8 @@ public class Board {
         return str;
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         Board b = new Board();
         System.out.println(b.toString());
-    }*/
+    }
 }

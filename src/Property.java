@@ -21,6 +21,10 @@ public class Property implements Square {
         return price;
     }
 
+    public int getRent(){
+        return (int) (0.1 * price);
+    }
+
     @Override
     public String toString() {
         return "Property{" +

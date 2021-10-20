@@ -1,6 +1,7 @@
 public class Die {
     private final int max = 6;
     private int value;
+
     public Die(){
         roll();
     }
