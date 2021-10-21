@@ -1,5 +1,5 @@
 public class Die {
-    private final int max = 6;
+    private final int MAX = 6;
     private int value;
 
     /**
@@ -18,7 +18,7 @@ public class Die {
      *
      */
     public void roll(){
-        value = (int) (Math.random() * max + 1);
+        value = (int) (Math.random() * MAX + 1);
     }
 
     /**
