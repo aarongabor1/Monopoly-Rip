@@ -2,6 +2,7 @@ public class Property implements Square {
     private String name;
     private int index;
     private int price;
+    private Player owner;
 
     public Property(String name, int index, int price){
         this.name = name;
@@ -23,6 +24,15 @@ public class Property implements Square {
 
     public int getRent(){
         return (int) (0.1 * price);
+    }
+
+    public void buyProperty(Player p){
+        owner = p;
+    }
+
+    public Player getOwner(){
+        if(owner == null) return null;
+        return owner;
     }
 
     @Override

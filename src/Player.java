@@ -32,15 +32,34 @@ public class Player {
         this.position = position;
     }
 
+    public void buyProperty(int price, Property prop){
+        balance -= price;
+        properties.add(prop);
+    }
+
+    public void payRent(int price){
+
+    }
+
+    private void checkPassedGo(int roll){
+
+    }
+
     public void takeTurn(){
-        System.out.println("Player: " + name + "turns");
+        System.out.println("Player: " + name + "'s turn");
+        System.out.println("This player is at square " + position.getIndex()+1);
+        System.out.println("This player has a balance of: " + balance);
+        System.out.println("This player owns the following properties: ");
+        for(Property p : properties){
+            System.out.print(p.getName() + " ");
+        }
         int roll;
         dice[0].roll();
         dice[1].roll();
         roll = dice[0].getValue() + dice[1].getValue();
         System.out.println("They rolled a " + roll);
         int destinationIndex = (position.getIndex() + roll) % 40;
-        Square destination = board.getSquare(destinationIndex);
+        Property destination = board.getProperty(destinationIndex);
         System.out.println("They landed on " + destination.toString() + "(index: " + destinationIndex + ")");
         setPosition(destination);
     }
