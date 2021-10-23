@@ -47,12 +47,7 @@ public class Player {
         balance += payment;
     }
 
-    public boolean checkPassedGo(int roll){
-        if(roll + position.getIndex() < position.getIndex()) return true;
-        return false;
-    }
-
-    public void takeTurn(){
+    private void printPlayerInfo(){
         System.out.println("Player: " + name + "'s turn");
         System.out.println("This player is at square " + position.getIndex());
         System.out.println("This player has a balance of: " + balance);
@@ -65,6 +60,13 @@ public class Player {
         }else{
             System.out.println("    No properties owned");
         }
+    }
+    public boolean checkPassedGo(int roll){
+        if(roll + position.getIndex() < position.getIndex()) return true;
+        return false;
+    }
+
+    private void rollDice(){
         int roll;
         die1.roll();
         die2.roll();
@@ -75,6 +77,11 @@ public class Player {
         Property destination = board.getProperty(destinationIndex);
         System.out.println("They landed on " + destination.toString() + "(index: " + destinationIndex + ")");
         setPosition(destination);
+    }
+
+    public void takeTurn(){
+        printPlayerInfo();
+        rollDice();
     }
 
 }
