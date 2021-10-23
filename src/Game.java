@@ -20,6 +20,13 @@ public class Game
         players.add(p);
     }
 
+    private void bankrupt(Player p){
+        if(p.getBalance()<0){
+            System.out.println(p.getName() + " has gone bankrupt. They are removed from the game");
+            players.remove(p);
+        }
+    }
+
     private void buyProperty(Player p, Property currPosition){
         System.out.println("This square is NOT owned");
         Scanner input = new Scanner(System.in);
@@ -42,6 +49,14 @@ public class Game
         } else if (answer.equals("No")) {
             System.out.println("The property was not purchased");
         }
+    }
+
+    private void payRent(Player owner, Player renter, Property p){
+        System.out.println("Player " + owner + "" +
+                "owns this property. You must pay rent");
+        int rent = p.getRent();
+        renter.payRent(rent);
+        owner.acceptRent(rent);
     }
 
     public void setup(){
@@ -74,6 +89,7 @@ public class Game
     {
         while(running){
             Property currPosition;
+            if(players.size() == 1) break;
             for(Player p : players){
                 p.takeTurn();
                 currPosition = board.getProperty(p.getPosition().getIndex());
@@ -84,14 +100,17 @@ public class Game
                     if(currPosition.getOwner().equals(p)){
                         System.out.println("This player owns this property");
                     }else{
-                        System.out.println("Player " +currPosition.getOwner().getName() + "" +
-                                "owns this property. You must pay rent");
-
+                        payRent(currPosition.getOwner(),p , currPosition);
+                        bankrupt(p);
                     }
                 }
                 System.out.println("This player's turn is over");
             }
         }
+        for(Player p : players){
+            System.out.println(p.getName() + " has won the game!");
+        }
+
     }
 
     public static void main(String [] args)

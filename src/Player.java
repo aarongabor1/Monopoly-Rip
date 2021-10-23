@@ -39,8 +39,12 @@ public class Player {
         properties.add(prop);
     }
 
-    public void payRent(int price){
+    public void payRent(int payment){
+        balance -= payment;
+    }
 
+    public void acceptRent(int payment){
+        balance += payment;
     }
 
     public boolean checkPassedGo(int roll){
