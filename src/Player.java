@@ -2,9 +2,10 @@ import java.util.*;
 
 public class Player {
     private String name;
-    private List<Property> properties;
+    private ArrayList<Property> properties;
     private int balance;
-    private Die[] dice;
+    private Die die1;
+    private Die die2;
     private Board board;
     private Square position;
 
@@ -12,8 +13,9 @@ public class Player {
         this.name = name;
         this.board = board;
         balance = 2000;
-        dice[0] = new Die();
-        dice[1] = new Die();
+        die1 = new Die();
+        die2 = new Die();
+        properties = new ArrayList<>();
     }
 
     public String getName() {
@@ -28,7 +30,7 @@ public class Player {
         return position;
     }
 
-    public void setPosition(Square position) {
+    public void setPosition(Property position) {
         this.position = position;
     }
 
@@ -41,23 +43,30 @@ public class Player {
 
     }
 
-    private void checkPassedGo(int roll){
-
+    public boolean checkPassedGo(int roll){
+        if(roll + position.getIndex() < position.getIndex()) return true;
+        return false;
     }
 
     public void takeTurn(){
         System.out.println("Player: " + name + "'s turn");
-        System.out.println("This player is at square " + position.getIndex()+1);
+        System.out.println("This player is at square " + position.getIndex());
         System.out.println("This player has a balance of: " + balance);
         System.out.println("This player owns the following properties: ");
-        for(Property p : properties){
-            System.out.print(p.getName() + " ");
+        if(properties.size()>0) {
+            for (Property p : properties) {
+                System.out.print("  " + p.getName() + " ");
+            }
+            System.out.println("");
+        }else{
+            System.out.println("    No properties owned");
         }
         int roll;
-        dice[0].roll();
-        dice[1].roll();
-        roll = dice[0].getValue() + dice[1].getValue();
+        die1.roll();
+        die2.roll();
+        roll = die1.getValue() + die2.getValue();
         System.out.println("They rolled a " + roll);
+        if(checkPassedGo(roll)) balance += 200;
         int destinationIndex = (position.getIndex() + roll) % 40;
         Property destination = board.getProperty(destinationIndex);
         System.out.println("They landed on " + destination.toString() + "(index: " + destinationIndex + ")");
