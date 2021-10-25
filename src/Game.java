@@ -87,27 +87,28 @@ public class Game
     }
 
     /**
+     *  Requests the number of players from the user using a scanner
+     *  Value is accepted If the entered int is equal to or greater than 2
+     *  Corresponding amount of players are created using a loop then added to the game
+     *
+     *  Once all players are created and added, boolean running is set to true and every players position is set to 0
+     *
      *
      */
     public void setup(){
         Scanner in = new Scanner(System.in);
         System.out.println("Enter Number of Players: ");
         int num = in.nextInt();
-        do
+        while(num < 2)
         {
-            if (num < 2)
-            {
-                System.out.println("Error please enter a higher number");
-                num = in.nextInt();
-            }
-            else
-            {
-                for (int i = 0; i < num; i++)
-                {
-                    addPlayer("Player " + (i+1));
-                }
-            }
-        }while(num < 2);
+            System.out.println("Error please enter a higher number");
+            num = in.nextInt();
+        }
+        for (int i = 0; i < num; i++)
+        {
+            addPlayer("Player " + (i+1));
+
+        }
         running = true;
 
         for(Player p : players){
@@ -116,6 +117,14 @@ public class Game
     }
 
     /**
+     * Main loop of game
+     *
+     * Processes:
+     * If boolean "running" is true and game is ongoing
+     * If there's more than 1 player that isn't eliminated
+     * Each players turn
+     * Main game functions (buying property, paying rent, current positon, end turn)
+     * If there's a winner
      *
      */
     public void play()
@@ -147,7 +156,9 @@ public class Game
     }
 
     /**
-     * @return
+     * Getter used for test cases
+     *
+     * @return amount of players initially selected to play
      */
     int getPlayerAmount()
     {
@@ -155,6 +166,8 @@ public class Game
     }
 
     /**
+     * Main that creates a new game, sets it up, and starts the play loop
+     *
      * @param args
      */
     public static void main(String [] args)

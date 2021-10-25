@@ -4,11 +4,17 @@ public class Board {
     private List<Property> squares;
     private final int numSquares = 40;
 
+    /**
+     * Constructor for Board class
+     */
     public Board(){
         squares = new ArrayList<>();
         createBoard();
     }
 
+    /**
+     * Creates the game board with 40 Square objects in an ArrayList
+     */
     private void createBoard() {
         squares.add(new Property("Empty", 0, -1));
         squares.add(new Property("Ottawa U", 1, 60));
@@ -52,10 +58,20 @@ public class Board {
         squares.add(new Property("Apple", 39, 400));
     }
 
+    /**
+     * Getter method that returns the Property at desired index in squares ArrayList
+     * @param index
+     * @return Property object
+     */
     public Property getProperty(int index){
         return squares.get(index);
     }
 
+    /**
+     *  toString method
+     *
+     * @return String
+     */
     public String toString(){
         String str = "";
         for(Square square: squares){
@@ -65,6 +81,10 @@ public class Board {
         return str;
     }
 
+    /**
+     * Main method that creates the board
+     * @param args
+     */
     public static void main(String[] args) {
         Board b = new Board();
         System.out.println(b.toString());

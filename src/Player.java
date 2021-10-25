@@ -9,6 +9,12 @@ public class Player {
     private Board board;
     private Square position;
 
+    /**
+     * Constructor for the Player class
+     *
+     * @param name
+     * @param board
+     */
     public Player(String name, Board board){
         this.name = name;
         this.board = board;
@@ -18,35 +24,78 @@ public class Player {
         properties = new ArrayList<>();
     }
 
+    /**
+     * Getter for the Player name
+     *
+     * @return String
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter for the Player balance
+     *
+     * @return int
+     */
     public int getBalance() {
         return balance;
     }
 
+    /**
+     * Getter for the Player position on the board
+     *
+     * @return Square
+     */
     public Square getPosition() {
         return position;
     }
 
+    /**
+     * Setter for the Player position
+     *
+     * @param position
+     */
     public void setPosition(Property position) {
         this.position = position;
     }
 
+    /**
+     * When a user purchases a property this will remove the amount of "price" from their total balance
+     * and will add the property "Prop" to an ArrayList that holds all their owned properties
+     *
+     * @param price
+     * @param prop
+     */
     public void buyProperty(int price, Property prop){
         balance -= price;
         properties.add(prop);
     }
 
+    /**
+     * Removes the amount "payment" passed as param from the Player's total balance
+     *
+     * @param payment
+     */
     public void payRent(int payment){
         balance -= payment;
     }
 
+    /**
+     * Adds the amount "payment" passed as param to the Player's total balance
+     *
+     * @param payment
+     */
     public void acceptRent(int payment){
         balance += payment;
     }
 
+    /**
+     * Prints the state of the player:
+     * Position on board
+     * Balance
+     * Owned properties
+     */
     private void printPlayerInfo(){
         System.out.println("Player: " + name + "'s turn");
         System.out.println("This player is at square " + position.getIndex());
@@ -61,11 +110,26 @@ public class Player {
             System.out.println("    No properties owned");
         }
     }
+
+    /**
+     * Returns True if the Player has rolled and their position index rolls over the max index of
+     * Returns False if the Player has rolled and their position index does not roll over the max index
+     * Once a Player reaches the index 39, the next Square on the Board is "Go"
+     * Thus, their position value changes back to "0" instead of increasing
+     *
+     * @param roll
+     * @return
+     */
     public boolean checkPassedGo(int roll){
         if(roll + position.getIndex() < position.getIndex()) return true;
         return false;
     }
 
+    /**
+     * Rolls the Die and increases the Player's position index the amount shown on the dice
+     * Prints the amount shown on the Die
+     * Prints the Property they landed on
+     */
     private void rollDice(){
         int roll;
         die1.roll();
@@ -79,6 +143,10 @@ public class Player {
         setPosition(destination);
     }
 
+    /**
+     * Starts the Players turn by showing the Player their state and then rolling the dice
+     *
+     */
     public void takeTurn(){
         printPlayerInfo();
         rollDice();
