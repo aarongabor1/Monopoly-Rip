@@ -81,13 +81,4 @@ public class Board {
         }
         return str;
     }
-
-    /**
-     * Main method that creates the board
-     * @param args
-     */
-    public static void main(String[] args) {
-        Board b = new Board();
-        System.out.println(b.toString());
-    }
 }
