@@ -8,6 +8,7 @@ public class Game
 
     /**
      *  Constructor for Game class
+     *
      *  Initiates: Board object, ArrayList of Player objects
      */
     public Game()
@@ -19,6 +20,7 @@ public class Game
 
     /**
      * Creates a new Player object on the board using the name parameter as it's name
+     *
      * The new Player object is then added to the players ArrayList
      *
      * @param name
@@ -31,6 +33,7 @@ public class Game
 
     /**
      * Checks if Player p balance is less than 0
+     *
      * If the players balance is less than 0, they are removed from the players ArrayList
      * This eliminates them from the game
      *
@@ -44,7 +47,21 @@ public class Game
     }
 
     /**
+     * This method processes the buy property function of the game using a Scanner to get user input
+     * from the terminal
      *
+     * If a Player lands on a Property that is unowned, they are given a choice to pay a fixed amount
+     * and become the owner of that Property
+     *
+     * If the Player chooses to buy the Property, they will answer "Yes".
+     * The amount of the Property is deducted from their balance and they're set as that Property's owner
+     *
+     * If the Player chooses to buy the Property but that Player doesnt have enough money,
+     * they will be told they have insufficient funds, the Property will remain unowned, and their
+     * balance will remain the same
+     *
+     * If the Player chooses not to buy the Property, he Property will remain unowned, and
+     * their balance will remain the same
      *
      * @param p
      * @param currPosition
@@ -74,6 +91,15 @@ public class Game
     }
 
     /**
+     * This method processes the pay rent function of the game.
+     *
+     * When a Player lands on a Property that is owned by another player after a roll, they owe the owner an
+     * amount corresponding to the rent shown on that Property
+     *
+     * This method gets the rent from the Property with the method getRent()
+     * Then calls payRent() to adjust the owing Players balance
+     * Finally calls acceptRent() to adjust the owed Players balance
+     *
      * @param owner
      * @param renter
      * @param p
@@ -92,7 +118,6 @@ public class Game
      *  Corresponding amount of players are created using a loop then added to the game
      *
      *  Once all players are created and added, boolean running is set to true and every players position is set to 0
-     *
      *
      */
     public void setup(){

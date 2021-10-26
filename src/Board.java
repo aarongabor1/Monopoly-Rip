@@ -14,6 +14,7 @@ public class Board {
 
     /**
      * Creates the game board with 40 Square objects in an ArrayList
+     * 
      */
     private void createBoard() {
         squares.add(new Property("Empty", 0, -1));
