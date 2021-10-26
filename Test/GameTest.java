@@ -9,6 +9,8 @@ public class GameTest {
     @Test
     public void testAddPlayer()
     {
+        game = new Game();
+
         game.addPlayer("Player1");
         game.addPlayer("Player2");
 
