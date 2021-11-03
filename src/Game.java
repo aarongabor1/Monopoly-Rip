@@ -5,6 +5,7 @@ public class Game
     private List<Player> players;
     private Board board;
     private boolean running;
+    private Player currPlayer;
 
     /**
      *  Constructor for Game class
@@ -39,11 +40,11 @@ public class Game
      *
      * @param p
      */
-    private void bankrupt(Player p){
+    private boolean bankrupt(Player p){
         if(p.getBalance()<0){
-            System.out.println(p.getName() + " has gone bankrupt. They are removed from the game");
-            players.remove(p);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -72,11 +73,11 @@ public class Game
         System.out.println("Would you like to buy? Yes : No ");
         String answer = input.next();
         while(true){
-            if(answer.equals("Yes") || answer.equals("No")) break;
+            if(answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("no")) break;
             System.out.println("Please answer 'Yes' or 'No'");
             answer = input.next();
         }
-        if (answer.equals("Yes")) {
+        if (answer.equalsIgnoreCase("yes")) {
             if (p.getBalance() - currPosition.getPrice() >= 0) {
                 p.buyProperty(currPosition.getPrice(), currPosition);
                 board.getProperty(p.getPosition().getIndex()).buyProperty(p);
@@ -85,7 +86,7 @@ public class Game
                 System.out.println("You don't have enough money to buy this property");
 
             }
-        } else if (answer.equals("No")) {
+        } else if (answer.equalsIgnoreCase("no")) {
             System.out.println("The property was not purchased");
         }
     }
@@ -105,8 +106,8 @@ public class Game
      * @param p
      */
     private void payRent(Player owner, Player renter, Property p){
-        System.out.println("Player " + owner + "" +
-                "owns this property. You must pay rent");
+        System.out.println("Player " + owner.getName() + "" +
+                " owns this property. You must pay rent");
         int rent = p.getRent();
         renter.payRent(rent);
         owner.acceptRent(rent);
@@ -152,33 +153,54 @@ public class Game
      * If there's a winner
      *
      */
-    public void play()
-    {
-        while(running){
-            Property currPosition;
-            if(players.size() == 1) break;
-            for(Player p : players){
-                p.takeTurn();
-                currPosition = board.getProperty(p.getPosition().getIndex());
-                if(currPosition.getPrice()> 0 && currPosition.getOwner() == null){
-                    buyProperty(p, currPosition);
+    public void play() {
+        currPlayer = players.get(0);
+        Property currPosition;
+        while (running) {
+            if (players.size() == 1) break;
+            currPlayer.takeTurn();
+            currPosition = board.getProperty(currPlayer.getPosition().getIndex());
+            if (currPosition.getPrice() > 0 && currPosition.getOwner() == null) {
+                buyProperty(currPlayer, currPosition);
 
-                }else if(currPosition.getOwner()!=null && currPosition.getPrice() > 0){
-                    if(currPosition.getOwner().equals(p)){
-                        System.out.println("This player owns this property");
-                    }else{
-                        payRent(currPosition.getOwner(),p , currPosition);
-                        bankrupt(p);
-                    }
+            } else if (currPosition.getOwner() != null && currPosition.getPrice() > 0) {
+                if (currPosition.getOwner().equals(currPlayer)) {
+                    System.out.println("This player owns this property");
+                } else {
+                    payRent(currPosition.getOwner(), currPlayer, currPosition);
                 }
-                System.out.println("This player's turn is over");
+            }
+            System.out.println("You have no other actions \n Type 'Pass' to pass your turn");
+            Scanner input = new Scanner(System.in);
+            String answer = input.next();
+            while(true) {
+                if(answer.equalsIgnoreCase("pass")) break;
+                System.out.println("You have no other actions \n Type 'Pass' to pass your turn");
+                answer = input.next();
+            }
+            System.out.println("This player's turn is over");
+            if (bankrupt(currPlayer)) {
+                System.out.println(currPlayer.getName() + " has gone bankrupt. They are removed from the game");
+                Player temp = currPlayer;
+                if (players.indexOf(currPlayer) == players.size() - 1) {
+                    currPlayer = players.get(0);
+                } else {
+                    currPlayer = players.get(players.indexOf(currPlayer) + 1);
+                }
+                players.remove(temp);
+            } else if (players.indexOf(currPlayer) == players.size() - 1) {
+                currPlayer = players.get(0);
+            } else {
+                currPlayer = players.get(players.indexOf(currPlayer) + 1);
             }
         }
-        for(Player p : players){
+
+        for (Player p : players) {
             System.out.println(p.getName() + " has won the game!");
         }
-
     }
+
+
 
     /**
      * Getter used for test cases
