@@ -12,6 +12,7 @@ public class View
     private static Font font4 = new Font("Times New Roman", Font.BOLD, 100);
     private static Font font5 = new Font("Times New Roman", Font.BOLD, 50);
 
+    private JFrame frame;
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
@@ -24,28 +25,27 @@ public class View
     private JButton endTurnButton;
     private JTextField playerSelection;
     private JLabel playerName;
-    private JScrollPane scrollPane;
+    private JPanel playerSelectionPanel;
 
     public View()
     {
-        JFrame frame = new JFrame("Monopoly");
+        frame = new JFrame("Monopoly");
         JPanel bottomPanel = new JPanel();
         frame.setSize(1000,650);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel = new JPanel(new GridLayout(3,1));
-        frame.add(mainPanel);
         mainPanel.setVisible(true);
-        JPanel outputPanel = new JPanel();
+        playerSelectionPanel = new JPanel();
+        playerSelectionPanel.setVisible(true);
+        frame.add(playerSelectionPanel);
         playerSelection = new JTextField("Enter Number of Players: ");
         playerSelection.setFont(font5);
-        outputPanel.add(playerSelection);
+        playerSelectionPanel.add(playerSelection);
         output = new JTextArea();
         output.setFont(font2);
         output.setEditable(false);
-        scrollPane = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVisible(false);
-        outputPanel.add(scrollPane);
-        mainPanel.add(outputPanel);
+        JScrollPane scrollPane = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        mainPanel.add(scrollPane);
         updatePanel = new JPanel(new GridLayout(1,3));
         balance = new JTextField();
         balance.setFont(font1);
@@ -146,6 +146,12 @@ public class View
         return Integer.valueOf(pn);
     }
 
+    public void startGame()
+    {
+        frame.remove(playerSelectionPanel);
+        frame.add(mainPanel);
+    }
+
     public void setRoll()
     {
         buttonPanel.setVisible(false);
@@ -185,6 +191,7 @@ public class View
         n.updateOutput("Test16");
         n.updateBalance("10000");
         n.updateBalance("20000");
+        n.startGame();
         n.setRoll();
         n.setButtons();
         n.setBuyable();
