@@ -104,6 +104,12 @@ public class View
         balance.setText("$" + str + "\r\n");
     }
 
+    public void inputFailed()
+    {
+        playerSelection.setText(null);
+        playerSelection.setText("Enter Number of Players: ");
+    }
+
     public void updateProperties(ArrayList<Property> arrayList)
     {
         properties.setText(null);
