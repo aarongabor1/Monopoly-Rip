@@ -1,14 +1,20 @@
 import javax.swing.*;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class View
 {
+    private static Font font1 = new Font("Times New Roman", Font.BOLD, 75);
+    private static Font font2 = new Font("Times New Roman", Font.PLAIN, 25);
+    private static Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
+    private static Font font4 = new Font("Times New Roman", Font.BOLD, 100);
+
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
-    private JTextArea balance;
+    private JTextField balance;
     private JTextArea properties;
     private JPanel rollPanel;
     private JPanel buttonPanel;
@@ -19,36 +25,50 @@ public class View
     {
         JFrame frame = new JFrame("Monopoly");
         JPanel bottomPanel = new JPanel();
-        frame.setSize(1000,750);
+        frame.setSize(1000,650);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(3,1));
+        mainPanel = new JPanel(new GridLayout(3,1));
         frame.add(mainPanel);
         mainPanel.setVisible(true);
         output = new JTextArea();
-        mainPanel.add(output);
-        updatePanel = new JPanel();
-        updatePanel.setLayout(new GridLayout(1,2));
-        balance = new JTextArea();
+        output.setFont(font2);
+        output.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        mainPanel.add(scrollPane);
+        updatePanel = new JPanel(new GridLayout(1,2));
+        balance = new JTextField();
+        balance.setFont(font1);
+        balance.setEditable(false);
+        balance.setBackground(Color.white);
+        balance.setHorizontalAlignment(JTextField.CENTER);
         properties = new JTextArea();
+        properties.setFont(font3);
+        properties.setEditable(false);
         updatePanel.add(balance);
         updatePanel.add(properties);
         mainPanel.add(updatePanel);
         mainPanel.add(bottomPanel);
         bottomPanel.setVisible(true);
-        rollPanel = new JPanel();
+        rollPanel = new JPanel(new GridLayout(1, 2));
         rollButton = new JButton("Roll");
         rollButton.setEnabled(true);
+        rollButton.setFont(font4);
+        rollButton.setBackground(Color.CYAN);
         rollPanel.add(rollButton);
         rollPanel.setVisible(false);
+        rollPanel.setBackground(Color.white);
         bottomPanel.add(rollPanel);
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1,2));
+        buttonPanel = new JPanel(new GridLayout(1,2));
+        buttonPanel.setBackground(Color.white);
         buyButton = new JButton("Buy");
         buyButton.setEnabled(false);
+        buyButton.setFont(font4);
+        buyButton.setBackground(new Color(124,252,0));
         buttonPanel.add(buyButton);
         endTurnButton = new JButton("End Turn");
         endTurnButton.setEnabled(true);
+        endTurnButton.setFont(font4);
+        endTurnButton.setBackground(Color.pink);
         buttonPanel.add(endTurnButton);
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
@@ -58,15 +78,18 @@ public class View
     public void updateOutput(String str)
     {
         output.append(str + "\r\n");
+        output.setCaretPosition(output.getDocument().getLength());
     }
 
     public void updateBalance(String str)
     {
-        balance.append("$" + str + "\r\n");
+        balance.setText(null);
+        balance.setText("$" + str + "\r\n");
     }
 
     public void updateProperties(ArrayList<Property> arrayList)
     {
+        properties.setText(null);
         for(Property p: arrayList)
         {
             properties.append(p.getName());
@@ -113,8 +136,22 @@ public class View
         n.updateOutput("Test2");
         n.updateOutput("Test3");
         n.updateOutput("Test4");
+        n.updateOutput("Test5");
+        n.updateOutput("Test6");
+        n.updateOutput("Test7");
+        n.updateOutput("Test8");
+        n.updateOutput("Test9");
+        n.updateOutput("Test10");
+        n.updateOutput("Test11");
+        n.updateOutput("Test12");
+        n.updateOutput("Test13");
+        n.updateOutput("Test14");
+        n.updateOutput("Test15");
+        n.updateOutput("Test16");
         n.updateBalance("10000");
         n.updateBalance("20000");
         n.setRoll();
+        n.setButtons();
+        n.setBuyable();
     }
 }
