@@ -10,6 +10,7 @@ public class View
     private static Font font2 = new Font("Times New Roman", Font.PLAIN, 25);
     private static Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
     private static Font font4 = new Font("Times New Roman", Font.BOLD, 100);
+    private static Font font5 = new Font("Times New Roman", Font.BOLD, 50);
 
     private JPanel mainPanel;
     private JTextArea output;
@@ -21,6 +22,10 @@ public class View
     private JButton rollButton;
     private JButton buyButton;
     private JButton endTurnButton;
+    private JTextField playerSelection;
+    private JLabel playerName;
+    private JScrollPane scrollPane;
+
     public View()
     {
         JFrame frame = new JFrame("Monopoly");
@@ -30,22 +35,34 @@ public class View
         mainPanel = new JPanel(new GridLayout(3,1));
         frame.add(mainPanel);
         mainPanel.setVisible(true);
+        JPanel outputPanel = new JPanel();
+        playerSelection = new JTextField("Enter Number of Players: ");
+        playerSelection.setFont(font5);
+        outputPanel.add(playerSelection);
         output = new JTextArea();
         output.setFont(font2);
         output.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        mainPanel.add(scrollPane);
-        updatePanel = new JPanel(new GridLayout(1,2));
+        scrollPane = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVisible(false);
+        outputPanel.add(scrollPane);
+        mainPanel.add(outputPanel);
+        updatePanel = new JPanel(new GridLayout(1,3));
         balance = new JTextField();
         balance.setFont(font1);
         balance.setEditable(false);
         balance.setBackground(Color.white);
         balance.setHorizontalAlignment(JTextField.CENTER);
+        playerName = new JLabel();
+        playerName.setVisible(true);
+        playerName.setFont(font1);
+        playerName.setBackground(Color.white);
         properties = new JTextArea();
         properties.setFont(font3);
         properties.setEditable(false);
+        JScrollPane scrollPane1 = new JScrollPane(properties, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         updatePanel.add(balance);
-        updatePanel.add(properties);
+        updatePanel.add(playerName);
+        updatePanel.add(scrollPane1);
         mainPanel.add(updatePanel);
         mainPanel.add(bottomPanel);
         bottomPanel.setVisible(true);
@@ -96,6 +113,11 @@ public class View
         }
     }
 
+    public void updatePlayerName(String str)
+    {
+        playerName.setText(str);
+    }
+
     public void addActionListenerRoll(ActionListener al)
     {
         rollButton.addActionListener(al);
@@ -109,6 +131,19 @@ public class View
     public void addActionListenerEndTurn(ActionListener al)
     {
         endTurnButton.addActionListener(al);
+    }
+
+    public void addActionListenerNumberPlayer(ActionListener al)
+    {
+        playerSelection.addActionListener(al);
+    }
+
+    public int getPlayerNumber()
+    {
+        String pn = playerSelection.getText();
+        pn.substring(23);
+        pn.replaceAll("\\s+", "");
+        return Integer.valueOf(pn);
     }
 
     public void setRoll()
