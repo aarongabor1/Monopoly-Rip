@@ -120,25 +120,39 @@ public class Game
      *  Once all players are created and added, boolean running is set to true and every players position is set to 0
      *
      */
-    public void setup(){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter Number of Players: ");
-        int num = in.nextInt();
-        while(num < 2)
-        {
-            System.out.println("Error please enter a higher number");
-            num = in.nextInt();
-        }
-        for (int i = 0; i < num; i++)
+    public void setup(int playerAmount){
+
+        for (int i = 0; i < playerAmount; i++)
         {
             addPlayer("Player " + (i+1));
-
+            System.out.println("Player " + (i+1) + " added");
         }
         running = true;
 
         for(Player p : players){
             p.setPosition(board.getProperty(0));
         }
+    }
+
+    public boolean checkPlayerAmount(String playerAmount)
+    {
+        try
+        {
+            // Parse the input from user
+            int i = Integer.parseInt(playerAmount);
+            if(i>1)
+            {
+                return true;
+            }
+        }
+        // The input from user is not an int
+        catch(NumberFormatException e)
+        {
+            return false;
+        }
+
+        // Input is an Int but not greater than 2
+        return false;
     }
 
     /**
@@ -195,10 +209,12 @@ public class Game
      *
      * @param args
      */
+    /**
     public static void main(String [] args)
     {
         Game game = new Game();
         game.setup();
         game.play();
     }
+     **/
 }
