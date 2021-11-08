@@ -98,24 +98,45 @@ public class Game
 
         // Update Board
         board.getProperty(currentPlayer.getPosition().getIndex()).buyProperty(currentPlayer);
+
+        // Print players owned properties
+        System.out.println(currentPlayer.getName()+" owns: "+ currentPlayer.getProperties().toString());
     }
 
     public boolean canBuy()
     {
-        if(currentPlayer.getBalance() - currentPlayer.getPosition().getPrice() >= 0)
+        Property cp = board.getProperty(currentPlayer.getPosition().getIndex());
+        System.out.println("Property Landed on: " + cp.getName());
+        if(cp.getName().equals("Empty"))
         {
-            if(board.getProperty(currentPlayer.getPosition().getIndex()).getOwner().equals(null))
-            {
-                return true;
-            }
-            // Can afford it but it's owned
+            System.out.println("Empty properties cannot be purchased");
+            return false;
+        }
+        else if(cp.getOwner()!=null)
+        {
+            System.out.println("Already owned properties cannot be purchased");
+            return false;
+        }
+        else if(currentPlayer.getBalance() - cp.getPrice() < 0)
+        {
+            System.out.println("Player cannot afford this property");
             return false;
         }
         else
         {
-            // Player cannot afford property
-            return false;
+            return true;
         }
+    }
+
+    public boolean isPropertyEmpty()
+    {
+        return (board.getProperty(currentPlayer.getPosition().getIndex()).getName().equals("Empty"));
+    }
+
+    public boolean isRentOwed()
+    {
+        // Checks if the owner of the property has the same name as the currentPlayer
+        return (board.getProperty(currentPlayer.getPosition().getIndex()).getName().equals(currentPlayer.getName()));
     }
 
     /**
@@ -253,6 +274,8 @@ public class Game
             }
             // Turn returns to the first player
             currentPlayer = players.get(0);
+            // Test
+            System.out.println("Current Player: "+currentPlayer.getName());
         }
         // Switch the currentPlayer to the next player in the list
         else
@@ -260,7 +283,7 @@ public class Game
             currentPlayer = players.get(currentTurn+1);
             System.out.println("Current Player: "+currentPlayer.getName());
         }
-        currentPlayer = players.get(currentTurn+1);
+        //currentPlayer = players.get(currentTurn+1);
     }
 
     boolean hasPlayerWon()

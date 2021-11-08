@@ -35,12 +35,21 @@ public class Controller implements ActionListener
             // Update view with roll results
             rollUpdate();
 
-            // Update view user options
-            v.setButtons();
+            // Update user options for the property they landed on
+            propertyOptions();
+
         }
         else if(o.equals("Buy"))
         {
+            // Test
             v.updateOutput("Buy Selected");
+
+            // Update Model and View
+            buyUpdate();
+        }
+        else if(o.equals("Pay Rent"))
+        {
+            v.updateOutput("Pay Rent Selected");
         }
         else if(o.equals("Submit"))
         {
@@ -92,16 +101,24 @@ public class Controller implements ActionListener
     // Update View for current player stats
     private void updatePlayer(Player cp)
     {
+        // Update View Player Data
         v.updatePlayerName(cp.getName());
         v.updateBalance(String.valueOf(cp.getBalance()));
         v.updateProperties(cp.getProperties());
+
+        // Update View Buttons
+        v.setRoll();
     }
 
     private void rollUpdate()
     {
         v.updateOutput("Roll Selected");
+
         // Players roll number
         v.updateOutput(m.getCurrentPlayer().getName() + " rolled: " + m.getCurrentPlayer().getRoll());
+
+        // Players New Position on board
+        v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
 
         // Players new position
         String property = m.getCurrentPlayer().getPosition().getName();
@@ -110,23 +127,59 @@ public class Controller implements ActionListener
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on an empty space");
         }
+        else if(m.isRentOwed())
+        {
+            v.updateOutput(m.getCurrentPlayer().getName()+" owes: "+m.getCurrentPlayer().getPosition().getPrice());
+        }
         else
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on: "+m.getCurrentPlayer().getPosition().getName());
         }
     }
 
-    private void buyUpdate()
+    private void propertyOptions()
     {
         if(m.canBuy())
         {
-            m.buyProperty();
+            System.out.println("Player can buy property");
+            v.setButtons();
+            v.setBuyable();
         }
+        else if(m.isPropertyEmpty())
+        {
+            System.out.println("Player cannot buy Empty Property");
+            v.setButtons();
+        }
+        else if(m.isRentOwed())
+        {
+            v.setRentable();
+        }
+        else
+        {
+            System.out.println("Player must pay rent");
+            v.setRentable();
+        }
+    }
+
+    private void buyUpdate()
+    {
+        // Tell model that Player wants to buy property
+        m.buyProperty();
+
+        // Update View Display
+        v.updateProperties(m.getCurrentPlayer().getProperties());
+
+        // Update View Buttons
+        v.setEndTurn();
     }
 
     private void endTurnUpdate()
     {
+        // Enter a divider between player turns in the console
         v.updateOutput("--------------------------------------");
+
+        // Update the View for the next Player
+        updatePlayer(m.getCurrentPlayer());
     }
 
 }

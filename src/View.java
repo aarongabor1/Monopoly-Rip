@@ -16,6 +16,7 @@ public class View
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
+    private JPanel bottomPanel;
     private JTextField balance;
     private JTextArea properties;
     private JPanel rollPanel;
@@ -23,6 +24,7 @@ public class View
     private JButton rollButton;
     private JButton buyButton;
     private JButton endTurnButton;
+    private JButton rentButton;
     private JTextField playerSelection;
     private JLabel playerName;
     private JPanel playerSelectionPanel;
@@ -32,7 +34,7 @@ public class View
     public View()
     {
         frame = new JFrame("Monopoly");
-        JPanel bottomPanel = new JPanel();
+        bottomPanel = new JPanel();
         frame.setSize(1000,650);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel = new JPanel(new GridLayout(3,1));
@@ -51,8 +53,6 @@ public class View
         playerSelection.setActionCommand("Player Number");
 
         submit = new JButton("Submit");
-        submit.setActionCommand("Submit");
-
 
         playerSelection.setFont(font5);
 
@@ -85,7 +85,7 @@ public class View
         mainPanel.add(updatePanel);
         mainPanel.add(bottomPanel);
         bottomPanel.setVisible(true);
-        rollPanel = new JPanel(new GridLayout(1, 2));
+        rollPanel = new JPanel(new GridLayout(1, 3));
         rollButton = new JButton("Roll");
         rollButton.setEnabled(true);
         rollButton.setFont(font4);
@@ -94,8 +94,15 @@ public class View
         rollPanel.setVisible(false);
         rollPanel.setBackground(Color.white);
         bottomPanel.add(rollPanel);
-        buttonPanel = new JPanel(new GridLayout(1,2));
+        buttonPanel = new JPanel(new GridLayout(1,3));
         buttonPanel.setBackground(Color.white);
+
+        rentButton = new JButton("Pay Rent");
+        rentButton.setEnabled(false);
+        rentButton.setFont(font4);
+        rentButton.setBackground(Color.orange);
+        buttonPanel.add(rentButton);
+
         buyButton = new JButton("Buy");
         buyButton.setEnabled(false);
         buyButton.setFont(font4);
@@ -126,8 +133,6 @@ public class View
     // Now updates the JLabel
     public void inputFailed()
     {
-        //playerSelection.setText(null);
-        //playerSelection.setText("Enter Number of Players: ");
         selectionText.setText("Please Enter a Valid Number of Players (2+):");
     }
 
@@ -136,7 +141,8 @@ public class View
         properties.setText(null);
         for(Property p: arrayList)
         {
-            properties.append(p.getName());
+            properties.append(p.getName()+"\n");
+
         }
     }
 
@@ -156,6 +162,7 @@ public class View
         rollButton.addActionListener(o);
         buyButton.addActionListener(o);
         endTurnButton.addActionListener(o);
+        rentButton.addActionListener(o);
         playerSelection.addActionListener(o);
         submit.addActionListener(o);
     }
@@ -180,6 +187,8 @@ public class View
     public void setRoll()
     {
         buttonPanel.setVisible(false);
+        buyButton.setVisible(false);
+        rentButton.setVisible(false);
         rollPanel.setVisible(true);
     }
 
@@ -187,11 +196,25 @@ public class View
     {
         rollPanel.setVisible(false);
         buttonPanel.setVisible(true);
-        buyButton.setEnabled(false);
+        bottomPanel.repaint();
     }
 
     public void setBuyable()
     {
         buyButton.setEnabled(true);
+        buyButton.setVisible(true);
+    }
+
+    public void setRentable()
+    {
+        rentButton.setEnabled(true);
+        rentButton.setVisible(true);
+        endTurnButton.setEnabled(false);
+    }
+
+    public void setEndTurn()
+    {
+        buyButton.setVisible(false);
+        rentButton.setVisible(false);
     }
 }
