@@ -4,7 +4,11 @@ public class Game
 {
     private List<Player> players;
     private Board board;
+
     private boolean running;
+    private boolean playerWon;
+
+    private Player currentPlayer;
 
     /**
      *  Constructor for Game class
@@ -63,10 +67,9 @@ public class Game
      * If the Player chooses not to buy the Property, he Property will remain unowned, and
      * their balance will remain the same
      *
-     * @param p
-     * @param currPosition
      */
-    private void buyProperty(Player p, Property currPosition){
+    void buyProperty(){
+        /**
         System.out.println("This square is NOT owned");
         Scanner input = new Scanner(System.in);
         System.out.println("Would you like to buy? Yes : No ");
@@ -87,6 +90,31 @@ public class Game
             }
         } else if (answer.equals("No")) {
             System.out.println("The property was not purchased");
+        }
+         **/
+
+        // Update Player
+        currentPlayer.buyProperty(currentPlayer.getPosition().getPrice(),board.getProperty(currentPlayer.getPosition().getIndex()));
+
+        // Update Board
+        board.getProperty(currentPlayer.getPosition().getIndex()).buyProperty(currentPlayer);
+    }
+
+    public boolean canBuy()
+    {
+        if(currentPlayer.getBalance() - currentPlayer.getPosition().getPrice() >= 0)
+        {
+            if(board.getProperty(currentPlayer.getPosition().getIndex()).getOwner().equals(null))
+            {
+                return true;
+            }
+            // Can afford it but it's owned
+            return false;
+        }
+        else
+        {
+            // Player cannot afford property
+            return false;
         }
     }
 
@@ -132,6 +160,9 @@ public class Game
         for(Player p : players){
             p.setPosition(board.getProperty(0));
         }
+
+        System.out.println("Total Players: " + players.size());
+        currentPlayer = players.get(0);
     }
 
     public boolean checkPlayerAmount(String playerAmount)
@@ -166,6 +197,7 @@ public class Game
      * If there's a winner
      *
      */
+    /**
     public void play()
     {
         while(running){
@@ -173,6 +205,7 @@ public class Game
             if(players.size() == 1) break;
             for(Player p : players){
                 p.takeTurn();
+                currentPlayer = p;
                 currPosition = board.getProperty(p.getPosition().getIndex());
                 if(currPosition.getPrice()> 0 && currPosition.getOwner() == null){
                     buyProperty(p, currPosition);
@@ -193,6 +226,48 @@ public class Game
         }
 
     }
+     **/
+
+    public void roll()
+    {
+        currentPlayer.takeTurn();
+    }
+
+    public int getCurrentRoll()
+    {
+        return currentPlayer.getRoll();
+    }
+
+    public void endTurn()
+    {
+        int currentTurn = players.indexOf(currentPlayer);
+        System.out.println("Current Turn Index: "+players.indexOf(currentPlayer));
+
+        // The last player in the list ends their turn
+        if(currentTurn == (players.size()-1))
+        {
+            // Only one player left
+            if(players.size()==1)
+            {
+                playerWon = true;
+            }
+            // Turn returns to the first player
+            currentPlayer = players.get(0);
+        }
+        // Switch the currentPlayer to the next player in the list
+        else
+        {
+            currentPlayer = players.get(currentTurn+1);
+            System.out.println("Current Player: "+currentPlayer.getName());
+        }
+        currentPlayer = players.get(currentTurn+1);
+    }
+
+    boolean hasPlayerWon()
+    {
+        return playerWon;
+    }
+
 
     /**
      * Getter used for test cases
@@ -205,16 +280,13 @@ public class Game
     }
 
     /**
-     * Main that creates a new game, sets it up, and starts the play loop
+     * Getter for the Player object whos turn it is
      *
-     * @param args
+     * @return
      */
-    /**
-    public static void main(String [] args)
+    Player getCurrentPlayer()
     {
-        Game game = new Game();
-        game.setup();
-        game.play();
+        return currentPlayer;
     }
-     **/
+
 }

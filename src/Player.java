@@ -51,6 +51,11 @@ public class Player {
         return position;
     }
 
+    public ArrayList<Property> getProperties()
+    {
+        return properties;
+    }
+
     /**
      * Setter for the Player position
      *
@@ -150,6 +155,11 @@ public class Player {
     public void takeTurn(){
         printPlayerInfo();
         rollDice();
+    }
+
+    public int getRoll()
+    {
+        return die1.getValue() + die2.getValue();
     }
 
 }

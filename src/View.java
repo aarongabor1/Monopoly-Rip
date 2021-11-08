@@ -27,6 +27,7 @@ public class View
     private JLabel playerName;
     private JPanel playerSelectionPanel;
     private JButton submit;
+    private JLabel selectionText;
 
     public View()
     {
@@ -42,7 +43,7 @@ public class View
         playerSelectionPanel.setVisible(true);
         frame.add(playerSelectionPanel);
 
-        JLabel selectionText = new JLabel("Please Select Player Name:");
+        selectionText = new JLabel("Please Select The Amount of Players (2+):");
         selectionText.setHorizontalAlignment(JLabel.CENTER);
 
         playerSelection = new JTextField();
@@ -122,10 +123,12 @@ public class View
         balance.setText("$" + str + "\r\n");
     }
 
+    // Now updates the JLabel
     public void inputFailed()
     {
-        playerSelection.setText(null);
-        playerSelection.setText("Enter Number of Players: ");
+        //playerSelection.setText(null);
+        //playerSelection.setText("Enter Number of Players: ");
+        selectionText.setText("Please Enter a Valid Number of Players (2+):");
     }
 
     public void updateProperties(ArrayList<Property> arrayList)
@@ -147,7 +150,7 @@ public class View
         return playerSelection.getText();
     }
 
-
+    // Put all ALs into one method for simplicity
     public void monopolyActionListener(ActionListener o)
     {
         rollButton.addActionListener(o);
@@ -157,6 +160,7 @@ public class View
         submit.addActionListener(o);
     }
 
+    // Currently can be deleted if you keep the menu I made
     public int getPlayerNumber()
     {
         String pn = playerSelection.getText();
