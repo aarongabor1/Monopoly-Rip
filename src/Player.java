@@ -104,6 +104,7 @@ public class Player {
 
     public void takeProperty(Property property)
     {
+
         property.buyProperty(this);
         this.properties.add(property);
     }

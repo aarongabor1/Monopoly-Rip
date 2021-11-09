@@ -269,4 +269,9 @@ public class View
         rentButton.setVisible(false);
         endTurnButton.setVisible(true);
     }
+
+    public void gameOver()
+    {
+        endTurnButton.setVisible(false);
+    }
 }

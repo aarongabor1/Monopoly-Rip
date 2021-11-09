@@ -187,6 +187,14 @@ public class Controller implements ActionListener
         // Enter a divider between player turns in the console
         v.updateOutput("--------------------------------------");
 
+        // Check if player has won
+        if(m.hasPlayerWon())
+        {
+            v.updateOutput("GAME OVER:");
+            v.updateOutput(m.getCurrentPlayer().getName() + " has won!");
+            v.gameOver();
+        }
+
         // Update the View for the next Player
         updatePlayer(m.getCurrentPlayer());
     }
