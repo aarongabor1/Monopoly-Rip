@@ -51,9 +51,11 @@ public class Controller implements ActionListener
         {
             // Test
             v.updateOutput("Pay Rent Selected");
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + m.getLandedOnProperty().getOwner().getName() + ": $" + m.getLandedOnProperty().getRent());
 
             // Update Model
             m.payRent();
+
 
             // Update view
             v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
@@ -159,6 +161,11 @@ public class Controller implements ActionListener
         {
             v.setButtons();
             v.setRentable();
+        }
+        else
+        {
+            v.setButtons();
+            v.setEndTurn();
         }
     }
 

@@ -118,24 +118,42 @@ public class View
         frame.setVisible(true);
     }
 
+    /**
+     * This method will update the output display by adding a String that it is passed
+     * and then will bring the panel to the end so that the play may see the most recent information.
+     * @param str The String that is to be added to the output display
+     */
     public void updateOutput(String str)
     {
         output.append(str + "\r\n");
         output.setCaretPosition(output.getDocument().getLength());
     }
 
+    /**
+     * This method will update the player's balance and will display the amount of money that the
+     * player currently has.
+     * @param str The String that contains the balance to be displayed that doesn't
+     *            have a dollar sign in it.
+     */
     public void updateBalance(String str)
     {
         balance.setText(null);
         balance.setText("$" + str + "\r\n");
     }
 
-    // Now updates the JLabel
+    /**
+     * This method will notify a player that has entered an invalid number in the player number
+     * window to reenter a valid number.
+     */
     public void inputFailed()
     {
         selectionText.setText("Please Enter a Valid Number of Players (2+):");
     }
 
+    /**
+     * This method will display all the properties that a player currently owns.
+     * @param arrayList The ArrayList of property objects of the property that are to be displayed.
+     */
     public void updateProperties(ArrayList<Property> arrayList)
     {
         properties.setText(null);
@@ -146,6 +164,10 @@ public class View
         }
     }
 
+    /**
+     * This is a method that will update the player name that is being displayed.
+     * @param str A String that contains the player name to be displayed.
+     */
     public void updatePlayerName(String str)
     {
         playerName.setText(str);
@@ -156,7 +178,12 @@ public class View
         return playerSelection.getText();
     }
 
-    // Put all ALs into one method for simplicity
+
+    /**
+     * A method that will add the action listener that has been passed to the elements of the
+     * GUI that needs an action listener.
+     * @param o The ActionListener object that contains the action listener to be used.
+     */
     public void monopolyActionListener(ActionListener o)
     {
         rollButton.addActionListener(o);
@@ -167,7 +194,11 @@ public class View
         submit.addActionListener(o);
     }
 
-    // Currently can be deleted if you keep the menu I made
+
+    /**
+     * This is a method that will update the player name that is being displayed.
+     * @param str A String that contains the player name to be displayed.
+     */
     public int getPlayerNumber()
     {
         String pn = playerSelection.getText();
@@ -176,6 +207,10 @@ public class View
         return Integer.valueOf(pn);
     }
 
+    /**
+     * This is a method that will switch between the player selection part of the program and the
+     * main game part of the program and will allow the game to start.
+     */
     public void startGame()
     {
         frame.remove(playerSelectionPanel);
@@ -184,6 +219,10 @@ public class View
         frame.setSize(1000,650);
     }
 
+    /**
+     * This method will change the bottom panel of the GUI to the roll panel and will disable the rent
+     * and buy buttons for the next player.
+     */
     public void setRoll()
     {
         buttonPanel.setVisible(false);
@@ -192,6 +231,9 @@ public class View
         rollPanel.setVisible(true);
     }
 
+    /**
+     * This method will switch the bottom panel from the roll panel to the button panel.
+     */
     public void setButtons()
     {
         rollPanel.setVisible(false);
@@ -199,12 +241,18 @@ public class View
         bottomPanel.repaint();
     }
 
+    /**
+     * This method will enable the buy button
+     */
     public void setBuyable()
     {
         buyButton.setEnabled(true);
         buyButton.setVisible(true);
     }
 
+    /**
+     * This method will enable the Rent button
+     */
     public void setRentable()
     {
         rentButton.setEnabled(true);
@@ -212,6 +260,9 @@ public class View
         endTurnButton.setVisible(false);
     }
 
+    /**
+     * This method will enable the End Turn Button
+     */
     public void setEndTurn()
     {
         buyButton.setVisible(false);

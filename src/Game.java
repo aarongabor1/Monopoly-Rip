@@ -243,7 +243,7 @@ public class Game
     public void endTurn()
     {
         // The last player in the list ends their turn
-        if(currentTurn == (players.size()-1))
+        if(currentTurn >= (players.size()-1))
         {
             if(players.size()!=startingPlayerAmount)
             {

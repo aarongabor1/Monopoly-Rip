@@ -19,7 +19,7 @@ public class Player {
     public Player(String name, Board board){
         this.name = name;
         this.board = board;
-        balance = 2000;
+        balance = 300;
         die1 = new Die();
         die2 = new Die();
         properties = new ArrayList<>();
@@ -83,8 +83,29 @@ public class Player {
      *
      * @param payment
      */
+    /**
     public void payRent(int payment){
         balance -= payment;
+    }
+**/
+
+    public int payRent(int payment){
+        if(balance - payment >= 0) {
+            balance -= payment;
+            return payment;
+        }
+        else
+        {
+            int num = payment - balance;
+            balance = 0;
+            return num;
+        }
+    }
+
+    public void takeProperty(Property property)
+    {
+        property.buyProperty(this);
+        this.properties.add(property);
     }
 
     /**
