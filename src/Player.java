@@ -82,12 +82,7 @@ public class Player {
      * Removes the amount "payment" passed as param from the Player's total balance
      *
      * @param payment
-     */
-    /**
-    public void payRent(int payment){
-        balance -= payment;
-    }
-**/
+    **/
 
     public int payRent(int payment){
         if(balance - payment >= 0) {
@@ -102,6 +97,11 @@ public class Player {
         }
     }
 
+    /**
+     * Adds another players property to their own collection of properties
+     *
+     * @param property
+     */
     public void takeProperty(Property property)
     {
 

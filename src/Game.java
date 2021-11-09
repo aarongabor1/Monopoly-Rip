@@ -44,15 +44,8 @@ public class Game
      * This eliminates them from the game
      *
      * @param p
+     * @param p2
      */
-    /**
-    public void bankrupt(Player p){
-        if(p.getBalance()<0){
-            System.out.println(p.getName() + " has gone bankrupt. They are removed from the game");
-            players.remove(p);
-        }
-    }
-    **/
     private void bankrupt(Player p, Player p2){
         if(p.getBalance() == 0){
             System.out.println(p.getName() + " has gone bankrupt. They are removed from the game");
@@ -65,6 +58,9 @@ public class Game
         }
     }
 
+    /**
+     * Pay rent from one user to another
+     */
     public void payRent(){
         int rent = getLandedOnProperty().getRent();
         int rentPayed = players.get(currentTurn).payRent(rent);
@@ -104,6 +100,7 @@ public class Game
     }
 
     /**
+     * Checks if user can buy property
      *
      * @return
      */
@@ -119,13 +116,17 @@ public class Game
         return false;
     }
 
+    /**
+     * checks if property is an empty square
+     * @return
+     */
     public boolean isPropertyEmpty()
     {
         return players.get(currentTurn).getPosition().getName().equals("Empty");
     }
 
     /**
-     *
+     * checks if property is owned by another player
      * @return
      */
     public boolean isRentOwed()
@@ -138,29 +139,6 @@ public class Game
         //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
         return false;
     }
-
-    /**
-     * This method processes the pay rent function of the game.
-     *
-     * When a Player lands on a Property that is owned by another player after a roll, they owe the owner an
-     * amount corresponding to the rent shown on that Property
-     *
-     * This method gets the rent from the Property with the method getRent()
-     * Then calls payRent() to adjust the owing Players balance
-     * Finally calls acceptRent() to adjust the owed Players balance
-     *
-     * @param
-     * @param
-     * @param
-     */
-    /**
-    public void payRent(){
-        int rent = getLandedOnProperty().getRent();
-        players.get(currentTurn).payRent(rent);
-        getLandedOnProperty().getOwner().acceptRent(rent);
-        bankrupt(players.get(currentTurn));
-    }
-     **/
 
     /**
      *  Requests the number of players from the user using a scanner
@@ -194,6 +172,7 @@ public class Game
     }
 
     /**
+     * Checks if the inputted player amount is valid (not a letter & a number over 1)
      *
      * @param playerAmount
      * @return
@@ -220,7 +199,7 @@ public class Game
     }
 
     /**
-     *
+     * Rolls the dice of the current player
      */
     public void roll()
     {
@@ -232,13 +211,17 @@ public class Game
         return currentPlayer.getRoll();
     }
 
+    /**
+     * returns the property the current player landed on
+     * @return
+     */
     public Property getLandedOnProperty()
     {
         return board.getProperty(players.get(currentTurn).getPosition().getIndex());
     }
 
     /**
-     *
+     * switches the turn to the next player in list players
      */
     public void endTurn()
     {
@@ -278,7 +261,7 @@ public class Game
     }
 
     /**
-     *
+     * Checks win condition boolean
      * @return
      */
     boolean hasPlayerWon()

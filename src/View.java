@@ -33,6 +33,7 @@ public class View
 
     public View()
     {
+        //Creating the frame and the main panel
         frame = new JFrame("Monopoly");
         bottomPanel = new JPanel();
         frame.setSize(1000,650);
@@ -40,51 +41,74 @@ public class View
         mainPanel = new JPanel(new GridLayout(3,1));
         mainPanel.setVisible(true);
 
+        //Creates the player selection panel
         playerSelectionPanel = new JPanel();
-        playerSelectionPanel.setLayout(new GridLayout(3,1));
+        playerSelectionPanel.setLayout(new GridLayout(3, 1));
+        playerSelectionPanel.setBackground(Color.white);
         playerSelectionPanel.setVisible(true);
         frame.add(playerSelectionPanel);
 
+        //Creates the player selection label
         selectionText = new JLabel("Please Select The Amount of Players (2+):");
         selectionText.setHorizontalAlignment(JLabel.CENTER);
+        selectionText.setFont(font5);
 
+        //Creates the Player selection entering area
         playerSelection = new JTextField();
         playerSelection.setEditable(true);
         playerSelection.setActionCommand("Player Number");
-
-        submit = new JButton("Submit");
-
         playerSelection.setFont(font5);
 
+        //Creates a button to allow users to submit their number of players
+        submit = new JButton("Submit");
+        submit.setFont(font1);
+        submit.setBackground(Color.cyan);
+
+        //Adds all elements to the player selection panel
         playerSelectionPanel.add(selectionText);
         playerSelectionPanel.add(playerSelection);
         playerSelectionPanel.add(submit);
 
+        //Creates the output of game information
         output = new JTextArea();
         output.setFont(font2);
         output.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         mainPanel.add(scrollPane);
+
+        //Creates the panel that gives player information
         updatePanel = new JPanel(new GridLayout(1,3));
+
+        //Creates the display for the player's money balance
         balance = new JTextField();
         balance.setFont(font1);
         balance.setEditable(false);
         balance.setBackground(Color.white);
         balance.setHorizontalAlignment(JTextField.CENTER);
+
+        //Creates the display for the player's name
         playerName = new JLabel();
         playerName.setVisible(true);
         playerName.setFont(font1);
         playerName.setBackground(Color.white);
+
+        //Creates the display for the properties that the player own
         properties = new JTextArea();
         properties.setFont(font3);
         properties.setEditable(false);
         JScrollPane scrollPane1 = new JScrollPane(properties, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        //Adds the three items above to the update panel
         updatePanel.add(balance);
         updatePanel.add(playerName);
         updatePanel.add(scrollPane1);
         mainPanel.add(updatePanel);
+
+        //Adds the bottom panel to the main panel
         mainPanel.add(bottomPanel);
         bottomPanel.setVisible(true);
+
+        //Creates the roll panel and the roll button
         rollPanel = new JPanel(new GridLayout(1, 3));
         rollButton = new JButton("Roll");
         rollButton.setEnabled(true);
@@ -94,20 +118,26 @@ public class View
         rollPanel.setVisible(false);
         rollPanel.setBackground(Color.white);
         bottomPanel.add(rollPanel);
+
+        //Creates a button panel for the turn buttons
         buttonPanel = new JPanel(new GridLayout(1,3));
         buttonPanel.setBackground(Color.white);
 
+        //Creates the rent button and adds it to the button panel
         rentButton = new JButton("Pay Rent");
         rentButton.setEnabled(false);
         rentButton.setFont(font4);
         rentButton.setBackground(Color.orange);
         buttonPanel.add(rentButton);
 
+        //Creates the buy button and adds it to the button panel
         buyButton = new JButton("Buy");
         buyButton.setEnabled(false);
         buyButton.setFont(font4);
         buyButton.setBackground(new Color(124,252,0));
         buttonPanel.add(buyButton);
+
+        //Creates the end turn button and adds it to the button panel
         endTurnButton = new JButton("End Turn");
         endTurnButton.setEnabled(true);
         endTurnButton.setFont(font4);

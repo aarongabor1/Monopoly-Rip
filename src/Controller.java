@@ -10,6 +10,12 @@ public class Controller implements ActionListener
     // GUI
     private View v;
 
+    /**
+     * constructor for controller class
+     *
+     * @param m
+     * @param v
+     */
     public Controller(Game m, View v)
     {
         // Initiate Model and View
@@ -20,6 +26,11 @@ public class Controller implements ActionListener
         v.monopolyActionListener(this);
     }
 
+    /**
+     * process action commands
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -109,7 +120,12 @@ public class Controller implements ActionListener
         System.out.println("Current Player: "+m.getCurrentPlayer().getName());
     }
 
-    // Update View for current player stats
+
+    /**
+     * update view for current player
+     *
+     * @param cp
+     */
     private void updatePlayer(Player cp)
     {
         // Update View Player Data
@@ -121,6 +137,9 @@ public class Controller implements ActionListener
         v.setRoll();
     }
 
+    /**
+     * update output in view with roll data
+     */
     private void rollUpdate()
     {
         v.updateOutput("Roll Selected");
@@ -144,6 +163,9 @@ public class Controller implements ActionListener
         }
     }
 
+    /**
+     * set the appropriate button options in view
+     */
     private void propertyOptions()
     {
         // Check if the property is empty
@@ -169,6 +191,9 @@ public class Controller implements ActionListener
         }
     }
 
+    /**
+     * Notify Model and View of user buying property
+     */
     private void buyUpdate()
     {
         // Tell model that Player wants to buy property
@@ -182,6 +207,10 @@ public class Controller implements ActionListener
         v.setEndTurn();
     }
 
+    /**
+     * Updates view at the end of a players turn for the next players data
+     * also checks for winner
+     */
     private void endTurnUpdate()
     {
         // Enter a divider between player turns in the console
