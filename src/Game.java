@@ -68,9 +68,9 @@ public class Game
     public void payRent(){
         int rent = getLandedOnProperty().getRent();
         int rentPayed = players.get(currentTurn).payRent(rent);
-        getLandedOnProperty().getOwner().acceptRent(rentPayed);
+        board.getProperty(players.get(currentTurn).getPosition().getIndex()).getOwner().acceptRent(rentPayed);
         if(rent != rentPayed)
-            bankrupt(players.get(currentTurn), board.getProperty(currentPlayer.getPosition().getIndex()).getOwner());
+            bankrupt(players.get(currentTurn), board.getProperty(players.get(currentTurn).getPosition().getIndex()).getOwner());
     }
 
 
