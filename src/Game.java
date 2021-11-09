@@ -66,7 +66,7 @@ public class Game
         int rentPayed = players.get(currentTurn).payRent(rent);
         board.getProperty(players.get(currentTurn).getPosition().getIndex()).getOwner().acceptRent(rentPayed);
         if(rent != rentPayed)
-            bankrupt(players.get(currentTurn), board.getProperty(players.get(currentTurn).getPosition().getIndex()).getOwner());
+            bankrupt(players.get(currentTurn), board.getProperty(currentPlayer.getPosition().getIndex()).getOwner());
     }
 
 

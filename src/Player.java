@@ -19,7 +19,7 @@ public class Player {
     public Player(String name, Board board){
         this.name = name;
         this.board = board;
-        balance = 2000;
+        balance = 300;
         die1 = new Die();
         die2 = new Die();
         properties = new ArrayList<>();
