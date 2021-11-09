@@ -9,7 +9,7 @@ public class View
     private static final Font font1 = new Font("Times New Roman", Font.BOLD, 75);
     private static final Font font2 = new Font("Times New Roman", Font.PLAIN, 25);
     private static final Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
-    private static final Font font4 = new Font("Times New Roman", Font.BOLD, 100);
+    private static final Font font4 = new Font("Times New Roman", Font.BOLD, 85);
     private static final Font font5 = new Font("Times New Roman", Font.BOLD, 50);
     private static final Font font6 = new Font("Times New Roman", Font.BOLD, 40);
 
@@ -296,8 +296,10 @@ public class View
         n.updateOutput("Test16");
         n.updateBalance("10000");
         n.updateBalance("20000");
+        n.startGame();
         n.setRoll();
         n.setButtons();
         n.setBuyable();
+
     }
 }
