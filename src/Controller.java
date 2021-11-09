@@ -49,7 +49,16 @@ public class Controller implements ActionListener
         }
         else if(o.equals("Pay Rent"))
         {
+            // Test
             v.updateOutput("Pay Rent Selected");
+
+            // Update Model
+            m.payRent();
+
+            // Update view
+            v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
+            v.setEndTurn();
+
         }
         else if(o.equals("Submit"))
         {
@@ -127,10 +136,6 @@ public class Controller implements ActionListener
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on an empty space");
         }
-        else if(m.isRentOwed())
-        {
-            v.updateOutput(m.getCurrentPlayer().getName()+" owes: "+m.getCurrentPlayer().getPosition().getPrice());
-        }
         else
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on: "+m.getCurrentPlayer().getPosition().getName());
@@ -139,24 +144,20 @@ public class Controller implements ActionListener
 
     private void propertyOptions()
     {
-        if(m.canBuy())
+        // Check if the property is empty
+        if(m.isPropertyEmpty())
         {
-            System.out.println("Player can buy property");
+            v.setButtons();
+            v.setEndTurn();
+        }
+        else if(m.canBuy())
+        {
             v.setButtons();
             v.setBuyable();
         }
-        else if(m.isPropertyEmpty())
-        {
-            System.out.println("Player cannot buy Empty Property");
-            v.setButtons();
-        }
         else if(m.isRentOwed())
         {
-            v.setRentable();
-        }
-        else
-        {
-            System.out.println("Player must pay rent");
+            v.setButtons();
             v.setRentable();
         }
     }
@@ -168,6 +169,7 @@ public class Controller implements ActionListener
 
         // Update View Display
         v.updateProperties(m.getCurrentPlayer().getProperties());
+        v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
 
         // Update View Buttons
         v.setEndTurn();
@@ -180,29 +182,5 @@ public class Controller implements ActionListener
 
         // Update the View for the next Player
         updatePlayer(m.getCurrentPlayer());
-    }
-
-}
-
-// ------------------------------------------------------------------------------------
-
-class PlayerController implements ActionListener
-{
-    //Variables
-
-    // Player (Model)
-    private Player p;
-
-    // View
-
-    public PlayerController()
-    {
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent actionEvent)
-    {
-
     }
 }

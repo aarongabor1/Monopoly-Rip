@@ -3,6 +3,7 @@ public class Property implements Square {
     private int index;
     private int price;
     private Player owner;
+    private boolean owned;
 
     /**
      * Constructor for Property class that creates a Property object
@@ -58,7 +59,8 @@ public class Property implements Square {
      *
      * @param p
      */
-    public void buyProperty(Player p){
+    public void buyProperty(Player p)
+    {
         owner = p;
     }
 

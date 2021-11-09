@@ -9,6 +9,7 @@ public class Game
     private boolean playerWon;
 
     private Player currentPlayer;
+    private int currentTurn;
 
     /**
      *  Constructor for Game class
@@ -69,74 +70,50 @@ public class Game
      *
      */
     void buyProperty(){
-        /**
-        System.out.println("This square is NOT owned");
-        Scanner input = new Scanner(System.in);
-        System.out.println("Would you like to buy? Yes : No ");
-        String answer = input.next();
-        while(true){
-            if(answer.equals("Yes") || answer.equals("No")) break;
-            System.out.println("Please answer 'Yes' or 'No'");
-            answer = input.next();
-        }
-        if (answer.equals("Yes")) {
-            if (p.getBalance() - currPosition.getPrice() >= 0) {
-                p.buyProperty(currPosition.getPrice(), currPosition);
-                board.getProperty(p.getPosition().getIndex()).buyProperty(p);
-                System.out.println(p.getName() + " now owns: " + currPosition.getName());
-            } else {
-                System.out.println("You don't have enough money to buy this property");
-
-            }
-        } else if (answer.equals("No")) {
-            System.out.println("The property was not purchased");
-        }
-         **/
+        // Current Position
+        Property p = getLandedOnProperty();
 
         // Update Player
-        currentPlayer.buyProperty(currentPlayer.getPosition().getPrice(),board.getProperty(currentPlayer.getPosition().getIndex()));
+        players.get(currentTurn).buyProperty(p.getPrice(),board.getProperty(p.getIndex()));
 
         // Update Board
-        board.getProperty(currentPlayer.getPosition().getIndex()).buyProperty(currentPlayer);
-
-        // Print players owned properties
-        System.out.println(currentPlayer.getName()+" owns: "+ currentPlayer.getProperties().toString());
+        board.getProperty(currentPlayer.getPosition().getIndex()).buyProperty(players.get(currentTurn));
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean canBuy()
     {
-        Property cp = board.getProperty(currentPlayer.getPosition().getIndex());
-        System.out.println("Property Landed on: " + cp.getName());
-        if(cp.getName().equals("Empty"))
+        if(getLandedOnProperty().getOwner()==null)
         {
-            System.out.println("Empty properties cannot be purchased");
-            return false;
+            if(players.get(currentTurn).getBalance()-getLandedOnProperty().getPrice() >= 0)
+            {
+                return !isPropertyEmpty();
+            }
         }
-        else if(cp.getOwner()!=null)
-        {
-            System.out.println("Already owned properties cannot be purchased");
-            return false;
-        }
-        else if(currentPlayer.getBalance() - cp.getPrice() < 0)
-        {
-            System.out.println("Player cannot afford this property");
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return false;
     }
 
     public boolean isPropertyEmpty()
     {
-        return (board.getProperty(currentPlayer.getPosition().getIndex()).getName().equals("Empty"));
+        return players.get(currentTurn).getPosition().getName().equals("Empty");
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isRentOwed()
     {
-        // Checks if the owner of the property has the same name as the currentPlayer
-        return (board.getProperty(currentPlayer.getPosition().getIndex()).getName().equals(currentPlayer.getName()));
+        if(players.get(currentTurn)!=getLandedOnProperty().getOwner())
+        {
+            System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
+            return true;
+        }
+        System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
+        return false;
     }
 
     /**
@@ -149,16 +126,14 @@ public class Game
      * Then calls payRent() to adjust the owing Players balance
      * Finally calls acceptRent() to adjust the owed Players balance
      *
-     * @param owner
-     * @param renter
-     * @param p
+     * @param
+     * @param
+     * @param
      */
-    private void payRent(Player owner, Player renter, Property p){
-        System.out.println("Player " + owner + "" +
-                "owns this property. You must pay rent");
-        int rent = p.getRent();
-        renter.payRent(rent);
-        owner.acceptRent(rent);
+    public void payRent(){
+        int rent = getLandedOnProperty().getRent();
+        players.get(currentTurn).payRent(rent);
+        getLandedOnProperty().getOwner().acceptRent(rent);
     }
 
     /**
@@ -173,7 +148,7 @@ public class Game
 
         for (int i = 0; i < playerAmount; i++)
         {
-            addPlayer("Player " + (i+1));
+            addPlayer("Player" + (i+1));
             System.out.println("Player " + (i+1) + " added");
         }
         running = true;
@@ -182,10 +157,20 @@ public class Game
             p.setPosition(board.getProperty(0));
         }
 
-        System.out.println("Total Players: " + players.size());
+        for(int i=0; i<players.size();++i)
+        {
+            System.out.println(players.get(i).getName());
+        }
+
         currentPlayer = players.get(0);
+        currentTurn = 0;
     }
 
+    /**
+     *
+     * @param playerAmount
+     * @return
+     */
     public boolean checkPlayerAmount(String playerAmount)
     {
         try
@@ -208,50 +193,11 @@ public class Game
     }
 
     /**
-     * Main loop of game
-     *
-     * Processes:
-     * If boolean "running" is true and game is ongoing
-     * If there's more than 1 player that isn't eliminated
-     * Each players turn
-     * Main game functions (buying property, paying rent, current positon, end turn)
-     * If there's a winner
      *
      */
-    /**
-    public void play()
-    {
-        while(running){
-            Property currPosition;
-            if(players.size() == 1) break;
-            for(Player p : players){
-                p.takeTurn();
-                currentPlayer = p;
-                currPosition = board.getProperty(p.getPosition().getIndex());
-                if(currPosition.getPrice()> 0 && currPosition.getOwner() == null){
-                    buyProperty(p, currPosition);
-
-                }else if(currPosition.getOwner()!=null && currPosition.getPrice() > 0){
-                    if(currPosition.getOwner().equals(p)){
-                        System.out.println("This player owns this property");
-                    }else{
-                        payRent(currPosition.getOwner(),p , currPosition);
-                        bankrupt(p);
-                    }
-                }
-                System.out.println("This player's turn is over");
-            }
-        }
-        for(Player p : players){
-            System.out.println(p.getName() + " has won the game!");
-        }
-
-    }
-     **/
-
     public void roll()
     {
-        currentPlayer.takeTurn();
+        players.get(currentTurn).takeTurn();
     }
 
     public int getCurrentRoll()
@@ -259,11 +205,16 @@ public class Game
         return currentPlayer.getRoll();
     }
 
+    public Property getLandedOnProperty()
+    {
+        return board.getProperty(currentPlayer.getPosition().getIndex());
+    }
+
+    /**
+     *
+     */
     public void endTurn()
     {
-        int currentTurn = players.indexOf(currentPlayer);
-        System.out.println("Current Turn Index: "+players.indexOf(currentPlayer));
-
         // The last player in the list ends their turn
         if(currentTurn == (players.size()-1))
         {
@@ -274,18 +225,27 @@ public class Game
             }
             // Turn returns to the first player
             currentPlayer = players.get(0);
+            currentTurn = 0;
             // Test
-            System.out.println("Current Player: "+currentPlayer.getName());
+            //System.out.println("Current Player: "+currentPlayer.getName());
         }
         // Switch the currentPlayer to the next player in the list
         else
         {
-            currentPlayer = players.get(currentTurn+1);
+            //currentPlayer = players.get(currentTurn+1);
             System.out.println("Current Player: "+currentPlayer.getName());
+            ++currentTurn;
         }
-        //currentPlayer = players.get(currentTurn+1);
+        currentPlayer = players.get(currentTurn);
+
+        System.out.println("\nCurrent Turn: " + currentTurn);
+        System.out.println("Current Player: " + players.get(currentTurn).getName());
     }
 
+    /**
+     *
+     * @return
+     */
     boolean hasPlayerWon()
     {
         return playerWon;

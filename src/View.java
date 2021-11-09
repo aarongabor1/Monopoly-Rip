@@ -209,12 +209,13 @@ public class View
     {
         rentButton.setEnabled(true);
         rentButton.setVisible(true);
-        endTurnButton.setEnabled(false);
+        endTurnButton.setVisible(false);
     }
 
     public void setEndTurn()
     {
         buyButton.setVisible(false);
         rentButton.setVisible(false);
+        endTurnButton.setVisible(true);
     }
 }

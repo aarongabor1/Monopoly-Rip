@@ -8,6 +8,7 @@ public class Player {
     private Die die2;
     private Board board;
     private Square position;
+    private Property landedOnProperty;
 
     /**
      * Constructor for the Player class
@@ -102,6 +103,7 @@ public class Player {
      * Owned properties
      */
     private void printPlayerInfo(){
+        System.out.println("\n");
         System.out.println("Player: " + name + "'s turn");
         System.out.println("This player is at square " + position.getIndex());
         System.out.println("This player has a balance of: " + balance);
@@ -144,7 +146,6 @@ public class Player {
         if(checkPassedGo(roll)) balance += 200;
         int destinationIndex = (position.getIndex() + roll) % 40;
         Property destination = board.getProperty(destinationIndex);
-        System.out.println("They landed on " + destination.toString() + "(index: " + destinationIndex + ")");
         setPosition(destination);
     }
 
