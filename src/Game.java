@@ -10,6 +10,7 @@ public class Game
 
     private Player currentPlayer;
     private int currentTurn;
+    private int startingPlayerAmount;
 
     /**
      *  Constructor for Game class
@@ -44,12 +45,34 @@ public class Game
      *
      * @param p
      */
-    private void bankrupt(Player p){
+    /**
+    public void bankrupt(Player p){
         if(p.getBalance()<0){
             System.out.println(p.getName() + " has gone bankrupt. They are removed from the game");
             players.remove(p);
         }
     }
+    **/
+    private void bankrupt(Player p, Player p2){
+        if(p.getBalance() == 0){
+            System.out.println(p.getName() + " has gone bankrupt. They are removed from the game");
+            for(int i = 0; i < p.getProperties().size()-1; i++)
+            {
+                p2.takeProperty(p.getProperties().get(i));
+                p.getProperties().remove(i);
+            }
+            players.remove(p);
+        }
+    }
+
+    public void payRent(){
+        int rent = getLandedOnProperty().getRent();
+        int rentPayed = players.get(currentTurn).payRent(rent);
+        getLandedOnProperty().getOwner().acceptRent(rentPayed);
+        if(rent != rentPayed)
+            bankrupt(players.get(currentTurn), getLandedOnProperty().getOwner());
+    }
+
 
     /**
      * This method processes the buy property function of the game using a Scanner to get user input
@@ -107,12 +130,12 @@ public class Game
      */
     public boolean isRentOwed()
     {
-        if(players.get(currentTurn)!=getLandedOnProperty().getOwner())
+        if(players.get(currentTurn)!=getLandedOnProperty().getOwner() && getLandedOnProperty().getOwner()!=null)
         {
-            System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
+            //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
             return true;
         }
-        System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
+        //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
         return false;
     }
 
@@ -130,11 +153,14 @@ public class Game
      * @param
      * @param
      */
+    /**
     public void payRent(){
         int rent = getLandedOnProperty().getRent();
         players.get(currentTurn).payRent(rent);
         getLandedOnProperty().getOwner().acceptRent(rent);
+        bankrupt(players.get(currentTurn));
     }
+     **/
 
     /**
      *  Requests the number of players from the user using a scanner
@@ -162,6 +188,7 @@ public class Game
             System.out.println(players.get(i).getName());
         }
 
+        startingPlayerAmount = playerAmount;
         currentPlayer = players.get(0);
         currentTurn = 0;
     }
@@ -218,6 +245,10 @@ public class Game
         // The last player in the list ends their turn
         if(currentTurn == (players.size()-1))
         {
+            if(players.size()!=startingPlayerAmount)
+            {
+                startingPlayerAmount=players.size();
+            }
             // Only one player left
             if(players.size()==1)
             {
@@ -229,12 +260,16 @@ public class Game
             // Test
             //System.out.println("Current Player: "+currentPlayer.getName());
         }
+        else if(players.size()!=startingPlayerAmount)
+        {
+            startingPlayerAmount=players.size();
+        }
         // Switch the currentPlayer to the next player in the list
         else
         {
-            //currentPlayer = players.get(currentTurn+1);
+            //currentPlayer = players.get(currentTurn);
+            currentTurn++;
             System.out.println("Current Player: "+currentPlayer.getName());
-            ++currentTurn;
         }
         currentPlayer = players.get(currentTurn);
 
