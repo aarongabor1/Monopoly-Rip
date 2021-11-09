@@ -273,6 +273,15 @@ public class View
     public void setRentable()
     {
         rentButton.setEnabled(true);
+        endTurnButton.setEnabled(false);
+    }
+
+    /**
+     * This method will enable the End Turn button
+     */
+    public void setEndTurn()
+    {
+        endTurnButton.setEnabled(true);
     }
 
     public static void main(String[] args)
