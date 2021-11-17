@@ -56,6 +56,8 @@ public class Game
             }
             players.remove(p);
         }
+        startingPlayerAmount--;
+        if(startingPlayerAmount == 1){playerWon = true;}
     }
 
     /**
@@ -96,7 +98,7 @@ public class Game
         players.get(currentTurn).buyProperty(p.getPrice(),board.getProperty(p.getIndex()));
 
         // Update Board
-        board.getProperty(currentPlayer.getPosition().getIndex()).buyProperty(players.get(currentTurn));
+        board.getProperty(currentPlayer.getPosition().getIndex()).setOwner(players.get(currentTurn));
     }
 
     /**
@@ -150,11 +152,11 @@ public class Game
      */
     public void setup(int playerAmount, Controller controller){
 
-        for (int i = 0; i < playerAmount; i++)
+        /*for (int i = 0; i < playerAmount; i++)
         {
             addPlayer("Player " + (i+1));
             System.out.println("Player " + (i+1) + " added");
-        }
+        }*/
 
         //AI test
         players.add(new AI("AI1", board, controller));

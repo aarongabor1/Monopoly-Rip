@@ -19,7 +19,7 @@ public class Player {
     public Player(String name, Board board){
         this.name = name;
         this.board = board;
-        balance = 2000;
+        balance = 500;
         die1 = new Die();
         die2 = new Die();
         properties = new ArrayList<>();
@@ -104,8 +104,7 @@ public class Player {
      */
     public void takeProperty(Property property)
     {
-
-        property.buyProperty(this);
+        property.setOwner(this);
         this.properties.add(property);
     }
 

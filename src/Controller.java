@@ -244,6 +244,6 @@ public class Controller implements ActionListener
         }
 
         // Update the View for the next Player
-        updatePlayer(m.getCurrentPlayer());
+        else {updatePlayer(m.getCurrentPlayer());}
     }
 }

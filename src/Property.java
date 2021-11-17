@@ -63,7 +63,7 @@ public class Property implements Square {
      *
      * @param p
      */
-    public void buyProperty(Player p)
+    public void setOwner(Player p)
     {
         owner = null;
         owner = p;
