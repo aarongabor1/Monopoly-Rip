@@ -7,7 +7,7 @@ public class PropertyTest {
     @Before
     public void beforeEachTestMethod() {
         System.out.println("Invoked before each test method");
-        p = new Property("Test",1,50);
+        p = new Property("Test",1,50, 1);
     }
 
     @After

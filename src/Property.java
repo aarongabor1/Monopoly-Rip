@@ -4,18 +4,21 @@ public class Property implements Square {
     private int price;
     private Player owner;
     private boolean owned;
+    private boolean isFullSet;
+    private final int set;
 
     /**
      * Constructor for Property class that creates a Property object
-     *
-     * @param name
+     *  @param name
      * @param index
      * @param price
+     * @param set
      */
-    public Property(String name, int index, int price){
+    public Property(String name, int index, int price, int set){
         this.name = name;
         this.index = index;
         this.price = price;
+        this.set = set;
     }
 
     /**
@@ -51,7 +54,8 @@ public class Property implements Square {
      * @return int
      */
     public int getRent(){
-        return (int) (0.1 * price);
+        if(isFullSet) return (int) (0.2 * price);
+        else return (int) (0.1 * price);
     }
 
     /**
