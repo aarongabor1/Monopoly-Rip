@@ -40,38 +40,15 @@ public class Controller implements ActionListener
         //Process Command
         if(o.equals("Roll"))
         {
-            // Tell Model that user selected Roll command
-            m.roll();
-
-            // Update view with roll results
-            rollUpdate();
-
-            // Update user options for the property they landed on
-            propertyOptions();
-
+           roll();
         }
         else if(o.equals("Buy"))
         {
-            // Test
-            v.updateOutput("Buy Selected");
-
-            // Update Model and View
-            buyUpdate();
+            buy();
         }
         else if(o.equals("Pay Rent"))
         {
-            // Test
-            v.updateOutput("Pay Rent Selected");
-            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + m.getLandedOnProperty().getOwner().getName() + ": $" + m.getLandedOnProperty().getRent());
-
-            // Update Model
-            m.payRent();
-
-
-            // Update view
-            v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
-            v.setEndTurn();
-
+            payRent();
         }
         else if(o.equals("Submit"))
         {
@@ -97,11 +74,48 @@ public class Controller implements ActionListener
         }
         else
         {
-            v.updateOutput("End Turn Selected");
-            m.endTurn();
-            endTurnUpdate();
+            endTurn();
         }
 
+    }
+
+    public void roll(){
+        // Tell Model that user selected Roll command
+        m.roll();
+
+        // Update view with roll results
+        rollUpdate();
+
+        // Update user options for the property they landed on
+        propertyOptions();
+    }
+
+    public void buy(){
+        // Test
+        v.updateOutput("Buy Selected");
+
+        // Update Model and View
+        buyUpdate();
+    }
+
+    public void payRent(){
+        // Test
+        v.updateOutput("Pay Rent Selected");
+        v.updateOutput(m.getCurrentPlayer().getName() + " paid " + m.getLandedOnProperty().getOwner().getName() + ": $" + m.getLandedOnProperty().getRent());
+
+        // Update Model
+        m.payRent();
+
+
+        // Update view
+        v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
+        v.setEndTurn();
+    }
+
+    public void endTurn(){
+        v.updateOutput("End Turn Selected");
+        m.endTurn();
+        endTurnUpdate();
     }
 
     /**
@@ -110,7 +124,7 @@ public class Controller implements ActionListener
     private void startGame()
     {
         // Setup the Model
-        m.setup(Integer.parseInt(v.getPlayerAmount()));
+        m.setup(Integer.parseInt(v.getPlayerAmount()),this);
 
         // Setup the View
         v.startGame();
@@ -133,8 +147,13 @@ public class Controller implements ActionListener
         v.updateBalance(String.valueOf(cp.getBalance()));
         v.updateProperties(cp.getProperties());
 
-        // Update View Buttons
-        v.setRoll();
+        if(cp instanceof AI){
+            ((AI) cp).AITurn(m);
+        }
+        else {
+            // Update View Buttons
+            v.setRoll();
+        }
     }
 
     /**
@@ -151,7 +170,7 @@ public class Controller implements ActionListener
         v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
 
         // Players new position
-        String property = m.getCurrentPlayer().getPosition().getName();
+        //String property = m.getCurrentPlayer().getPosition().getName();
 
         if(m.getCurrentPlayer().getPosition().getName().equals("Empty"))
         {

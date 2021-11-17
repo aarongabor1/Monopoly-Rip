@@ -148,13 +148,21 @@ public class Game
      *  Once all players are created and added, boolean running is set to true and every players position is set to 0
      *
      */
-    public void setup(int playerAmount){
+    public void setup(int playerAmount, Controller controller){
 
         for (int i = 0; i < playerAmount; i++)
         {
-            addPlayer("Player" + (i+1));
+            addPlayer("Player " + (i+1));
             System.out.println("Player " + (i+1) + " added");
         }
+
+        //AI test
+        players.add(new AI("AI1", board, controller));
+        players.add(new AI("AI2", board, controller));
+        players.add(new AI("AI3", board, controller));
+        players.add(new AI("AI4", board, controller));
+        playerAmount += 4;
+
         running = true;
 
         for(Player p : players){
