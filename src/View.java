@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * @author Aaron Gabor
+ * @version 3.0.0
+ */
 public class View
 {
     //Set fonts for all text in the GUI
@@ -30,6 +34,17 @@ public class View
     private JPanel playerSelectionPanel;
     private JButton submit;
     private JLabel selectionText;
+    private JButton houseHotelButton;
+
+    private JFrame houseFrame;
+    private JButton buyHouseButton;
+    private JButton buyHotelButton;
+    private JButton closeButton;
+    private JComboBox<String> dropdown;
+    private JPanel dropdownPanel;
+    private JPanel houseButtonPanel;
+    private JTextField outputHouse;
+    private JTextField balance2;
 
     /**
      * A constructor for the View class that will create a GUI and will configure the settings
@@ -124,7 +139,7 @@ public class View
         bottomPanel.add(rollPanel);
 
         //Creates a button panel for the turn buttons
-        buttonPanel = new JPanel(new GridLayout(1, 3));
+        buttonPanel = new JPanel(new GridLayout(2, 2));
         buttonPanel.setBackground(Color.white);
 
         //Creates the buy button and adds it to the button panel
@@ -141,6 +156,12 @@ public class View
         rentButton.setBackground(Color.ORANGE);
         buttonPanel.add(rentButton);
 
+        //Creates the house/hotel button and adds it to the button panel
+        houseHotelButton = new JButton("House/Hotel");
+        houseHotelButton.setEnabled(false);
+        houseHotelButton.setFont(font4);
+        buttonPanel.add(houseHotelButton);
+
         //Creates the end turn button and adds it to the button panel
         endTurnButton = new JButton("End Turn");
         endTurnButton.setEnabled(true);
@@ -150,6 +171,52 @@ public class View
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
         frame.setVisible(true);
+
+        //House Frame
+        houseFrame = new JFrame("Buy Houses and Hotels");
+        houseFrame.setLayout(new GridLayout(3,1));
+        houseFrame.setSize(1000,650);
+        houseFrame.setVisible(false);
+
+        //Creates output for house buying
+        JPanel panel = new JPanel(new GridLayout(1,2));
+        panel.setVisible(true);
+        houseFrame.add(panel);
+        outputHouse = new JTextField();
+        outputHouse.setVisible(true);
+        outputHouse.setEditable(false);
+        outputHouse.setFont(font2);
+        outputHouse.setBackground(Color.white);
+        outputHouse.setHorizontalAlignment(JTextField.CENTER);
+        balance2 = new JTextField();
+        balance2.setVisible(true);
+        balance2.setEditable(false);
+        balance2.setFont(font1);
+        balance2.setBackground(Color.white);
+        balance2.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(balance2);
+        panel.add(outputHouse);
+
+        //Creates panel for dropdown bar
+        dropdownPanel = new JPanel();
+        dropdownPanel.setVisible(true);
+        houseFrame.add(dropdownPanel);
+
+        //Creates button panel
+        houseButtonPanel = new JPanel(new GridLayout(1,3));
+        houseButtonPanel.setVisible(true);
+        houseFrame.add(houseButtonPanel);
+
+        //Creates buttons for buying houses and hotels
+        buyHouseButton = new JButton("Buy House");
+        buyHouseButton.setFont(font5);
+        houseButtonPanel.add(buyHouseButton);
+        buyHotelButton = new JButton("Buy Hotel");
+        buyHotelButton.setFont(font5);
+        houseButtonPanel.add(buyHotelButton);
+        closeButton = new JButton("Close");
+        closeButton.setFont(font5);
+        houseButtonPanel.add(closeButton);
     }
 
     /**
@@ -173,6 +240,8 @@ public class View
     {
         balance.setText(null);
         balance.setText("$" + str + "\r\n");
+        balance2.setText(null);
+        balance2.setText("$" + str + "\r\n");
     }
 
     /**
@@ -224,6 +293,7 @@ public class View
         playerSelection.addActionListener(o);
         submit.addActionListener(o);
         rentButton.addActionListener(o);
+        houseHotelButton.addActionListener(o);
     }
 
     /**
@@ -247,6 +317,7 @@ public class View
         buttonPanel.setVisible(false);
         buyButton.setEnabled(false);
         rentButton.setEnabled(false);
+        houseHotelButton.setEnabled(false);
         rollPanel.setVisible(true);
     }
 
@@ -284,6 +355,54 @@ public class View
         endTurnButton.setEnabled(true);
     }
 
+    /**
+     * This method will enable the House/Hotel button
+     */
+    public void setHouseHotelBuyable()
+    {
+        houseHotelButton.setEnabled(true);
+    }
+
+    public void openHouseBuy()
+    {
+        houseFrame.setVisible(true);
+    }
+
+    public void updateOutputHouse(String str)
+    {
+        outputHouse.setText(str);
+    }
+
+    public void setUpDropdown(ArrayList<Property> arrayList)
+    {
+        String[] names = new String[arrayList.size()-1];
+        for(int i = 0; i < arrayList.size(); i++)
+        {
+            names[i] = arrayList.get(i).getName();
+        }
+        dropdown = new JComboBox<String>(names);
+        dropdown.setVisible(true);
+        dropdown.setFont(font2);
+        dropdownPanel.add(dropdown);
+    }
+
+    public void setHouseActionListener(ActionListener al)
+    {
+        buyHouseButton.addActionListener(al);
+        buyHotelButton.addActionListener(al);
+        closeButton.addActionListener(al);
+    }
+
+    public String getSelection()
+    {
+        return dropdown.getName();
+    }
+
+    public void closeHouseFrame()
+    {
+        houseFrame.setVisible(false);
+    }
+
     public static void main(String[] args)
     {
         View n = new View();
@@ -309,6 +428,15 @@ public class View
         n.setRoll();
         n.setButtons();
         n.setBuyable();
+        n.setHouseHotelBuyable();
+
+        String[] str = {"C1", "C2", "C3", "C4"};
+        n.dropdown = new JComboBox<String>(str);
+        n.dropdown.setVisible(true);
+        n.dropdown.setFont(font2);
+        n.dropdownPanel.add(n.dropdown);
+        n.openHouseBuy();
+
 
     }
 }
