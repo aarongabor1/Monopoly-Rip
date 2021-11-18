@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.0.0
+ * @version 3.0.1
  */
 public class View
 {
@@ -395,7 +395,7 @@ public class View
 
     public String getSelection()
     {
-        return dropdown.getName();
+        return dropdown.getSelectedItem().toString();
     }
 
     public void closeHouseFrame()
@@ -436,6 +436,9 @@ public class View
         n.dropdown.setFont(font2);
         n.dropdownPanel.add(n.dropdown);
         n.openHouseBuy();
+        while(true) {
+            System.out.println(n.getSelection());
+        }
 
 
     }
