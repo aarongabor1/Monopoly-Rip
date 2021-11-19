@@ -59,9 +59,11 @@ public class Property implements Square {
      *
      * @return int
      */
-    public int getRent(){
-        if(isFullSet) return (int) (0.2 * price);
-        else return (int) (0.1 * price);
+    public int getRent(int numOwnedInSet, boolean hotel){
+        int tempPrice = price;
+        if(isFullSet) tempPrice *=2;
+        if(hotel) return (int) (0.5 * tempPrice);
+        else return (int) ((0.1 * tempPrice) + (numOfhouses * tempPrice * 0.5));
     }
 
     /**
@@ -160,6 +162,10 @@ public class Property implements Square {
      */
     public int getHousePrice(){
         return housePrice;
+    }
+
+    public void setFullSetTrue(){
+        isFullSet = true;
     }
 
 }

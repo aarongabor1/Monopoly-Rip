@@ -23,10 +23,10 @@ public class Board {
         squares.add(new Property("Carleton U", 3, 60,1,2,50));
         squares.add(new Property("Empty", 4, -1,-1,0,-1));
         squares.add(new Property("Empty", 5, -1,-1,0,-1));
-        squares.add(new Property("Chevrolet", 6, 100,2,0,350));
+        squares.add(new Property("Chevrolet", 6, 100,2,3,50));
         squares.add(new Property("Empty", 7, -1,-1,0,3-1));
-        squares.add(new Property("Honda", 8, 100,2,0,350));
-        squares.add(new Property("Toyota", 9, 120,2,0,350));
+        squares.add(new Property("Honda", 8, 100,2,3,50));
+        squares.add(new Property("Toyota", 9, 120,2,3, 50));
         squares.add(new Jail(10));
         squares.add(new Property("Home Depot", 11, 140,3,3,100));
         squares.add(new Property("Empty", 12, -1,-1,0,-1));

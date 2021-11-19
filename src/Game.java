@@ -62,13 +62,22 @@ public class Game
      * Pay rent from one user to another
      */
     public void payRent(){
-        int rent = ((Property) getLandedOnProperty()).getRent();
+        int numInSet = getNumInSetOwned(((Property) currentPlayer.getPosition()).getOwner(), (Property) currentPlayer.getPosition());
+        boolean hotel = ((Property) currentPlayer.getPosition()).hasHotel();
+        int rent = ((Property) getLandedOnProperty()).getRent(numInSet, hotel);
         int rentPayed = players.get(currentTurn).payRent(rent);
         ((Property)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
         if(rent != rentPayed)
             bankrupt(players.get(currentTurn), ((Property)getLandedOnProperty()).getOwner());
     }
 
+    public int getNumInSetOwned(Player play, Property prop){
+        int num = 0;
+        for(Property p : play.getProperties()){
+            if(p.getSet()==prop.getSet()) num++;
+        }
+        return num;
+    }
 
     /**
      * This method processes the buy property function of the game using a Scanner to get user input
@@ -92,12 +101,19 @@ public class Game
         // Current Position
         Property p = (Property)getLandedOnProperty();
         Square s = p;
+        int set = p.getSet();
 
         // Update Player
         players.get(currentTurn).buyProperty(p.getPrice(), (Property) board.getProperty(s.getIndex()));
 
         // Update Board
         ((Property) board.getProperty(currentPlayer.getPosition().getIndex())).buyProperty(players.get(currentTurn));
+
+        if(fullSet(currentPlayer,p)){
+            for(Property prop : currentPlayer.getProperties()){
+                if(prop.getSet()==set) prop.setFullSetTrue();
+            }
+        }
     }
 
     /**
@@ -121,7 +137,7 @@ public class Game
         if(isSquareProperty()) {
             if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
                 if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0) {
-                    return true;
+                    if(((Property)currentPlayer.getPosition()).getHouses() < 4) return true;
                 }
             }
         }
@@ -131,7 +147,8 @@ public class Game
     public boolean canBuyHotel(){
         if(isSquareProperty()) {
             if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
-                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0 && (fullSet(currentPlayer, (Property) currentPlayer.getPosition()))) {
+                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0)
+                    if(((Property)currentPlayer.getPosition()).getHouses() == 4) {
                     return true;
                 }
             }

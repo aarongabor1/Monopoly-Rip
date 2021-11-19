@@ -32,7 +32,7 @@ public class PropertyTest {
 
     @Test
     public void getRent() {
-        assertEquals(5,p.getRent());
+        assertEquals(5,p.getRent(0,false));
     }
 
     @Test

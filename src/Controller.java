@@ -62,7 +62,9 @@ public class Controller implements ActionListener
         {
             // Test
             v.updateOutput("Pay Rent Selected");
-            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Property)m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Property)m.getLandedOnProperty()).getRent());
+            int numInSet = m.getNumInSetOwned(((Property)m.getCurrentPlayer().getPosition()).getOwner(), (Property) m.getCurrentPlayer().getPosition());
+            boolean hotel = ((Property) m.getCurrentPlayer().getPosition()).hasHotel();
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Property)m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Property)m.getLandedOnProperty()).getRent(numInSet,hotel));
 
             // Update Model
             m.payRent();
@@ -153,7 +155,7 @@ public class Controller implements ActionListener
         // Players new position
         String property = m.getCurrentPlayer().getPosition().getName();
 
-        if(m.getCurrentPlayer().getPosition().getName().equals("Empty"))
+        if(m.isPropertyEmpty())
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on an empty space");
         }
