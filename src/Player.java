@@ -62,7 +62,7 @@ public class Player {
      *
      * @param position
      */
-    public void setPosition(Property position) {
+    public void setPosition(Square position) {
         this.position = position;
     }
 
@@ -167,7 +167,7 @@ public class Player {
         System.out.println("They rolled a " + roll);
         if(checkPassedGo(roll)) balance += 200;
         int destinationIndex = (position.getIndex() + roll) % 40;
-        Property destination = board.getProperty(destinationIndex);
+        Square destination = board.getProperty(destinationIndex);
         setPosition(destination);
     }
 

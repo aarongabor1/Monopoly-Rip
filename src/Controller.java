@@ -62,7 +62,7 @@ public class Controller implements ActionListener
         {
             // Test
             v.updateOutput("Pay Rent Selected");
-            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + m.getLandedOnProperty().getOwner().getName() + ": $" + m.getLandedOnProperty().getRent());
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Property)m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Property)m.getLandedOnProperty()).getRent());
 
             // Update Model
             m.payRent();

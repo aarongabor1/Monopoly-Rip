@@ -62,11 +62,11 @@ public class Game
      * Pay rent from one user to another
      */
     public void payRent(){
-        int rent = getLandedOnProperty().getRent();
+        int rent = ((Property) getLandedOnProperty()).getRent();
         int rentPayed = players.get(currentTurn).payRent(rent);
-        getLandedOnProperty().getOwner().acceptRent(rentPayed);
+        ((Property)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
         if(rent != rentPayed)
-            bankrupt(players.get(currentTurn), getLandedOnProperty().getOwner());
+            bankrupt(players.get(currentTurn), ((Property)getLandedOnProperty()).getOwner());
     }
 
 
@@ -90,13 +90,14 @@ public class Game
      */
     void buyProperty(){
         // Current Position
-        Property p = getLandedOnProperty();
+        Property p = (Property)getLandedOnProperty();
+        Square s = p;
 
         // Update Player
-        players.get(currentTurn).buyProperty(p.getPrice(),board.getProperty(p.getIndex()));
+        players.get(currentTurn).buyProperty(p.getPrice(), (Property) board.getProperty(s.getIndex()));
 
         // Update Board
-        board.getProperty(currentPlayer.getPosition().getIndex()).buyProperty(players.get(currentTurn));
+        ((Property) board.getProperty(currentPlayer.getPosition().getIndex())).buyProperty(players.get(currentTurn));
     }
 
     /**
@@ -106,7 +107,7 @@ public class Game
      */
     public boolean canBuy()
     {
-        if(getLandedOnProperty().getOwner()==null)
+        if(((Property)getLandedOnProperty()).getOwner()==null)
         {
             if(players.get(currentTurn).getBalance()-getLandedOnProperty().getPrice() >= 0)
             {
@@ -131,7 +132,7 @@ public class Game
      */
     public boolean isRentOwed()
     {
-        if(players.get(currentTurn)!=getLandedOnProperty().getOwner() && getLandedOnProperty().getOwner()!=null)
+        if(players.get(currentTurn)!= ((Property)getLandedOnProperty()).getOwner() && ((Property)getLandedOnProperty()).getOwner()!=null)
         {
             //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
             return true;
@@ -215,7 +216,7 @@ public class Game
      * returns the property the current player landed on
      * @return
      */
-    public Property getLandedOnProperty()
+    public Square getLandedOnProperty()
     {
         return board.getProperty(currentPlayer.getPosition().getIndex());
     }

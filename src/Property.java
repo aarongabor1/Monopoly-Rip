@@ -6,6 +6,8 @@ public class Property implements Square {
     private boolean owned;
     private boolean isFullSet;
     private final int set;
+    private boolean house;
+    private boolean hotel;
 
     /**
      * Constructor for Property class that creates a Property object
@@ -91,5 +93,41 @@ public class Property implements Square {
                 ", index=" + index +
                 ", price=" + price +
                 '}';
+    }
+
+    /**
+     * Getter for house
+     *
+     * @return boolean
+     */
+    public boolean hasHouse(){
+        return house;
+    }
+
+    /**
+     * Setter for house
+     *
+     * @param houseBuilt
+     */
+    public void setHouse(boolean houseBuilt){
+        house = houseBuilt;
+    }
+
+    /**
+     * Getter for hotel
+     *
+     * @return boolean
+     */
+    public boolean hasHotel(){
+        return hotel;
+    }
+
+    /**
+     * Setter for hotel
+     *
+     * @param hotelBuilt
+     */
+    public void setHotel(boolean hotelBuilt){
+        hotel = hotelBuilt;
     }
 }
