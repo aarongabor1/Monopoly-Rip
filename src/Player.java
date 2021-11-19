@@ -132,7 +132,7 @@ public class Player {
         System.out.println("This player owns the following properties: ");
         if(properties.size()>0) {
             for (Property p : properties) {
-                System.out.print("  " + p.getName() + " ");
+                System.out.print("  " + p.getName() + "(Set:" + p.getSet() + " ");
             }
             System.out.println("");
         }else{
