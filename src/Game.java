@@ -107,13 +107,44 @@ public class Game
      */
     public boolean canBuy()
     {
-        if(((Property)getLandedOnProperty()).getOwner()==null)
-        {
-            if(players.get(currentTurn).getBalance()-getLandedOnProperty().getPrice() >= 0)
-            {
-                return !isPropertyEmpty();
+        if(isSquareProperty()){
+            if (((Property) getLandedOnProperty()).getOwner() == null) {
+                if (players.get(currentTurn).getBalance() - getLandedOnProperty().getPrice() >= 0) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
+
+    public boolean canBuyHouse(){
+        if(isSquareProperty()) {
+            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
+                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean canBuyHotel(){
+        if(isSquareProperty()) {
+            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
+                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0 && (fullSet(currentPlayer, (Property) currentPlayer.getPosition()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean fullSet(Player play, Property prop){
+        int count =0;
+        for(Property p : play.getProperties()){
+            if(p.getSet()==prop.getSet()) count++;
+        }
+        if(count == prop.getNumInSet()) return true;
         return false;
     }
 
@@ -123,7 +154,11 @@ public class Game
      */
     public boolean isPropertyEmpty()
     {
-        return players.get(currentTurn).getPosition().getName().equals("Empty");
+        return players.get(currentTurn).getPosition().getPrice() < 0;
+    }
+    public boolean isSquareProperty(){
+        if(currentPlayer.getPosition() instanceof Property ) return true;
+        return false;
     }
 
     /**

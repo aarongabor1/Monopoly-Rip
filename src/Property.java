@@ -6,8 +6,10 @@ public class Property implements Square {
     private boolean owned;
     private boolean isFullSet;
     private final int set;
-    private boolean house;
+    private int numOfhouses;
     private boolean hotel;
+    private int housePrice;
+    private int numInSet;
 
     /**
      * Constructor for Property class that creates a Property object
@@ -16,11 +18,13 @@ public class Property implements Square {
      * @param price
      * @param set
      */
-    public Property(String name, int index, int price, int set){
+    public Property(String name, int index, int price, int set, int numInSet, int housePrice){
         this.name = name;
         this.index = index;
         this.price = price;
         this.set = set;
+        this.numInSet = numInSet;
+        this.housePrice = housePrice;
     }
 
     /**
@@ -100,8 +104,8 @@ public class Property implements Square {
      *
      * @return boolean
      */
-    public boolean hasHouse(){
-        return house;
+    public int getHouses(){
+        return numOfhouses;
     }
 
     /**
@@ -110,7 +114,7 @@ public class Property implements Square {
      * @param houseBuilt
      */
     public void setHouse(boolean houseBuilt){
-        house = houseBuilt;
+        numOfhouses++;
     }
 
     /**
@@ -130,4 +134,32 @@ public class Property implements Square {
     public void setHotel(boolean hotelBuilt){
         hotel = hotelBuilt;
     }
+
+    /**
+     * Getter for set
+     *
+     * @return int
+     */
+    public int getSet(){
+        return set;
+    }
+
+    /**
+     * Getter for numInSet
+     *
+     * @return int
+     */
+    public int getNumInSet(){
+        return numInSet;
+    }
+
+    /**
+     * Getter for housePrice
+     *
+     * @return int
+     */
+    public int getHousePrice(){
+        return housePrice;
+    }
+
 }
