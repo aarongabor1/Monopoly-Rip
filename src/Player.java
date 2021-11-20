@@ -9,6 +9,8 @@ public class Player {
     private Board board;
     private Square position;
     private Property landedOnProperty;
+    private boolean inJail = false;
+    private boolean roll1Double = false, roll2Double = false, roll3Double = false;
 
     /**
      * Constructor for the Player class
@@ -161,14 +163,29 @@ public class Player {
      */
     private void rollDice(){
         int roll;
-        die1.roll();
-        die2.roll();
-        roll = die1.getValue() + die2.getValue();
-        System.out.println("They rolled a " + roll);
-        if(checkPassedGo(roll)) balance += 200;
-        int destinationIndex = (position.getIndex() + roll) % 40;
-        Square destination = board.getProperty(destinationIndex);
-        setPosition(destination);
+        if(!inJail) {
+            die1.roll();
+            die2.roll();
+            roll3Double = roll2Double;
+            roll2Double = roll1Double;
+            roll1Double = (die1.getValue() == die2.getValue());
+            roll = die1.getValue() + die2.getValue();
+            System.out.println("They rolled a " + die1.getValue() + "and a " + die2.getValue());
+            if (roll1Double && roll2Double && roll3Double) {
+                inJail = true;
+                Square jail = board.getProperty(10);
+                setPosition(jail);
+            } else {
+                if (checkPassedGo(roll)) balance += 200;
+                int destinationIndex = (position.getIndex() + roll) % 40;
+                Square destination = board.getProperty(destinationIndex);
+                setPosition(destination);
+            }
+        }else{
+            die1.roll();
+            die2.roll();
+            if(die1.getValue() == die2.getValue()) inJail = false;
+        }
     }
 
     /**
