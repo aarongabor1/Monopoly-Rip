@@ -180,6 +180,11 @@ public class Player {
                 int destinationIndex = (position.getIndex() + roll) % 40;
                 Square destination = board.getProperty(destinationIndex);
                 setPosition(destination);
+                if(position.getIndex() == 30){
+                    inJail = true;
+                    Square jail = board.getProperty(10);
+                    setPosition(jail);
+                }
             }
         }else{
             die1.roll();
