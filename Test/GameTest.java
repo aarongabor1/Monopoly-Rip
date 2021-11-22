@@ -7,8 +7,7 @@ public class GameTest {
     Game game;
 
     @Test
-    public void testAddPlayer()
-    {
+    public void testAddPlayer() {
         game = new Game();
 
         game.addPlayer("Player1");

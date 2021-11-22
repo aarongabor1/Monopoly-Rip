@@ -3,18 +3,28 @@ public class Property implements Square {
     private int index;
     private int price;
     private Player owner;
+    private boolean owned;
+    private boolean isFullSet;
+    private final int set;
+    private int numOfhouses;
+    private boolean hotel;
+    private int housePrice;
+    private int numInSet;
 
     /**
      * Constructor for Property class that creates a Property object
-     *
-     * @param name
+     *  @param name
      * @param index
      * @param price
+     * @param set
      */
-    public Property(String name, int index, int price){
+    public Property(String name, int index, int price, int set, int numInSet, int housePrice){
         this.name = name;
         this.index = index;
         this.price = price;
+        this.set = set;
+        this.numInSet = numInSet;
+        this.housePrice = housePrice;
     }
 
     /**
@@ -45,12 +55,15 @@ public class Property implements Square {
     }
 
     /**
-     * Calculates and returns the rent of the Property based on the price of the Property multiplied by 0.1
+     * Calculates and returns the rent of the Property
      *
      * @return int
      */
-    public int getRent(){
-        return (int) (0.1 * price);
+    public int getRent(int numOwnedInSet, boolean hotel){
+        int tempPrice = price;
+        if(isFullSet) tempPrice *=2;
+        if(hotel) return (int) (0.5 * tempPrice);
+        else return (int) ((0.1 * tempPrice) + (numOfhouses * tempPrice * 0.5));
     }
 
     /**
@@ -58,7 +71,9 @@ public class Property implements Square {
      *
      * @param p
      */
-    public void buyProperty(Player p){
+    public void setOwner(Player p)
+    {
+        owner = null;
         owner = p;
     }
 
@@ -85,4 +100,72 @@ public class Property implements Square {
                 ", price=" + price +
                 '}';
     }
+
+    /**
+     * Getter for house
+     *
+     * @return boolean
+     */
+    public int getHouses(){
+        return numOfhouses;
+    }
+
+    /**
+     * Setter for house
+     *
+     * @param houseBuilt
+     */
+    public void setHouse(boolean houseBuilt){
+        numOfhouses++;
+    }
+
+    /**
+     * Getter for hotel
+     *
+     * @return boolean
+     */
+    public boolean hasHotel(){
+        return hotel;
+    }
+
+    /**
+     * Setter for hotel
+     *
+     * @param hotelBuilt
+     */
+    public void setHotel(boolean hotelBuilt){
+        hotel = hotelBuilt;
+    }
+
+    /**
+     * Getter for set
+     *
+     * @return int
+     */
+    public int getSet(){
+        return set;
+    }
+
+    /**
+     * Getter for numInSet
+     *
+     * @return int
+     */
+    public int getNumInSet(){
+        return numInSet;
+    }
+
+    /**
+     * Getter for housePrice
+     *
+     * @return int
+     */
+    public int getHousePrice(){
+        return housePrice;
+    }
+
+    public void setFullSetTrue(){
+        isFullSet = true;
+    }
+
 }

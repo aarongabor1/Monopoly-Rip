@@ -21,6 +21,7 @@ public class View
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
+
     private JTextField balance;
     private JTextArea properties;
     private JPanel rollPanel;
@@ -171,7 +172,7 @@ public class View
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
         frame.setVisible(true);
-
+      
         //House Frame
         houseFrame = new JFrame("Buy Houses and Hotels");
         houseFrame.setLayout(new GridLayout(3,1));
@@ -260,9 +261,10 @@ public class View
     public void updateProperties(ArrayList<Property> arrayList)
     {
         properties.setText(null);
-        for (Property p : arrayList)
+        for(Property p: arrayList)
         {
-            properties.append(p.getName());
+            properties.append(p.getName()+ " Set: " + p.getSet() + "\n");
+
         }
     }
 
@@ -294,6 +296,18 @@ public class View
         submit.addActionListener(o);
         rentButton.addActionListener(o);
         houseHotelButton.addActionListener(o);
+    }
+
+
+    /**
+     * This is a method that will update the player name that is being displayed.
+     */
+    public int getPlayerNumber()
+    {
+        String pn = playerSelection.getText();
+        pn.substring(23);
+        pn.replaceAll("\\s+", "");
+        return Integer.valueOf(pn);
     }
 
     /**
@@ -328,6 +342,7 @@ public class View
     {
         rollPanel.setVisible(false);
         buttonPanel.setVisible(true);
+        bottomPanel.repaint();
     }
 
     /**
@@ -336,6 +351,7 @@ public class View
     public void setBuyable()
     {
         buyButton.setEnabled(true);
+        buyButton.setVisible(true);
     }
 
     /**
@@ -401,45 +417,5 @@ public class View
     public void closeHouseFrame()
     {
         houseFrame.setVisible(false);
-    }
-
-    public static void main(String[] args)
-    {
-        View n = new View();
-        n.updateOutput("Test1");
-        n.updateOutput("Test2");
-        n.updateOutput("Test3");
-        n.updateOutput("Test4");
-        n.updateOutput("Test5");
-        n.updateOutput("Test6");
-        n.updateOutput("Test7");
-        n.updateOutput("Test8");
-        n.updateOutput("Test9");
-        n.updateOutput("Test10");
-        n.updateOutput("Test11");
-        n.updateOutput("Test12");
-        n.updateOutput("Test13");
-        n.updateOutput("Test14");
-        n.updateOutput("Test15");
-        n.updateOutput("Test16");
-        n.updateBalance("10000");
-        n.updateBalance("20000");
-        n.startGame();
-        n.setRoll();
-        n.setButtons();
-        n.setBuyable();
-        n.setHouseHotelBuyable();
-
-        String[] str = {"C1", "C2", "C3", "C4"};
-        n.dropdown = new JComboBox<String>(str);
-        n.dropdown.setVisible(true);
-        n.dropdown.setFont(font2);
-        n.dropdownPanel.add(n.dropdown);
-        n.openHouseBuy();
-        while(true) {
-            System.out.println(n.getSelection());
-        }
-
-
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * Die class representing a normal D6
+ * @author Cam Sommerville
+ */
 public class Die {
     private final int max = 6;
     private int value;
@@ -31,3 +35,4 @@ public class Die {
     }
 
 }
+
