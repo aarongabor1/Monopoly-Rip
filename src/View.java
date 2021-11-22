@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.0.1
+ * @version 3.0.3
  */
 public class View
 {
@@ -262,7 +262,7 @@ public class View
         properties.setText(null);
         for (Property p : arrayList)
         {
-            properties.append(p.getName());
+            properties.append(p.getName() + " Set: " + p.getSet() + "\n");
         }
     }
 
@@ -316,8 +316,11 @@ public class View
     {
         buttonPanel.setVisible(false);
         buyButton.setEnabled(false);
+        buyButton.setVisible(true);
         rentButton.setEnabled(false);
+        rollButton.setVisible(true);
         houseHotelButton.setEnabled(false);
+        houseHotelButton.setVisible(true);
         rollPanel.setVisible(true);
     }
 
@@ -353,6 +356,15 @@ public class View
     public void setEndTurn()
     {
         endTurnButton.setEnabled(true);
+    }
+
+    /**
+     * This method will disable the Rent and Buy button.
+     */
+    public void turnOffButtons()
+    {
+        rentButton.setEnabled(false);
+        buyButton.setEnabled(false);
     }
 
     /**
@@ -403,43 +415,10 @@ public class View
         houseFrame.setVisible(false);
     }
 
-    public static void main(String[] args)
+    public void aITurn()
     {
-        View n = new View();
-        n.updateOutput("Test1");
-        n.updateOutput("Test2");
-        n.updateOutput("Test3");
-        n.updateOutput("Test4");
-        n.updateOutput("Test5");
-        n.updateOutput("Test6");
-        n.updateOutput("Test7");
-        n.updateOutput("Test8");
-        n.updateOutput("Test9");
-        n.updateOutput("Test10");
-        n.updateOutput("Test11");
-        n.updateOutput("Test12");
-        n.updateOutput("Test13");
-        n.updateOutput("Test14");
-        n.updateOutput("Test15");
-        n.updateOutput("Test16");
-        n.updateBalance("10000");
-        n.updateBalance("20000");
-        n.startGame();
-        n.setRoll();
-        n.setButtons();
-        n.setBuyable();
-        n.setHouseHotelBuyable();
-
-        String[] str = {"C1", "C2", "C3", "C4"};
-        n.dropdown = new JComboBox<String>(str);
-        n.dropdown.setVisible(true);
-        n.dropdown.setFont(font2);
-        n.dropdownPanel.add(n.dropdown);
-        n.openHouseBuy();
-        while(true) {
-            System.out.println(n.getSelection());
-        }
-
-
+        rentButton.setVisible(false);
+        buyButton.setVisible(false);
+        houseHotelButton.setVisible(false);
     }
 }

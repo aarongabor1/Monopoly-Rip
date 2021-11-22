@@ -56,19 +56,30 @@ public class Game
             }
             players.remove(p);
         }
+        startingPlayerAmount--;
+        if(startingPlayerAmount == 1){playerWon = true;}
     }
 
     /**
      * Pay rent from one user to another
      */
     public void payRent(){
-        int rent = getLandedOnProperty().getRent();
+        int numInSet = getNumInSetOwned(((Property) currentPlayer.getPosition()).getOwner(), (Property) currentPlayer.getPosition());
+        boolean hotel = ((Property) currentPlayer.getPosition()).hasHotel();
+        int rent = ((Property) getLandedOnProperty()).getRent(numInSet, hotel);
         int rentPayed = players.get(currentTurn).payRent(rent);
-        getLandedOnProperty().getOwner().acceptRent(rentPayed);
+        ((Property)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
         if(rent != rentPayed)
-            bankrupt(players.get(currentTurn), getLandedOnProperty().getOwner());
+            bankrupt(players.get(currentTurn), ((Property)getLandedOnProperty()).getOwner());
     }
 
+    public int getNumInSetOwned(Player play, Property prop){
+        int num = 0;
+        for(Property p : play.getProperties()){
+            if(p.getSet()==prop.getSet()) num++;
+        }
+        return num;
+    }
 
     /**
      * This method processes the buy property function of the game using a Scanner to get user input
@@ -90,13 +101,21 @@ public class Game
      */
     void buyProperty(){
         // Current Position
-        Property p = getLandedOnProperty();
+        Property p = (Property)getLandedOnProperty();
+        Square s = p;
+        int set = p.getSet();
 
         // Update Player
-        players.get(currentTurn).buyProperty(p.getPrice(),board.getProperty(p.getIndex()));
+        players.get(currentTurn).buyProperty(p.getPrice(), (Property) board.getProperty(s.getIndex()));
 
         // Update Board
-        board.getProperty(currentPlayer.getPosition().getIndex()).buyProperty(players.get(currentTurn));
+        ((Property) board.getProperty(currentPlayer.getPosition().getIndex())).setOwner(players.get(currentTurn));
+
+        if(fullSet(currentPlayer,p)){
+            for(Property prop : currentPlayer.getProperties()){
+                if(prop.getSet()==set) prop.setFullSetTrue();
+            }
+        }
     }
 
     /**
@@ -106,13 +125,45 @@ public class Game
      */
     public boolean canBuy()
     {
-        if(getLandedOnProperty().getOwner()==null)
-        {
-            if(players.get(currentTurn).getBalance()-getLandedOnProperty().getPrice() >= 0)
-            {
-                return !isPropertyEmpty();
+        if(isSquareProperty()){
+            if (((Property) getLandedOnProperty()).getOwner() == null) {
+                if (players.get(currentTurn).getBalance() - getLandedOnProperty().getPrice() >= 0) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
+
+    public boolean canBuyHouse(){
+        if(isSquareProperty()) {
+            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
+                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0) {
+                    if(((Property)currentPlayer.getPosition()).getHouses() < 4) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean canBuyHotel(){
+        if(isSquareProperty()) {
+            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
+                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0)
+                    if(((Property)currentPlayer.getPosition()).getHouses() == 4) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean fullSet(Player play, Property prop){
+        int count =0;
+        for(Property p : play.getProperties()){
+            if(p.getSet()==prop.getSet()) count++;
+        }
+        if(count == prop.getNumInSet()) return true;
         return false;
     }
 
@@ -122,7 +173,11 @@ public class Game
      */
     public boolean isPropertyEmpty()
     {
-        return players.get(currentTurn).getPosition().getName().equals("Empty");
+        return players.get(currentTurn).getPosition().getPrice() < 0;
+    }
+    public boolean isSquareProperty(){
+        if(currentPlayer.getPosition() instanceof Property ) return true;
+        return false;
     }
 
     /**
@@ -131,7 +186,7 @@ public class Game
      */
     public boolean isRentOwed()
     {
-        if(players.get(currentTurn)!=getLandedOnProperty().getOwner() && getLandedOnProperty().getOwner()!=null)
+        if(players.get(currentTurn)!= ((Property)getLandedOnProperty()).getOwner() && ((Property)getLandedOnProperty()).getOwner()!=null)
         {
             //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
             return true;
@@ -148,13 +203,21 @@ public class Game
      *  Once all players are created and added, boolean running is set to true and every players position is set to 0
      *
      */
-    public void setup(int playerAmount){
+    public void setup(int playerAmount, Controller controller){
 
         for (int i = 0; i < playerAmount; i++)
         {
             addPlayer("Player" + (i+1));
             System.out.println("Player " + (i+1) + " added");
         }
+
+        //AI test
+        players.add(new AI("AI1", board, controller));
+        players.add(new AI("AI2", board, controller));
+        players.add(new AI("AI3", board, controller));
+        players.add(new AI("AI4", board, controller));
+        playerAmount += 4;
+
         running = true;
 
         for(Player p : players){
@@ -208,14 +271,14 @@ public class Game
 
     public int getCurrentRoll()
     {
-        return currentPlayer.getRoll();
+        return currentPlayer.getRoll(1) + currentPlayer.getRoll(2);
     }
 
     /**
      * returns the property the current player landed on
      * @return
      */
-    public Property getLandedOnProperty()
+    public Square getLandedOnProperty()
     {
         return board.getProperty(currentPlayer.getPosition().getIndex());
     }
