@@ -56,6 +56,8 @@ public class Game
             }
             players.remove(p);
         }
+        startingPlayerAmount--;
+        if(startingPlayerAmount == 1){playerWon = true;}
     }
 
     /**
@@ -107,7 +109,7 @@ public class Game
         players.get(currentTurn).buyProperty(p.getPrice(), (Property) board.getProperty(s.getIndex()));
 
         // Update Board
-        ((Property) board.getProperty(currentPlayer.getPosition().getIndex())).buyProperty(players.get(currentTurn));
+        ((Property) board.getProperty(currentPlayer.getPosition().getIndex())).setOwner(players.get(currentTurn));
 
         if(fullSet(currentPlayer,p)){
             for(Property prop : currentPlayer.getProperties()){
@@ -201,13 +203,29 @@ public class Game
      *  Once all players are created and added, boolean running is set to true and every players position is set to 0
      *
      */
-    public void setup(int playerAmount){
+    public void setup(int playerAmount, int AIAmount, Controller controller){
 
-        for (int i = 0; i < playerAmount; i++)
-        {
-            addPlayer("Player" + (i+1));
-            System.out.println("Player " + (i+1) + " added");
+        if(playerAmount > 0) {
+            for (int i = 0; i < playerAmount; i++) {
+                addPlayer("Player " + (i + 1));
+                System.out.println("Player " + (i + 1) + " added");
+            }
         }
+
+        if(AIAmount > 0) {
+            for (int i = 0; i < AIAmount; i++) {
+                players.add(new AI("AI " + (i + 1), board, controller));
+                System.out.println("AI " + (i + 1) + " added");
+            }
+        }
+
+        /*//AI test
+        players.add(new AI("AI1", board, controller));
+        players.add(new AI("AI2", board, controller));
+        players.add(new AI("AI3", board, controller));
+        players.add(new AI("AI4", board, controller));
+        playerAmount += 4;*/
+
         running = true;
 
         for(Player p : players){
@@ -219,7 +237,7 @@ public class Game
             System.out.println(players.get(i).getName());
         }
 
-        startingPlayerAmount = playerAmount;
+        startingPlayerAmount = playerAmount + AIAmount;
         currentPlayer = players.get(0);
         currentTurn = 0;
     }
@@ -236,7 +254,7 @@ public class Game
         {
             // Parse the input from user
             int i = Integer.parseInt(playerAmount);
-            if(i>1)
+            if(i >= 0)
             {
                 return true;
             }
@@ -261,7 +279,7 @@ public class Game
 
     public int getCurrentRoll()
     {
-        return currentPlayer.getRoll();
+        return currentPlayer.getRoll(1) + currentPlayer.getRoll(2);
     }
 
     /**

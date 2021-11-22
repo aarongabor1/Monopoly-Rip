@@ -21,7 +21,7 @@ public class Player {
     public Player(String name, Board board){
         this.name = name;
         this.board = board;
-        balance = 1500;
+        balance = 2000;
         die1 = new Die();
         die2 = new Die();
         properties = new ArrayList<>();
@@ -107,7 +107,7 @@ public class Player {
     public void takeProperty(Property property)
     {
 
-        property.buyProperty(this);
+        property.setOwner(this);
         this.properties.add(property);
     }
 
@@ -202,9 +202,11 @@ public class Player {
         rollDice();
     }
 
-    public int getRoll()
+    public int getRoll(int whichDie)
     {
-        return die1.getValue() + die2.getValue();
+       if (whichDie ==1) return die1.getValue();
+       if (whichDie == 2) return die2.getValue();
+       return -1;
     }
 
 }

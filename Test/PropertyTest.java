@@ -40,7 +40,7 @@ public class PropertyTest {
         Board b = new Board();
         Player p1 = new Player("P1",b);
 
-        p.buyProperty(p1);
+        p.setOwner(p1);
         assertEquals(p1, p.getOwner());
     }
 }
