@@ -262,7 +262,7 @@ public class View
         properties.setText(null);
         for (Property p : arrayList)
         {
-            //properties.append(p.getName() + " Set: " + p.getSet() + "\n");
+            properties.append(p.getName() + " Set: " + p.getSet() + "\n");
         }
     }
 

@@ -163,7 +163,8 @@ public class Controller implements ActionListener
         v.updateOutput("Roll Selected");
 
         // Players roll number
-        v.updateOutput(m.getCurrentPlayer().getName() + " rolled: " + m.getCurrentPlayer().getRoll());
+        v.updateOutput(m.getCurrentPlayer().getName() + " rolled a " + m.getCurrentPlayer().getRoll(1)
+                + " and a " + m.getCurrentPlayer().getRoll(2));
 
         // Players New Position on board
         v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
@@ -175,8 +176,11 @@ public class Controller implements ActionListener
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on an empty space");
         }
-        else
-        {
+        else if (m.getCurrentPlayer().getPosition() instanceof Property){
+            v.updateOutput(m.getCurrentPlayer().getName()+" landed on: "+m.getCurrentPlayer().getPosition().getName()
+                    + " Set: " + m.getCurrentPlayer().getPosition().getSet());
+        }
+        else {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on: "+m.getCurrentPlayer().getPosition().getName());
         }
     }
