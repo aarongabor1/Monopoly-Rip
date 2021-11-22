@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.0.3
+ * @version 3.1.1
  */
 public class View
 {
@@ -15,7 +15,7 @@ public class View
     private static final Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
     private static final Font font4 = new Font("Times New Roman", Font.BOLD, 85);
     private static final Font font5 = new Font("Times New Roman", Font.BOLD, 50);
-    private static final Font font6 = new Font("Times New Roman", Font.BOLD, 40);
+    private static final Font font6 = new Font("Times New Roman", Font.BOLD, 25);
 
     private JFrame frame;
     private JPanel mainPanel;
@@ -30,10 +30,12 @@ public class View
     private JButton endTurnButton;
     private JButton rentButton;
     private JTextField playerSelection;
+    private JTextField aiSelection;
     private JLabel playerName;
     private JPanel playerSelectionPanel;
     private JButton submit;
     private JLabel selectionText;
+    private JLabel aISelectionText;
     private JButton houseHotelButton;
 
     private JFrame houseFrame;
@@ -62,7 +64,7 @@ public class View
 
         //Creates the player selection panel
         playerSelectionPanel = new JPanel();
-        playerSelectionPanel.setLayout(new GridLayout(3, 1));
+        playerSelectionPanel.setLayout(new GridLayout(3, 2));
         playerSelectionPanel.setBackground(Color.white);
         playerSelectionPanel.setVisible(true);
         frame.add(playerSelectionPanel);
@@ -72,11 +74,22 @@ public class View
         selectionText.setHorizontalAlignment(JLabel.CENTER);
         selectionText.setFont(font6);
 
+        //Creates the AI selection label
+        aISelectionText = new JLabel("Please Select The Amount of AI Players:");
+        aISelectionText.setHorizontalAlignment(JLabel.CENTER);
+        aISelectionText.setFont(font6);
+
         //Creates the Player selection entering area
         playerSelection = new JTextField();
         playerSelection.setEditable(true);
         playerSelection.setActionCommand("Player Number");
         playerSelection.setFont(font5);
+
+        //Creates the AI selection entering area
+        aiSelection = new JTextField();
+        aiSelection.setEditable(true);
+        aiSelection.setActionCommand("AI Number");
+        aiSelection.setFont(font5);
 
         //Creates a button to allow users to submit their number of players
         submit = new JButton("Submit");
@@ -85,7 +98,9 @@ public class View
 
         //Adds all elements to the player selection panel
         playerSelectionPanel.add(selectionText);
+        playerSelectionPanel.add(aISelectionText);
         playerSelectionPanel.add(playerSelection);
+        playerSelectionPanel.add(aiSelection);
         playerSelectionPanel.add(submit);
 
         //Creates the output of game information
@@ -280,6 +295,11 @@ public class View
         return playerSelection.getText();
     }
 
+    public String getAIAmount()
+    {
+        return aiSelection.getText();
+    }
+
     /**
      * A method that will add the action listener that has been passed to the elements of the
      * GUI that needs an action listener.
@@ -291,9 +311,21 @@ public class View
         buyButton.addActionListener(o);
         endTurnButton.addActionListener(o);
         playerSelection.addActionListener(o);
+        aiSelection.addActionListener(o);
         submit.addActionListener(o);
         rentButton.addActionListener(o);
         houseHotelButton.addActionListener(o);
+    }
+
+    /**
+     * This is a method that will update the player name that is being displayed.
+     */
+    public int getPlayerNumber()
+    {
+        String pn = playerSelection.getText();
+        pn.substring(23);
+        pn.replaceAll("\\s+", "");
+        return Integer.valueOf(pn);
     }
 
     /**
