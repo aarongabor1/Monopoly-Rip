@@ -202,9 +202,11 @@ public class Player {
         rollDice();
     }
 
-    public int getRoll()
+    public int getRoll(int whichDie)
     {
-        return die1.getValue() + die2.getValue();
+       if (whichDie ==1) return die1.getValue();
+       if (whichDie == 2) return die2.getValue();
+       return -1;
     }
 
 }

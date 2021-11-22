@@ -271,7 +271,7 @@ public class Game
 
     public int getCurrentRoll()
     {
-        return currentPlayer.getRoll();
+        return currentPlayer.getRoll(1) + currentPlayer.getRoll(2);
     }
 
     /**

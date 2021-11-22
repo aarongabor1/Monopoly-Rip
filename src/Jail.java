@@ -32,4 +32,9 @@ public class Jail implements Square {
     public int getRent(int numOwnedInSet, boolean hotel) {
         return 0;
     }
+
+    @Override
+    public int getSet() {
+        return -1;
+    }
 }

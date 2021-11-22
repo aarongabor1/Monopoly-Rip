@@ -6,4 +6,6 @@ public interface Square {
     Player getOwner();
 
     int getRent(int numOwnedInSet, boolean hotel);
+
+    int getSet();
 }
