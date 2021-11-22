@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.0.2
+ * @version 3.0.3
  */
 public class View
 {
@@ -21,7 +21,6 @@ public class View
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
-
     private JTextField balance;
     private JTextArea properties;
     private JPanel rollPanel;
@@ -172,7 +171,7 @@ public class View
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
         frame.setVisible(true);
-      
+
         //House Frame
         houseFrame = new JFrame("Buy Houses and Hotels");
         houseFrame.setLayout(new GridLayout(3,1));
@@ -261,10 +260,9 @@ public class View
     public void updateProperties(ArrayList<Property> arrayList)
     {
         properties.setText(null);
-        for(Property p: arrayList)
+        for (Property p : arrayList)
         {
-            properties.append(p.getName()+ " Set: " + p.getSet() + "\n");
-
+            //properties.append(p.getName() + " Set: " + p.getSet() + "\n");
         }
     }
 
@@ -298,18 +296,6 @@ public class View
         houseHotelButton.addActionListener(o);
     }
 
-
-    /**
-     * This is a method that will update the player name that is being displayed.
-     */
-    public int getPlayerNumber()
-    {
-        String pn = playerSelection.getText();
-        pn.substring(23);
-        pn.replaceAll("\\s+", "");
-        return Integer.valueOf(pn);
-    }
-
     /**
      * This is a method that will switch between the player selection part of the program and the
      * main game part of the program and will allow the game to start.
@@ -330,8 +316,11 @@ public class View
     {
         buttonPanel.setVisible(false);
         buyButton.setEnabled(false);
+        buyButton.setVisible(true);
         rentButton.setEnabled(false);
+        rollButton.setVisible(true);
         houseHotelButton.setEnabled(false);
+        houseHotelButton.setVisible(true);
         rollPanel.setVisible(true);
     }
 
@@ -342,7 +331,6 @@ public class View
     {
         rollPanel.setVisible(false);
         buttonPanel.setVisible(true);
-        bottomPanel.repaint();
     }
 
     /**
@@ -351,7 +339,6 @@ public class View
     public void setBuyable()
     {
         buyButton.setEnabled(true);
-        buyButton.setVisible(true);
     }
 
     /**
@@ -369,6 +356,15 @@ public class View
     public void setEndTurn()
     {
         endTurnButton.setEnabled(true);
+    }
+
+    /**
+     * This method will disable the Rent and Buy button.
+     */
+    public void turnOffButtons()
+    {
+        rentButton.setEnabled(false);
+        buyButton.setEnabled(false);
     }
 
     /**
@@ -417,5 +413,12 @@ public class View
     public void closeHouseFrame()
     {
         houseFrame.setVisible(false);
+    }
+
+    public void aITurn()
+    {
+        rentButton.setVisible(false);
+        buyButton.setVisible(false);
+        houseHotelButton.setVisible(false);
     }
 }

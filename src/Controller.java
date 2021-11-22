@@ -96,6 +96,7 @@ public class Controller implements ActionListener
 
         // Update Model and View
         buyUpdate();
+        v.turnOffButtons();
     }
 
     public void payRent(){
@@ -106,6 +107,7 @@ public class Controller implements ActionListener
         m.payRent();
         v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
         v.setEndTurn();
+        v.turnOffButtons();
     }
 
     public void endTurn(){
@@ -144,6 +146,7 @@ public class Controller implements ActionListener
         v.updateProperties(cp.getProperties());
 
         if(cp instanceof AI){
+            v.aITurn();
             ((AI) cp).AITurn(m);
         }
         else {
@@ -236,7 +239,7 @@ public class Controller implements ActionListener
         {
             v.updateOutput("GAME OVER:");
             v.updateOutput(m.getCurrentPlayer().getName() + " has won!");
-            v.gameOver();
+            //v.gameOver();
         }
 
         // Update the View for the next Player
