@@ -101,9 +101,18 @@ public class Controller implements ActionListener
 
     public void payRent(){
         v.updateOutput("Pay Rent Selected");
-        int numInSet = this.m.getNumInSetOwned(((Property)this.m.getCurrentPlayer().getPosition()).getOwner(), (Property)this.m.getCurrentPlayer().getPosition());
-        boolean hotel = ((Property)this.m.getCurrentPlayer().getPosition()).hasHotel();
-        v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Property)m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Property)m.getLandedOnProperty()).getRent(numInSet,hotel));
+        int numInSet;
+        if(m.getLandedOnProperty() instanceof Railroad){
+            numInSet = this.m.getNumInSetOwned(((Railroad) this.m.getCurrentPlayer().getPosition()).getOwner(), (Railroad) this.m.getCurrentPlayer().getPosition());
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Railroad) m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Railroad) m.getLandedOnProperty()).getRent(numInSet));
+        }else if(m.getLandedOnProperty() instanceof Utility) {
+            numInSet = this.m.getNumInSetOwned(((Utility) this.m.getCurrentPlayer().getPosition()).getOwner(), (Utility) this.m.getCurrentPlayer().getPosition());
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Utility) m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Utility) m.getLandedOnProperty()).getRent(numInSet,m.getCurrentRoll()));
+        }else{
+            numInSet = this.m.getNumInSetOwned(((Property) this.m.getCurrentPlayer().getPosition()).getOwner(), (Property) this.m.getCurrentPlayer().getPosition());
+            boolean hotel = ((Property) this.m.getCurrentPlayer().getPosition()).hasHotel();
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Property) m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Property) m.getLandedOnProperty()).getRent(numInSet, hotel));
+        }
         m.payRent();
         v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
         v.setEndTurn();
