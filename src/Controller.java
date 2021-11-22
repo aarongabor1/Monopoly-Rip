@@ -170,9 +170,9 @@ public class Controller implements ActionListener
         v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
 
         // Players new position
-        //String property = m.getCurrentPlayer().getPosition().getName();
+        String property = m.getCurrentPlayer().getPosition().getName();
 
-        if(m.getCurrentPlayer().getPosition().getName().equals("Empty"))
+        if(m.isPropertyEmpty())
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on an empty space");
         }
