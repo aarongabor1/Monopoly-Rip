@@ -55,7 +55,7 @@ public class Controller implements ActionListener
             System.out.println("Players Selected: " + v.getPlayerAmount());
 
             // Check if input is valid
-            if(m.checkPlayerAmount(v.getPlayerAmount()))
+            if(m.checkPlayerAmount(v.getPlayerAmount()) && m.checkPlayerAmount(v.getAIAmount()))
             {
                 // Test
                 System.out.println("Player number selected is valid");

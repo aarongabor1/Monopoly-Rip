@@ -205,16 +205,18 @@ public class Game
      */
     public void setup(int playerAmount, int AIAmount, Controller controller){
 
-        for (int i = 0; i < playerAmount; i++)
-        {
-            addPlayer("Player " + (i+1));
-            System.out.println("Player " + (i+1) + " added");
+        if(playerAmount > 0) {
+            for (int i = 0; i < playerAmount; i++) {
+                addPlayer("Player " + (i + 1));
+                System.out.println("Player " + (i + 1) + " added");
+            }
         }
 
-        for (int i = 0; i < playerAmount; i++)
-        {
-            players.add(new AI("AI " + (i+1), board, controller));;
-            System.out.println("AI " + (i+1) + " added");
+        if(AIAmount > 0) {
+            for (int i = 0; i < AIAmount; i++) {
+                players.add(new AI("AI " + (i + 1), board, controller));
+                System.out.println("AI " + (i + 1) + " added");
+            }
         }
 
         /*//AI test
@@ -252,7 +254,7 @@ public class Game
         {
             // Parse the input from user
             int i = Integer.parseInt(playerAmount);
-            if(i>1)
+            if(i >= 0)
             {
                 return true;
             }

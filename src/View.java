@@ -70,7 +70,7 @@ public class View
         frame.add(playerSelectionPanel);
 
         //Creates the player selection label
-        selectionText = new JLabel("Please Select The Amount of Players (2+):");
+        selectionText = new JLabel("Please Select The Amount of Players:");
         selectionText.setHorizontalAlignment(JLabel.CENTER);
         selectionText.setFont(font6);
 
@@ -265,7 +265,8 @@ public class View
      */
     public void inputFailed()
     {
-        selectionText.setText("Please Enter a Valid Number of Players (2+):");
+        selectionText.setText("Please Enter a Valid Number of Players:");
+        aISelectionText.setText("Please Enter a Valid Number of AI Players:");
     }
 
     /**
