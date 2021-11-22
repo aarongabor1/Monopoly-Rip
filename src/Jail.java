@@ -15,11 +15,21 @@ public class Jail implements Square {
 
     @Override
     public String getName() {
-        return null;
+        return "Just Visiting";
     }
 
     @Override
     public String toString() {
         return null;
+    }
+
+    @Override
+    public Player getOwner() {
+        return null;
+    }
+
+    @Override
+    public int getRent(int numOwnedInSet, boolean hotel) {
+        return 0;
     }
 }
