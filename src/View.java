@@ -189,7 +189,7 @@ public class View
         properties.setText(null);
         for(Property p: arrayList)
         {
-            properties.append(p.getName()+"\n");
+            properties.append(p.getName()+ " Set: " + p.getSet() + "\n");
 
         }
     }
@@ -227,7 +227,6 @@ public class View
 
     /**
      * This is a method that will update the player name that is being displayed.
-     * @param str A String that contains the player name to be displayed.
      */
     public int getPlayerNumber()
     {
