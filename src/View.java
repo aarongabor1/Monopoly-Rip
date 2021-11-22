@@ -417,9 +417,8 @@ public class View
 
     public void aITurn()
     {
-        rentButton.setEnabled(false);
-        buyButton.setEnabled(false);
-        houseHotelButton.setEnabled(false);
-        endTurnButton.setEnabled(true);
+        rentButton.setVisible(false);
+        buyButton.setVisible(false);
+        houseHotelButton.setVisible(false);
     }
 }
