@@ -1,17 +1,8 @@
-import java.util.ArrayList;
-
 /**
  * Simple AI that plays the Monopoly Game
  * @Author Cam Sommerville
  */
 public class AI extends Player{
-    private String name;
-    private ArrayList<Property> properties;
-    private int balance;
-    private Die die1;
-    private Die die2;
-    private Board board;
-    private Square position;
     private Controller controller;
 
     /**
