@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.1.0
+ * @version 3.1.1
  */
 public class View
 {
@@ -315,6 +315,17 @@ public class View
         submit.addActionListener(o);
         rentButton.addActionListener(o);
         houseHotelButton.addActionListener(o);
+    }
+
+    /**
+     * This is a method that will update the player name that is being displayed.
+     */
+    public int getPlayerNumber()
+    {
+        String pn = playerSelection.getText();
+        pn.substring(23);
+        pn.replaceAll("\\s+", "");
+        return Integer.valueOf(pn);
     }
 
     /**
