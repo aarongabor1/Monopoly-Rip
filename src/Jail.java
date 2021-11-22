@@ -15,7 +15,7 @@ public class Jail implements Square {
 
     @Override
     public String getName() {
-        return null;
+        return "Just Visiting";
     }
 
     @Override
