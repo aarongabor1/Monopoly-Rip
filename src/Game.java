@@ -64,13 +64,31 @@ public class Game
      * Pay rent from one user to another
      */
     public void payRent(){
-        int numInSet = getNumInSetOwned(((Property) currentPlayer.getPosition()).getOwner(), (Property) currentPlayer.getPosition());
-        boolean hotel = ((Property) currentPlayer.getPosition()).hasHotel();
-        int rent = ((Property) getLandedOnProperty()).getRent(numInSet, hotel);
-        int rentPayed = players.get(currentTurn).payRent(rent);
-        ((Property)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
-        if(rent != rentPayed)
-            bankrupt(players.get(currentTurn), ((Property)getLandedOnProperty()).getOwner());
+        int numInSet;
+        int rent;
+        if(isSquareRailroad()){
+            numInSet = getNumInSetOwned(((Railroad) currentPlayer.getPosition()).getOwner(), (Railroad) currentPlayer.getPosition());
+            rent = ((Railroad) getLandedOnProperty()).getRent(numInSet);
+            int rentPayed = players.get(currentTurn).payRent(rent);
+            ((Railroad)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
+            if(rent != rentPayed)
+                bankrupt(players.get(currentTurn), ((Railroad)getLandedOnProperty()).getOwner());
+        }else if(isSquareProperty()){
+            numInSet = getNumInSetOwned(((Property) currentPlayer.getPosition()).getOwner(), (Property) currentPlayer.getPosition());
+            boolean hotel = ((Property) currentPlayer.getPosition()).hasHotel();
+            rent = ((Property) getLandedOnProperty()).getRent(numInSet, hotel);
+            int rentPayed = players.get(currentTurn).payRent(rent);
+            ((Property)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
+            if(rent != rentPayed)
+                bankrupt(players.get(currentTurn), ((Property)getLandedOnProperty()).getOwner());
+        }else if(isSquareUtility()){
+            numInSet = getNumInSetOwned(((Utility) currentPlayer.getPosition()).getOwner(), (Railroad) currentPlayer.getPosition());
+            rent = ((Utility) getLandedOnProperty()).getRent(numInSet,getCurrentRoll());
+            int rentPayed = players.get(currentTurn).payRent(rent);
+            ((Utility)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
+            if(rent != rentPayed)
+                bankrupt(players.get(currentTurn), ((Utility)getLandedOnProperty()).getOwner());
+        }
     }
 
     public int getNumInSetOwned(Player play, Property prop){
@@ -95,7 +113,7 @@ public class Game
      * they will be told they have insufficient funds, the Property will remain unowned, and their
      * balance will remain the same
      *
-     * If the Player chooses not to buy the Property, he Property will remain unowned, and
+     * If the Player chooses not to guy the Property, he Property will remain unowned, and
      * their balance will remain the same
      *
      */
@@ -127,6 +145,18 @@ public class Game
     {
         if(isSquareProperty()){
             if (((Property) getLandedOnProperty()).getOwner() == null) {
+                if (players.get(currentTurn).getBalance() - getLandedOnProperty().getPrice() >= 0) {
+                    return true;
+                }
+            }
+        }else if(isSquareRailroad()) {
+            if (((Railroad) getLandedOnProperty()).getOwner() == null) {
+                if (players.get(currentTurn).getBalance() - getLandedOnProperty().getPrice() >= 0) {
+                    return true;
+                }
+            }
+        }else if(isSquareUtility()){
+            if (((Utility) getLandedOnProperty()).getOwner() == null) {
                 if (players.get(currentTurn).getBalance() - getLandedOnProperty().getPrice() >= 0) {
                     return true;
                 }
@@ -180,13 +210,23 @@ public class Game
         return false;
     }
 
+    public boolean isSquareRailroad(){
+        if(currentPlayer.getPosition() instanceof Railroad ) return true;
+        return false;
+    }
+
+    public boolean isSquareUtility(){
+        if(currentPlayer.getPosition() instanceof Utility ) return true;
+        return false;
+    }
+
     /**
      * checks if property is owned by another player
      * @return
      */
     public boolean isRentOwed()
     {
-        if(players.get(currentTurn)!= ((Property)getLandedOnProperty()).getOwner() && ((Property)getLandedOnProperty()).getOwner()!=null)
+        if(players.get(currentTurn)!= (getLandedOnProperty()).getOwner() && (getLandedOnProperty()).getOwner()!=null)
         {
             //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
             return true;
