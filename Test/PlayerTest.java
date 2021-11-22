@@ -34,7 +34,7 @@ public class PlayerTest {
 
     @Test
     public void buyProperty() {
-        player.buyProperty(60, board.getProperty(1));
+        player.buyProperty(60, (Property) board.getProperty(1));
         assertEquals(1940,player.getBalance());
     }
 

@@ -8,6 +8,9 @@ public class Player {
     private Die die2;
     private Board board;
     private Square position;
+    private Property landedOnProperty;
+    private boolean inJail = false;
+    private boolean roll1Double = false, roll2Double = false, roll3Double = false;
 
     /**
      * Constructor for the Player class
@@ -51,12 +54,17 @@ public class Player {
         return position;
     }
 
+    public ArrayList<Property> getProperties()
+    {
+        return properties;
+    }
+
     /**
      * Setter for the Player position
      *
      * @param position
      */
-    public void setPosition(Property position) {
+    public void setPosition(Square position) {
         this.position = position;
     }
 
@@ -76,9 +84,31 @@ public class Player {
      * Removes the amount "payment" passed as param from the Player's total balance
      *
      * @param payment
+    **/
+
+    public int payRent(int payment){
+        if(balance - payment >= 0) {
+            balance -= payment;
+            return payment;
+        }
+        else
+        {
+            int num = payment - balance;
+            balance = 0;
+            return num;
+        }
+    }
+
+    /**
+     * Adds another players property to their own collection of properties
+     *
+     * @param property
      */
-    public void payRent(int payment){
-        balance -= payment;
+    public void takeProperty(Property property)
+    {
+
+        property.setOwner(this);
+        this.properties.add(property);
     }
 
     /**
@@ -97,13 +127,14 @@ public class Player {
      * Owned properties
      */
     private void printPlayerInfo(){
+        System.out.println("\n");
         System.out.println("Player: " + name + "'s turn");
         System.out.println("This player is at square " + position.getIndex());
         System.out.println("This player has a balance of: " + balance);
         System.out.println("This player owns the following properties: ");
         if(properties.size()>0) {
             for (Property p : properties) {
-                System.out.print("  " + p.getName() + " ");
+                System.out.print("  " + p.getName() + "(Set:" + p.getSet() + " ");
             }
             System.out.println("");
         }else{
@@ -132,15 +163,34 @@ public class Player {
      */
     private void rollDice(){
         int roll;
-        die1.roll();
-        die2.roll();
-        roll = die1.getValue() + die2.getValue();
-        System.out.println("They rolled a " + roll);
-        if(checkPassedGo(roll)) balance += 200;
-        int destinationIndex = (position.getIndex() + roll) % 40;
-        Property destination = board.getProperty(destinationIndex);
-        System.out.println("They landed on " + destination.toString() + "(index: " + destinationIndex + ")");
-        setPosition(destination);
+        if(!inJail) {
+            die1.roll();
+            die2.roll();
+            roll3Double = roll2Double;
+            roll2Double = roll1Double;
+            roll1Double = (die1.getValue() == die2.getValue());
+            roll = die1.getValue() + die2.getValue();
+            System.out.println("They rolled a " + die1.getValue() + "and a " + die2.getValue());
+            if (roll1Double && roll2Double && roll3Double) {
+                inJail = true;
+                Square jail = board.getProperty(10);
+                setPosition(jail);
+            } else {
+                if (checkPassedGo(roll)) balance += 200;
+                int destinationIndex = (position.getIndex() + roll) % 40;
+                Square destination = board.getProperty(destinationIndex);
+                setPosition(destination);
+                if(position.getIndex() == 30){
+                    inJail = true;
+                    Square jail = board.getProperty(10);
+                    setPosition(jail);
+                }
+            }
+        }else{
+            die1.roll();
+            die2.roll();
+            if(die1.getValue() == die2.getValue()) inJail = false;
+        }
     }
 
     /**
@@ -150,6 +200,11 @@ public class Player {
     public void takeTurn(){
         printPlayerInfo();
         rollDice();
+    }
+
+    public int getRoll()
+    {
+        return die1.getValue() + die2.getValue();
     }
 
 }

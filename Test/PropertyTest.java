@@ -7,7 +7,7 @@ public class PropertyTest {
     @Before
     public void beforeEachTestMethod() {
         System.out.println("Invoked before each test method");
-        p = new Property("Test",1,50);
+        p = new Property("Test",1,50, 1,1,50);
     }
 
     @After
@@ -32,7 +32,7 @@ public class PropertyTest {
 
     @Test
     public void getRent() {
-        assertEquals(5,p.getRent());
+        assertEquals(5,p.getRent(0,false));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PropertyTest {
         Board b = new Board();
         Player p1 = new Player("P1",b);
 
-        p.buyProperty(p1);
+        p.setOwner(p1);
         assertEquals(p1, p.getOwner());
     }
 }
