@@ -3,20 +3,24 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * @author Aaron Gabor
+ * @version 3.0.3
+ */
 public class View
 {
-    private static Font font1 = new Font("Times New Roman", Font.BOLD, 75);
-    private static Font font2 = new Font("Times New Roman", Font.PLAIN, 25);
-    private static Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
-    private static Font font4 = new Font("Times New Roman", Font.BOLD, 100);
-    private static Font font5 = new Font("Times New Roman", Font.BOLD, 50);
-
+    //Set fonts for all text in the GUI
+    private static final Font font1 = new Font("Times New Roman", Font.BOLD, 75);
+    private static final Font font2 = new Font("Times New Roman", Font.PLAIN, 25);
+    private static final Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
+    private static final Font font4 = new Font("Times New Roman", Font.BOLD, 85);
+    private static final Font font5 = new Font("Times New Roman", Font.BOLD, 50);
+    private static final Font font6 = new Font("Times New Roman", Font.BOLD, 40);
 
     private JFrame frame;
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
-    private JPanel bottomPanel;
     private JTextField balance;
     private JTextArea properties;
     private JPanel rollPanel;
@@ -30,15 +34,30 @@ public class View
     private JPanel playerSelectionPanel;
     private JButton submit;
     private JLabel selectionText;
+    private JButton houseHotelButton;
 
+    private JFrame houseFrame;
+    private JButton buyHouseButton;
+    private JButton buyHotelButton;
+    private JButton closeButton;
+    private JComboBox<String> dropdown;
+    private JPanel dropdownPanel;
+    private JPanel houseButtonPanel;
+    private JTextField outputHouse;
+    private JTextField balance2;
+
+    /**
+     * A constructor for the View class that will create a GUI and will configure the settings
+     * of all the frames, panels, text areas, text fields, labels, and buttons.
+     */
     public View()
     {
         //Creating the frame and the main panel
         frame = new JFrame("Monopoly");
-        bottomPanel = new JPanel();
-        frame.setSize(1000,650);
+        JPanel bottomPanel = new JPanel();
+        frame.setSize(1000, 650);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainPanel = new JPanel(new GridLayout(3,1));
+        mainPanel = new JPanel(new GridLayout(3, 1));
         mainPanel.setVisible(true);
 
         //Creates the player selection panel
@@ -51,7 +70,7 @@ public class View
         //Creates the player selection label
         selectionText = new JLabel("Please Select The Amount of Players (2+):");
         selectionText.setHorizontalAlignment(JLabel.CENTER);
-        selectionText.setFont(font5);
+        selectionText.setFont(font6);
 
         //Creates the Player selection entering area
         playerSelection = new JTextField();
@@ -77,7 +96,7 @@ public class View
         mainPanel.add(scrollPane);
 
         //Creates the panel that gives player information
-        updatePanel = new JPanel(new GridLayout(1,3));
+        updatePanel = new JPanel(new GridLayout(1, 3));
 
         //Creates the display for the player's money balance
         balance = new JTextField();
@@ -109,7 +128,7 @@ public class View
         bottomPanel.setVisible(true);
 
         //Creates the roll panel and the roll button
-        rollPanel = new JPanel(new GridLayout(1, 3));
+        rollPanel = new JPanel(new GridLayout(1, 2));
         rollButton = new JButton("Roll");
         rollButton.setEnabled(true);
         rollButton.setFont(font4);
@@ -120,22 +139,28 @@ public class View
         bottomPanel.add(rollPanel);
 
         //Creates a button panel for the turn buttons
-        buttonPanel = new JPanel(new GridLayout(1,3));
+        buttonPanel = new JPanel(new GridLayout(2, 2));
         buttonPanel.setBackground(Color.white);
-
-        //Creates the rent button and adds it to the button panel
-        rentButton = new JButton("Pay Rent");
-        rentButton.setEnabled(false);
-        rentButton.setFont(font4);
-        rentButton.setBackground(Color.orange);
-        buttonPanel.add(rentButton);
 
         //Creates the buy button and adds it to the button panel
         buyButton = new JButton("Buy");
         buyButton.setEnabled(false);
         buyButton.setFont(font4);
-        buyButton.setBackground(new Color(124,252,0));
+        buyButton.setBackground(new Color(124, 252, 0));
         buttonPanel.add(buyButton);
+
+        //Creates the rent button and adds it to the button panel
+        rentButton = new JButton("Pay Rent");
+        rentButton.setEnabled(false);
+        rentButton.setFont(font4);
+        rentButton.setBackground(Color.ORANGE);
+        buttonPanel.add(rentButton);
+
+        //Creates the house/hotel button and adds it to the button panel
+        houseHotelButton = new JButton("House/Hotel");
+        houseHotelButton.setEnabled(false);
+        houseHotelButton.setFont(font4);
+        buttonPanel.add(houseHotelButton);
 
         //Creates the end turn button and adds it to the button panel
         endTurnButton = new JButton("End Turn");
@@ -146,6 +171,52 @@ public class View
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
         frame.setVisible(true);
+
+        //House Frame
+        houseFrame = new JFrame("Buy Houses and Hotels");
+        houseFrame.setLayout(new GridLayout(3,1));
+        houseFrame.setSize(1000,650);
+        houseFrame.setVisible(false);
+
+        //Creates output for house buying
+        JPanel panel = new JPanel(new GridLayout(1,2));
+        panel.setVisible(true);
+        houseFrame.add(panel);
+        outputHouse = new JTextField();
+        outputHouse.setVisible(true);
+        outputHouse.setEditable(false);
+        outputHouse.setFont(font2);
+        outputHouse.setBackground(Color.white);
+        outputHouse.setHorizontalAlignment(JTextField.CENTER);
+        balance2 = new JTextField();
+        balance2.setVisible(true);
+        balance2.setEditable(false);
+        balance2.setFont(font1);
+        balance2.setBackground(Color.white);
+        balance2.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(balance2);
+        panel.add(outputHouse);
+
+        //Creates panel for dropdown bar
+        dropdownPanel = new JPanel();
+        dropdownPanel.setVisible(true);
+        houseFrame.add(dropdownPanel);
+
+        //Creates button panel
+        houseButtonPanel = new JPanel(new GridLayout(1,3));
+        houseButtonPanel.setVisible(true);
+        houseFrame.add(houseButtonPanel);
+
+        //Creates buttons for buying houses and hotels
+        buyHouseButton = new JButton("Buy House");
+        buyHouseButton.setFont(font5);
+        houseButtonPanel.add(buyHouseButton);
+        buyHotelButton = new JButton("Buy Hotel");
+        buyHotelButton.setFont(font5);
+        houseButtonPanel.add(buyHotelButton);
+        closeButton = new JButton("Close");
+        closeButton.setFont(font5);
+        houseButtonPanel.add(closeButton);
     }
 
     /**
@@ -169,6 +240,8 @@ public class View
     {
         balance.setText(null);
         balance.setText("$" + str + "\r\n");
+        balance2.setText(null);
+        balance2.setText("$" + str + "\r\n");
     }
 
     /**
@@ -187,10 +260,9 @@ public class View
     public void updateProperties(ArrayList<Property> arrayList)
     {
         properties.setText(null);
-        for(Property p: arrayList)
+        for (Property p : arrayList)
         {
-            properties.append(p.getName()+ " Set: " + p.getSet() + "\n");
-
+            //properties.append(p.getName() + " Set: " + p.getSet() + "\n");
         }
     }
 
@@ -208,7 +280,6 @@ public class View
         return playerSelection.getText();
     }
 
-
     /**
      * A method that will add the action listener that has been passed to the elements of the
      * GUI that needs an action listener.
@@ -219,21 +290,10 @@ public class View
         rollButton.addActionListener(o);
         buyButton.addActionListener(o);
         endTurnButton.addActionListener(o);
-        rentButton.addActionListener(o);
         playerSelection.addActionListener(o);
         submit.addActionListener(o);
-    }
-
-
-    /**
-     * This is a method that will update the player name that is being displayed.
-     */
-    public int getPlayerNumber()
-    {
-        String pn = playerSelection.getText();
-        pn.substring(23);
-        pn.replaceAll("\\s+", "");
-        return Integer.valueOf(pn);
+        rentButton.addActionListener(o);
+        houseHotelButton.addActionListener(o);
     }
 
     /**
@@ -245,7 +305,7 @@ public class View
         frame.remove(playerSelectionPanel);
         frame.add(mainPanel);
         frame.pack();
-        frame.setSize(1000,650);
+        frame.setSize(1000, 650);
     }
 
     /**
@@ -255,8 +315,12 @@ public class View
     public void setRoll()
     {
         buttonPanel.setVisible(false);
-        buyButton.setVisible(false);
-        rentButton.setVisible(false);
+        buyButton.setEnabled(false);
+        buyButton.setVisible(true);
+        rentButton.setEnabled(false);
+        rollButton.setVisible(true);
+        houseHotelButton.setEnabled(false);
+        houseHotelButton.setVisible(true);
         rollPanel.setVisible(true);
     }
 
@@ -267,7 +331,6 @@ public class View
     {
         rollPanel.setVisible(false);
         buttonPanel.setVisible(true);
-        bottomPanel.repaint();
     }
 
     /**
@@ -276,7 +339,6 @@ public class View
     public void setBuyable()
     {
         buyButton.setEnabled(true);
-        buyButton.setVisible(true);
     }
 
     /**
@@ -285,22 +347,79 @@ public class View
     public void setRentable()
     {
         rentButton.setEnabled(true);
-        rentButton.setVisible(true);
-        endTurnButton.setVisible(false);
+        endTurnButton.setEnabled(false);
     }
 
     /**
-     * This method will enable the End Turn Button
+     * This method will enable the End Turn button
      */
     public void setEndTurn()
     {
-        buyButton.setVisible(false);
-        rentButton.setVisible(false);
-        endTurnButton.setVisible(true);
+        endTurnButton.setEnabled(true);
     }
 
-    public void gameOver()
+    /**
+     * This method will disable the Rent and Buy button.
+     */
+    public void turnOffButtons()
     {
-        endTurnButton.setVisible(false);
+        rentButton.setEnabled(false);
+        buyButton.setEnabled(false);
+    }
+
+    /**
+     * This method will enable the House/Hotel button
+     */
+    public void setHouseHotelBuyable()
+    {
+        houseHotelButton.setEnabled(true);
+    }
+
+    public void openHouseBuy()
+    {
+        houseFrame.setVisible(true);
+    }
+
+    public void updateOutputHouse(String str)
+    {
+        outputHouse.setText(str);
+    }
+
+    public void setUpDropdown(ArrayList<Property> arrayList)
+    {
+        String[] names = new String[arrayList.size()-1];
+        for(int i = 0; i < arrayList.size(); i++)
+        {
+            names[i] = arrayList.get(i).getName();
+        }
+        dropdown = new JComboBox<String>(names);
+        dropdown.setVisible(true);
+        dropdown.setFont(font2);
+        dropdownPanel.add(dropdown);
+    }
+
+    public void setHouseActionListener(ActionListener al)
+    {
+        buyHouseButton.addActionListener(al);
+        buyHotelButton.addActionListener(al);
+        closeButton.addActionListener(al);
+    }
+
+    public String getSelection()
+    {
+        return dropdown.getSelectedItem().toString();
+    }
+
+    public void closeHouseFrame()
+    {
+        houseFrame.setVisible(false);
+    }
+
+    public void aITurn()
+    {
+        rentButton.setEnabled(false);
+        buyButton.setEnabled(false);
+        houseHotelButton.setEnabled(false);
+        endTurnButton.setEnabled(true);
     }
 }
