@@ -122,7 +122,7 @@ public class Controller implements ActionListener
     private void startGame()
     {
         // Setup the Model
-        m.setup(Integer.parseInt(v.getPlayerAmount()),this);
+        m.setup(Integer.parseInt(v.getPlayerAmount()),Integer.parseInt(v.getAIAmount()),this);
 
         // Setup the View
         v.startGame();
