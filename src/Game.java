@@ -109,7 +109,7 @@ public class Game
         players.get(currentTurn).buyProperty(p.getPrice(), (Property) board.getProperty(s.getIndex()));
 
         // Update Board
-        ((Property) board.getProperty(currentPlayer.getPosition().getIndex())).buyProperty(players.get(currentTurn));
+        ((Property) board.getProperty(currentPlayer.getPosition().getIndex())).setOwner(players.get(currentTurn));
 
         if(fullSet(currentPlayer,p)){
             for(Property prop : currentPlayer.getProperties()){
@@ -209,7 +209,7 @@ public class Game
         {
             addPlayer("Player" + (i+1));
             System.out.println("Player " + (i+1) + " added");
-        }*/
+        }
 
         //AI test
         players.add(new AI("AI1", board, controller));

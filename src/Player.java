@@ -107,7 +107,7 @@ public class Player {
     public void takeProperty(Property property)
     {
 
-        property.buyProperty(this);
+        property.setOwner(this);
         this.properties.add(property);
     }
 

@@ -55,7 +55,7 @@ public class Property implements Square {
     }
 
     /**
-     * Calculates and returns the rent of the Property based on the price of the Property multiplied by 0.1
+     * Calculates and returns the rent of the Property
      *
      * @return int
      */

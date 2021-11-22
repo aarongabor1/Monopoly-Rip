@@ -22,4 +22,14 @@ public class Jail implements Square {
     public String toString() {
         return null;
     }
+
+    @Override
+    public Player getOwner() {
+        return null;
+    }
+
+    @Override
+    public int getRent(int numOwnedInSet, boolean hotel) {
+        return 0;
+    }
 }
