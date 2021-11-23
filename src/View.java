@@ -231,7 +231,7 @@ public class View
         houseButtonPanel.setVisible(true);
         houseFrame.add(houseButtonPanel);
 
-        //Creates buttons for buying houses and hotels
+        //Creates button for buying houses and hotels
         buyHouseButton = new JButton("Buy House");
         buyHouseButton.setFont(font5);
         buyHouseButton.setBackground(new Color(240, 255, 77));
