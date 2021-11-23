@@ -225,10 +225,14 @@ public class View
         //Creates buttons for buying houses and hotels
         buyHouseButton = new JButton("Buy House");
         buyHouseButton.setFont(font5);
+        buyHouseButton.setEnabled(false);
         houseButtonPanel.add(buyHouseButton);
+
         buyHotelButton = new JButton("Buy Hotel");
         buyHotelButton.setFont(font5);
+        buyHotelButton.setEnabled(false);
         houseButtonPanel.add(buyHotelButton);
+
         closeButton = new JButton("Close");
         closeButton.setFont(font5);
         houseButtonPanel.add(closeButton);
@@ -408,6 +412,29 @@ public class View
         houseHotelButton.setEnabled(true);
     }
 
+    public void enableBuyHouseButton()
+    {
+        buyHouseButton.setEnabled(true);
+        buyHotelButton.setEnabled(false);
+    }
+
+    public void enableBuyHotelButton()
+    {
+       buyHotelButton.setEnabled(true);
+       buyHouseButton.setEnabled(false);
+    }
+
+    public void disableHouseHotelBuyable()
+    {
+        houseHotelButton.setEnabled(false);
+    }
+
+    public void disableHotelAndHouse()
+    {
+        buyHotelButton.setEnabled(false);
+        buyHouseButton.setEnabled(false);
+    }
+
     public void openHouseBuy()
     {
         houseFrame.setVisible(true);
@@ -420,12 +447,13 @@ public class View
 
     public void setUpDropdown(ArrayList<Property> arrayList)
     {
-        String[] names = new String[arrayList.size()-1];
+        String[] names = new String[arrayList.size()];
         for(int i = 0; i < arrayList.size(); i++)
         {
             names[i] = arrayList.get(i).getName();
         }
         dropdown = new JComboBox<String>(names);
+        dropdown.setActionCommand("dropdown");
         dropdown.setVisible(true);
         dropdown.setFont(font2);
         dropdownPanel.add(dropdown);
@@ -436,6 +464,11 @@ public class View
         buyHouseButton.addActionListener(al);
         buyHotelButton.addActionListener(al);
         closeButton.addActionListener(al);
+    }
+
+    public void setDropdownActionListener(ActionListener al)
+    {
+        dropdown.addActionListener(al);
     }
 
     public String getSelection()
