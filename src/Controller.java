@@ -202,6 +202,9 @@ public class Controller implements ActionListener
         v.updatePlayerName(cp.getName());
         v.updateBalance(String.valueOf(cp.getBalance()));
         v.updateProperties(cp.getProperties());
+        if(cp.isInJail()){
+            v.updateOutput("This Player is in Jail");
+        }
 
         if(cp instanceof AI){
             v.aITurn();
