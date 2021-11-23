@@ -1,3 +1,7 @@
+/**
+ * Represents a Utility Square
+ * @author Braxton Martin
+ */
 public class Utility extends Property{
 
     /**

@@ -18,6 +18,10 @@ public class AI extends Player{
         this.controller = controller;
     }
 
+    /**
+     * Method simulates an AI taking its turn
+     * @param model
+     */
     public void AITurn(Game model){
         controller.roll();
 

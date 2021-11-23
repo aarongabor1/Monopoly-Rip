@@ -1,5 +1,12 @@
 import java.util.*;
 
+/**
+ * Simulates the Monopoly Game
+ * @author Cam Sommerville
+ * @author Brady Norton
+ * @author Braxton Martin
+ * @author Aaron Gabor
+ */
 public class Game
 {
     private List<Player> players;
@@ -91,6 +98,12 @@ public class Game
         }
     }
 
+    /**
+     * returns the number of properties in the set the player owns
+     * @param play
+     * @param prop
+     * @return int
+     */
     public int getNumInSetOwned(Player play, Property prop){
         int num = 0;
         for(Property p : play.getProperties()){
@@ -165,6 +178,11 @@ public class Game
         return false;
     }
 
+    /**
+     * returns whether the player can buy a house
+     * @param p
+     * @return boolean
+     */
     public boolean canBuyHouse(Property p)
     {
         ArrayList<Integer> houseAmounts = new ArrayList<>();
@@ -189,6 +207,10 @@ public class Game
         return false;
     }
 
+    /**
+     * returns whether the current player can buy a hotel
+     * @return boolean
+     */
     public boolean canBuyHotel()
     {
         for(Property p:players.get(currentTurn).getProperties())
@@ -207,6 +229,12 @@ public class Game
         return false;
     }
 
+    /**
+     * Checks if the player has the full set
+     * @param play
+     * @param prop
+     * @return
+     */
     public boolean fullSet(Player play, Property prop){
         int count =0;
         for(Property p : play.getProperties()){
@@ -216,6 +244,11 @@ public class Game
         return false;
     }
 
+    /**
+     * checks if max number of houses has been reached
+     * @param setNumber
+     * @return
+     */
     public boolean maxHousesBuilt(int setNumber)
     {
         for(int i=0;i<board.getPropertySet(setNumber).size();++i)
@@ -237,16 +270,28 @@ public class Game
         return players.get(currentTurn).getPosition().getPrice() < 0;
     }
 
+    /**
+     * Checks if the Square is a Property
+     * @return
+     */
     public boolean isSquareProperty(){
         if(currentPlayer.getPosition() instanceof Property ) return true;
         return false;
     }
 
+    /**
+     * Checks if the Square is a Railroad
+     * @return
+     */
     public boolean isSquareRailroad(){
         if(currentPlayer.getPosition() instanceof Railroad ) return true;
         return false;
     }
 
+    /**
+     * Checks if the Square is a Utility
+     * @return
+     */
     public boolean isSquareUtility(){
         if(currentPlayer.getPosition() instanceof Utility ) return true;
         return false;
@@ -260,10 +305,8 @@ public class Game
     {
         if(players.get(currentTurn)!= (getLandedOnProperty()).getOwner() && (getLandedOnProperty()).getOwner()!=null)
         {
-            //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
             return true;
         }
-        //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
         return false;
     }
 
@@ -290,13 +333,6 @@ public class Game
                 System.out.println("AI " + (i + 1) + " added");
             }
         }
-
-        /*//AI test
-        players.add(new AI("AI1", board, controller));
-        players.add(new AI("AI2", board, controller));
-        players.add(new AI("AI3", board, controller));
-        players.add(new AI("AI4", board, controller));
-        playerAmount += 4;*/
 
         running = true;
 
@@ -384,7 +420,6 @@ public class Game
             currentPlayer = players.get(0);
             currentTurn = 0;
             // Test
-            //System.out.println("Current Player: "+currentPlayer.getName());
         }
         else if(players.size()!=startingPlayerAmount)
         {
@@ -393,7 +428,6 @@ public class Game
         // Switch the currentPlayer to the next player in the list
         else
         {
-            //currentPlayer = players.get(currentTurn);
             currentTurn++;
             System.out.println("Current Player: "+currentPlayer.getName());
         }
@@ -433,46 +467,6 @@ public class Game
         return currentPlayer;
     }
 
-    /**
-    void buyHouseTest()
-    {
-        // Setup Players
-        players.add(new Player("P1",board));
-        players.add(new Player("P2",board));
-
-        // Start Players at "Go"
-        for(Player p : players){
-            p.setPosition(board.getProperty(0));
-        }
-
-        // Print each player for testing
-        for(int i=0; i<players.size();++i)
-        {
-            System.out.println(players.get(i).getName());
-        }
-
-        startingPlayerAmount = players.size();
-        currentPlayer = players.get(0);
-        currentTurn = 0;
-
-        // Add properties to players
-        currentPlayer.setPosition(board.getProperty(1));
-        buyProperty();
-        System.out.println(currentPlayer.getName()+" bought: " + currentPlayer.getPosition().getName());
-
-        currentPlayer.setPosition(board.getProperty(3));
-        buyProperty();
-        System.out.println(currentPlayer.getName()+" bought: " + currentPlayer.getPosition().getName());
-
-        // Test if we can build a hotel
-        currentPlayer.getProperties().get(0).setHouse(4);
-        currentPlayer.getProperties().get(1).setHouse(4);
-
-
-        running = true;
-    }
-     **/
-
     public Property getPropertyByName(String propertyName)
     {
         int propertyIndex=0;
@@ -486,6 +480,10 @@ public class Game
         return ((Property)board.getProperty(propertyIndex));
     }
 
+    /**
+     * checks if the player has the full set
+     * @return
+     */
     boolean doesPlayerOwnFullSet()
     {
         if(players.get(currentTurn).getProperties().size()>1)
@@ -495,6 +493,10 @@ public class Game
         return false;
     }
 
+    /**
+     * Makes the current player buy a house
+     * @param p
+     */
     public void buyHouse(String p)
     {
         for(int i=0; i<players.get(currentTurn).getProperties().size();++i)
@@ -510,6 +512,10 @@ public class Game
         }
     }
 
+    /**
+     * Makes the current player buy a hotel
+     * @param p
+     */
     public void buyHotel(String p)
     {
         // Set Hotel

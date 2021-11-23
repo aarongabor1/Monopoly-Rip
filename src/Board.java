@@ -1,5 +1,10 @@
 import java.util.*;
 
+/**
+ * Class that simulates the Monopoly board
+ * @author Cam Sommerville
+ * @author Braxton Martin
+ */
 public class Board {
     private List<Square> squares;
     private final int numSquares = 40;
