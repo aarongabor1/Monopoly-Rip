@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.1.1
+ * @version 3.1.2
  */
 public class View
 {
@@ -21,6 +21,7 @@ public class View
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
+
     private JTextField balance;
     private JTextArea properties;
     private JPanel rollPanel;
@@ -30,7 +31,7 @@ public class View
     private JButton endTurnButton;
     private JButton rentButton;
     private JTextField playerSelection;
-    private JTextField aiSelection;
+    private JTextField aISelection;
     private JLabel playerName;
     private JPanel playerSelectionPanel;
     private JButton submit;
@@ -64,13 +65,13 @@ public class View
 
         //Creates the player selection panel
         playerSelectionPanel = new JPanel();
-        playerSelectionPanel.setLayout(new GridLayout(3, 2));
+        playerSelectionPanel.setLayout(new GridLayout(3, 1));
         playerSelectionPanel.setBackground(Color.white);
         playerSelectionPanel.setVisible(true);
         frame.add(playerSelectionPanel);
 
         //Creates the player selection label
-        selectionText = new JLabel("Please Select The Amount of Players:");
+        selectionText = new JLabel("Please Select The Amount of Players (2+):");
         selectionText.setHorizontalAlignment(JLabel.CENTER);
         selectionText.setFont(font6);
 
@@ -86,21 +87,25 @@ public class View
         playerSelection.setFont(font5);
 
         //Creates the AI selection entering area
-        aiSelection = new JTextField();
-        aiSelection.setEditable(true);
-        aiSelection.setActionCommand("AI Number");
-        aiSelection.setFont(font5);
+        aISelection = new JTextField();
+        aISelection.setEditable(true);
+        aISelection.setActionCommand("AI Number");
+        aISelection.setFont(font5);
 
         //Creates a button to allow users to submit their number of players
         submit = new JButton("Submit");
         submit.setFont(font1);
         submit.setBackground(Color.cyan);
 
+        //Creates a blank space to place the submit button better
+        JLabel temp = new JLabel();
+
         //Adds all elements to the player selection panel
         playerSelectionPanel.add(selectionText);
         playerSelectionPanel.add(aISelectionText);
         playerSelectionPanel.add(playerSelection);
-        playerSelectionPanel.add(aiSelection);
+        playerSelectionPanel.add(aISelection);
+        playerSelectionPanel.add(temp);
         playerSelectionPanel.add(submit);
 
         //Creates the output of game information
@@ -122,9 +127,11 @@ public class View
 
         //Creates the display for the player's name
         playerName = new JLabel();
+        playerName.setHorizontalAlignment(SwingConstants.CENTER);
         playerName.setVisible(true);
         playerName.setFont(font1);
         playerName.setBackground(Color.white);
+        playerName.setOpaque(true);
 
         //Creates the display for the properties that the player own
         properties = new JTextArea();
@@ -151,6 +158,7 @@ public class View
         rollPanel.add(rollButton);
         rollPanel.setVisible(false);
         rollPanel.setBackground(Color.white);
+        rollPanel.setOpaque(true);
         bottomPanel.add(rollPanel);
 
         //Creates a button panel for the turn buttons
@@ -174,6 +182,7 @@ public class View
         //Creates the house/hotel button and adds it to the button panel
         houseHotelButton = new JButton("House/Hotel");
         houseHotelButton.setEnabled(false);
+        houseHotelButton.setBackground(new Color(98, 252, 224));
         houseHotelButton.setFont(font4);
         buttonPanel.add(houseHotelButton);
 
@@ -186,7 +195,7 @@ public class View
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
         frame.setVisible(true);
-
+      
         //House Frame
         houseFrame = new JFrame("Buy Houses and Hotels");
         houseFrame.setLayout(new GridLayout(3,1));
@@ -214,6 +223,7 @@ public class View
 
         //Creates panel for dropdown bar
         dropdownPanel = new JPanel();
+        dropdownPanel.setBackground(Color.white);
         dropdownPanel.setVisible(true);
         houseFrame.add(dropdownPanel);
 
@@ -222,19 +232,18 @@ public class View
         houseButtonPanel.setVisible(true);
         houseFrame.add(houseButtonPanel);
 
-        //Creates buttons for buying houses and hotels
+        //Creates button for buying houses and hotels
         buyHouseButton = new JButton("Buy House");
         buyHouseButton.setFont(font5);
-        buyHouseButton.setEnabled(false);
+        buyHouseButton.setBackground(new Color(240, 255, 77));
         houseButtonPanel.add(buyHouseButton);
-
         buyHotelButton = new JButton("Buy Hotel");
         buyHotelButton.setFont(font5);
-        buyHotelButton.setEnabled(false);
+        buyHotelButton.setBackground(new Color(246, 77, 255));
         houseButtonPanel.add(buyHotelButton);
-
         closeButton = new JButton("Close");
         closeButton.setFont(font5);
+        closeButton.setBackground(new Color(237, 24, 24));
         houseButtonPanel.add(closeButton);
     }
 
@@ -295,14 +304,24 @@ public class View
         playerName.setText(str);
     }
 
+    /**
+     * This is a method that will get the number of players that the user entered
+     * and return a string with the number.
+     * @return A String that contains the number of players.
+     */
     public String getPlayerAmount()
     {
         return playerSelection.getText();
     }
 
+    /**
+     * This is a method that will get the number of AI players that the user
+     * entered and return a string with the number.
+     * @return A String that contains the number of AI players.
+     */
     public String getAIAmount()
     {
-        return aiSelection.getText();
+        return aISelection.getText();
     }
 
     /**
@@ -316,11 +335,12 @@ public class View
         buyButton.addActionListener(o);
         endTurnButton.addActionListener(o);
         playerSelection.addActionListener(o);
-        aiSelection.addActionListener(o);
+        aISelection.addActionListener(o);
         submit.addActionListener(o);
         rentButton.addActionListener(o);
         houseHotelButton.addActionListener(o);
     }
+
 
     /**
      * This is a method that will update the player name that is being displayed.
@@ -355,6 +375,7 @@ public class View
         buyButton.setEnabled(false);
         buyButton.setVisible(true);
         rentButton.setEnabled(false);
+        rentButton.setVisible(true);
         rollButton.setVisible(true);
         houseHotelButton.setEnabled(false);
         houseHotelButton.setVisible(true);
@@ -376,6 +397,7 @@ public class View
     public void setBuyable()
     {
         buyButton.setEnabled(true);
+        buyButton.setVisible(true);
     }
 
     /**
@@ -412,6 +434,9 @@ public class View
         houseHotelButton.setEnabled(true);
     }
 
+    /**
+     * This method will show the house frame
+     */
     public void enableBuyHouseButton()
     {
         buyHouseButton.setEnabled(true);
@@ -440,14 +465,24 @@ public class View
         houseFrame.setVisible(true);
     }
 
+    /**
+     * This method will update the output text area in the house and hotel
+     * buying frame.
+     * @param str A String containing the information to be displayed
+     */
     public void updateOutputHouse(String str)
     {
         outputHouse.setText(str);
     }
 
+    /**
+     * This is a method that will set up the dropdown menu of the properties
+     * that the user can buy houses and hotels on.
+     * @param arrayList A ArrayList of Property that can have houses or hotels.
+     */
     public void setUpDropdown(ArrayList<Property> arrayList)
     {
-        String[] names = new String[arrayList.size()];
+        String[] names = new String[arrayList.size()-1];
         for(int i = 0; i < arrayList.size(); i++)
         {
             names[i] = arrayList.get(i).getName();
@@ -459,13 +494,24 @@ public class View
         dropdownPanel.add(dropdown);
     }
 
+    /**
+     * This is a method that will add ActionListener to everything that needs one
+     * on the house and hotel buying frame.
+     * @param al An ActionListener object to be added.
+     */
     public void setHouseActionListener(ActionListener al)
     {
         buyHouseButton.addActionListener(al);
         buyHotelButton.addActionListener(al);
         closeButton.addActionListener(al);
+        dropdown.addActionListener(al);
     }
 
+    /**
+     * This method will return what the user has selected from the
+     * dropdown menu.
+     * @return A String that contains the selection.
+     */
     public void setDropdownActionListener(ActionListener al)
     {
         dropdown.addActionListener(al);
@@ -476,11 +522,20 @@ public class View
         return dropdown.getSelectedItem().toString();
     }
 
+    /**
+     * This method will close the house and hotel buying frame.
+     */
     public void closeHouseFrame()
     {
         houseFrame.setVisible(false);
     }
 
+    /**
+     * This method is used to allow the information of what happened
+     * in an AI's turn to be displayed to a user it will allow
+     * the user to only activate the end turn button to tell the
+     * game when it can continue.
+     */
     public void aITurn()
     {
         rentButton.setEnabled(false);
