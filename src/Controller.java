@@ -2,13 +2,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Milestone 3 TO-DO:
- *
- * 1. Buy house function
- * 2. Buy hotel function
- * 3. Process "Go" square
- * 4. Process "Jail" square
- *
+ * Controller Class for the Monopoly GUI
+ * @author Brady Norton
+ * Modifications by Cam Sommerville
  */
 public class Controller implements ActionListener
 {
@@ -27,11 +23,8 @@ public class Controller implements ActionListener
      */
     public Controller(Game m, View v)
     {
-        // Initiate Model and View
         this.m = m;
         this.v = v;
-
-        // Initiate Actions
         v.monopolyActionListener(this);
     }
 
@@ -128,14 +121,23 @@ public class Controller implements ActionListener
 
     }
 
+    /**
+     * Outputs that a house has been bought
+     */
     public void houseOutput(){
         v.updateOutput(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
     }
 
+    /**
+     * Outputs that a hotel has been bought
+     */
     public void hotelOutput(){
         v.updateOutput(m.getCurrentPlayer() + " bought a hotel on: "+ v.getSelection());
     }
 
+    /**
+     * method to simulate a roll in the model and update the view accordingly
+     */
     public void roll(){
         // Tell Model that user selected Roll command
         m.roll();
@@ -147,6 +149,9 @@ public class Controller implements ActionListener
         propertyOptions();
     }
 
+    /**
+     * method to simulate a purchase in the model and update the view accordingly
+     */
     public void buy(){
         // Test
         v.updateOutput("Buy Selected");
@@ -156,6 +161,9 @@ public class Controller implements ActionListener
         v.turnOffButtons();
     }
 
+    /**
+     * method to pay rent and update the view accordingly
+     */
     public void payRent(){
         v.updateOutput("Pay Rent Selected");
         int numInSet;
@@ -176,6 +184,9 @@ public class Controller implements ActionListener
         v.turnOffButtons();
     }
 
+    /**
+     * Method used to end the current players turn
+     */
     public void endTurn(){
         v.updateOutput("End Turn Selected");
         m.endTurn();
@@ -321,6 +332,9 @@ public class Controller implements ActionListener
         else {updatePlayer(m.getCurrentPlayer());}
     }
 
+    /**
+     * Builds the Property Buying interface
+     */
     public void buildProperty()
     {
         if(m.doesPlayerOwnFullSet())
@@ -337,6 +351,9 @@ public class Controller implements ActionListener
         }
     }
 
+    /**
+     * Informs the view whether houses/hotels can be purchased
+     */
     public void propertyBuildingOptions()
     {
         // Start the options initially disabled

@@ -1,5 +1,12 @@
 import java.util.*;
 
+/**
+ * Simulates a Monopoly Player
+ * @author Cam Sommerville
+ * @author Brady Norton
+ * @author Braxton Martin
+ * @author Aaron Gabor
+ */
 public class Player {
     private String name;
     private ArrayList<Property> properties;
@@ -214,6 +221,11 @@ public class Player {
         rollDice();
     }
 
+    /**
+     * returns the roll of one of the players dice
+     * @param whichDie
+     * @return
+     */
     public int getRoll(int whichDie)
     {
        if (whichDie ==1) return die1.getValue();
@@ -221,6 +233,10 @@ public class Player {
        return -1;
     }
 
+    /**
+     * Buys a house for the player
+     * @param cost
+     */
     public void buyHouse(int cost)
     {
         balance = balance - cost;

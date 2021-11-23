@@ -1,3 +1,7 @@
+/**
+ * Represents a Railroad
+ * @author Braxton Martin
+ */
 public class Railroad extends Property{
     /**
      * Constructor for Property class that creates a Property object

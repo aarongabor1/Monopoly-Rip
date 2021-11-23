@@ -1,3 +1,7 @@
+/**
+ * Interface for all squares on the board
+ * @author Cam Sommerville
+ */
 public interface Square {
     int getIndex();
     int getPrice();

@@ -1,3 +1,10 @@
+/**
+ * Represents a purchasable property
+ * @author Cam Sommerville
+ * @author Brady Norton
+ * @author Braxton Martin
+ * @author Aaron Gabor
+ */
 public class Property implements Square {
     private String name;
     private int index;
