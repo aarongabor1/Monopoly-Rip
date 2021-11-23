@@ -432,7 +432,7 @@ public class Game
         return currentPlayer;
     }
 
-    /**
+
     void buyHouseTest()
     {
         // Setup Players
@@ -464,13 +464,12 @@ public class Game
         System.out.println(currentPlayer.getName()+" bought: " + currentPlayer.getPosition().getName());
 
         // Test if we can build a hotel
-        currentPlayer.getProperties().get(0).setHouse(4);
-        currentPlayer.getProperties().get(1).setHouse(4);
+        currentPlayer.getProperties().get(0).setHouse();
+        currentPlayer.getProperties().get(1).setHouse();
 
 
         running = true;
     }
-     **/
 
     public Property getPropertyByName(String propertyName)
     {
@@ -489,7 +488,14 @@ public class Game
     {
         if(players.get(currentTurn).getProperties().size()>1)
         {
-            return true;
+            for(int i=0; i<players.get(currentTurn).getProperties().size(); ++i)
+            {
+                if(players.get(currentTurn).getProperties().get(i).isFullSetTrue())
+                {
+                    return true;
+                }
+            }
+
         }
         return false;
     }
