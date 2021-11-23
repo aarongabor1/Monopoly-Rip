@@ -325,10 +325,11 @@ public class Controller implements ActionListener
     {
         if(m.doesPlayerOwnFullSet())
         {
+            // Update View
             v.setHouseHotelBuyable();
             v.setUpDropdown(m.getCurrentPlayer().getProperties());
 
-            //v.setDropdownActionListener(this);
+            // Set action listeners
             v.setHouseActionListener(this);
         }
         else

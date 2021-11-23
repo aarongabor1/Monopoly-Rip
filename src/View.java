@@ -52,12 +52,6 @@ public class View
     // Default List Model Variables
     private DefaultListModel propertyModel;
 
-    private ArrayList<String> propertyNames;
-
-    private JList pList;
-
-    private JScrollPane sp;
-
     private JComboBox cb;
 
     /**
@@ -247,10 +241,12 @@ public class View
         buyHouseButton = new JButton("Buy House");
         buyHouseButton.setFont(font5);
         buyHouseButton.setBackground(new Color(240, 255, 77));
+        buyHouseButton.setEnabled(false);
         houseButtonPanel.add(buyHouseButton);
         buyHotelButton = new JButton("Buy Hotel");
         buyHotelButton.setFont(font5);
         buyHotelButton.setBackground(new Color(246, 77, 255));
+        buyHotelButton.setEnabled(false);
         houseButtonPanel.add(buyHotelButton);
         closeButton = new JButton("Close");
         closeButton.setFont(font5);
@@ -459,6 +455,7 @@ public class View
         buyHotelButton.setEnabled(false);
     }
 
+
     public void enableBuyHotelButton()
     {
        buyHotelButton.setEnabled(true);
@@ -498,36 +495,6 @@ public class View
      */
     public void setUpDropdown(ArrayList<Property> arrayList)
     {
-        /**
-        // Set up property list
-        propertyModel = new DefaultListModel<>();
-
-        String[] names = new String[arrayList.size()-1];
-        for(int i = 0; i < arrayList.size(); i++)
-        {
-            // Populate Model
-            propertyModel.addElement(arrayList.get(i).getName());
-
-            names[i] = arrayList.get(i).getName();
-        }
-        //dropdown = new JComboBox<String>(names);
-        //dropdown.setActionCommand("dropdown");
-        //dropdown.setVisible(true);
-        //dropdown.setFont(font2);
-        //dropdownPanel.add(dropdown);
-
-        // JList
-        pList = new JList<String>(propertyModel);
-
-        // Scroll pane
-        //sp = new JScrollPane(pList);
-
-        // Default Combo Box
-        DefaultComboBoxModel cbm = new DefaultComboBoxModel();
-
-        // Add to panel
-        //dropdownPanel.add(sp);
-         **/
         // Set up property list
         propertyModel = new DefaultListModel<>();
 
@@ -576,7 +543,6 @@ public class View
     public String getSelection()
     {
         return cb.getSelectedItem().toString();
-        //return pList.getSelectedValue().toString();
     }
 
     /**
