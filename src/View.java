@@ -483,7 +483,7 @@ public class View
     public void setUpDropdown(ArrayList<Property> arrayList)
     {
         String[] names = new String[arrayList.size()-1];
-        for(int i = 0; i < arrayList.size(); i++)
+        for(int i = 0; i < arrayList.size()-1; i++)
         {
             names[i] = arrayList.get(i).getName();
         }
