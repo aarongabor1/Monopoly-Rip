@@ -98,13 +98,15 @@ public class Controller implements ActionListener
             // Update View
             propertyBuildingOptions();
 
-            System.out.println(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
+            houseOutput();
         }
         else if(o.equals("Buy Hotel"))
         {
             System.out.println("Buy Hotel Selected");
 
             m.buyHotel(v.getSelection());
+
+            hotelOutput();
         }
         else if(o.equals("Selected Property"))
         {
@@ -124,6 +126,14 @@ public class Controller implements ActionListener
             endTurn();
         }
 
+    }
+
+    public void houseOutput(){
+        v.updateOutput(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
+    }
+
+    public void hotelOutput(){
+        v.updateOutput(m.getCurrentPlayer() + " bought a hotel on: "+ v.getSelection());
     }
 
     public void roll(){
@@ -202,6 +212,9 @@ public class Controller implements ActionListener
         v.updatePlayerName(cp.getName());
         v.updateBalance(String.valueOf(cp.getBalance()));
         v.updateProperties(cp.getProperties());
+        if(cp.isInJail()){
+            v.updateOutput("This Player is in Jail");
+        }
 
         if(cp instanceof AI){
             v.aITurn();
@@ -324,7 +337,7 @@ public class Controller implements ActionListener
         }
     }
 
-    private void propertyBuildingOptions()
+    public void propertyBuildingOptions()
     {
         // Start the options initially disabled
         v.disableHotelAndHouse();

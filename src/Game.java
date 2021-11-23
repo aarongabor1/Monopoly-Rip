@@ -236,6 +236,7 @@ public class Game
     {
         return players.get(currentTurn).getPosition().getPrice() < 0;
     }
+
     public boolean isSquareProperty(){
         if(currentPlayer.getPosition() instanceof Property ) return true;
         return false;

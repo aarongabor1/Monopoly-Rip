@@ -302,7 +302,12 @@ public class View
         properties.setText(null);
         for (Property p : arrayList)
         {
-            properties.append(p.getName() + " Set: " + p.getSet() + "\n");
+            if (p instanceof Utility || p instanceof Railroad){
+                properties.append(p.getName() + "\n");
+            }
+            else {
+                properties.append(p.getName() + " Set: " + p.getSet() + " Houses: " + p.getHouses() + " Hotel: " + p.hasHotel() + "\n");
+            }
         }
     }
 
