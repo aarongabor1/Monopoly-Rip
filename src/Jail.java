@@ -1,3 +1,7 @@
+/**
+ * Represents the Jail Square
+ * @author Braxton Martin
+ */
 public class Jail implements Square {
 
     public Jail(int index){
