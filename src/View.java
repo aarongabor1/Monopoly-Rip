@@ -49,6 +49,17 @@ public class View
     private JTextField outputHouse;
     private JTextField balance2;
 
+    // Default List Model Variables
+    private DefaultListModel propertyModel;
+
+    private ArrayList<String> propertyNames;
+
+    private JList pList;
+
+    private JScrollPane sp;
+
+    private JComboBox cb;
+
     /**
      * A constructor for the View class that will create a GUI and will configure the settings
      * of all the frames, panels, text areas, text fields, labels, and buttons.
@@ -487,16 +498,61 @@ public class View
      */
     public void setUpDropdown(ArrayList<Property> arrayList)
     {
+        /**
+        // Set up property list
+        propertyModel = new DefaultListModel<>();
+
         String[] names = new String[arrayList.size()-1];
-        for(int i = 0; i < arrayList.size()-1; i++)
+        for(int i = 0; i < arrayList.size(); i++)
         {
+            // Populate Model
+            propertyModel.addElement(arrayList.get(i).getName());
+
             names[i] = arrayList.get(i).getName();
         }
-        dropdown = new JComboBox<String>(names);
-        dropdown.setActionCommand("dropdown");
-        dropdown.setVisible(true);
-        dropdown.setFont(font2);
-        dropdownPanel.add(dropdown);
+        //dropdown = new JComboBox<String>(names);
+        //dropdown.setActionCommand("dropdown");
+        //dropdown.setVisible(true);
+        //dropdown.setFont(font2);
+        //dropdownPanel.add(dropdown);
+
+        // JList
+        pList = new JList<String>(propertyModel);
+
+        // Scroll pane
+        //sp = new JScrollPane(pList);
+
+        // Default Combo Box
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+
+        // Add to panel
+        //dropdownPanel.add(sp);
+         **/
+        // Set up property list
+        propertyModel = new DefaultListModel<>();
+
+        for(int i = 0; i < arrayList.size(); i++)
+        {
+            // Populate Model
+            propertyModel.addElement(arrayList.get(i).getName());
+        }
+
+        // Get property names
+        String[] p = new String[propertyModel.getSize()];
+        propertyModel.copyInto(p);
+
+        // Set up default combo box model
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel(p);
+        cb = new JComboBox();
+        cb.setModel(cbm);
+        cb.insertItemAt(" ",0);
+        cb.setSelectedIndex(0);
+        cb.setActionCommand("Selected Property");
+
+        // Add to panel
+        cb.setVisible(true);
+        cb.setFont(font2);
+        dropdownPanel.add(cb);
     }
 
     /**
@@ -509,7 +565,7 @@ public class View
         buyHouseButton.addActionListener(al);
         buyHotelButton.addActionListener(al);
         closeButton.addActionListener(al);
-        dropdown.addActionListener(al);
+        cb.addActionListener(al);
     }
 
     /**
@@ -517,14 +573,10 @@ public class View
      * dropdown menu.
      * @return A String that contains the selection.
      */
-    public void setDropdownActionListener(ActionListener al)
-    {
-        dropdown.addActionListener(al);
-    }
-
     public String getSelection()
     {
-        return dropdown.getSelectedItem().toString();
+        return cb.getSelectedItem().toString();
+        //return pList.getSelectedValue().toString();
     }
 
     /**

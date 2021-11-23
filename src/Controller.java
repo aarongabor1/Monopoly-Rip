@@ -101,7 +101,7 @@ public class Controller implements ActionListener
 
             hotelOutput();
         }
-        else if(o.equals("dropdown"))
+        else if(o.equals("Selected Property"))
         {
             System.out.println(v.getSelection()+ " Selected");
 
@@ -342,7 +342,7 @@ public class Controller implements ActionListener
             v.setHouseHotelBuyable();
             v.setUpDropdown(m.getCurrentPlayer().getProperties());
 
-            v.setDropdownActionListener(this);
+            //v.setDropdownActionListener(this);
             v.setHouseActionListener(this);
         }
         else
@@ -356,6 +356,9 @@ public class Controller implements ActionListener
      */
     public void propertyBuildingOptions()
     {
+        // Start the options initially disabled
+        v.disableHotelAndHouse();
+
         // Player can build houses
         if(m.canBuyHouse(m.getPropertyByName(v.getSelection())))
         {
@@ -364,6 +367,11 @@ public class Controller implements ActionListener
         else if(m.canBuyHotel())
         {
             v.enableBuyHotelButton();
+        }
+        else if(v.getSelection().equals(" "))
+        {
+            // Disable options
+            v.disableHotelAndHouse();
         }
         else
         {

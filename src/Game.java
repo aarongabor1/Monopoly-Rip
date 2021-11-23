@@ -466,7 +466,7 @@ public class Game
     {
         return currentPlayer;
     }
-
+  
     public Property getPropertyByName(String propertyName)
     {
         int propertyIndex=0;
@@ -488,7 +488,14 @@ public class Game
     {
         if(players.get(currentTurn).getProperties().size()>1)
         {
-            return true;
+            for(int i=0; i<players.get(currentTurn).getProperties().size(); ++i)
+            {
+                if(players.get(currentTurn).getProperties().get(i).isFullSetTrue())
+                {
+                    return true;
+                }
+            }
+
         }
         return false;
     }
