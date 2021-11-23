@@ -98,13 +98,15 @@ public class Controller implements ActionListener
             // Update View
             propertyBuildingOptions();
 
-            System.out.println(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
+            houseOutput();
         }
         else if(o.equals("Buy Hotel"))
         {
             System.out.println("Buy Hotel Selected");
 
             m.buyHotel(v.getSelection());
+
+            hotelOutput();
         }
         else if(o.equals("dropdown"))
         {
@@ -124,6 +126,14 @@ public class Controller implements ActionListener
             endTurn();
         }
 
+    }
+
+    public void houseOutput(){
+        v.updateOutput(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
+    }
+
+    public void hotelOutput(){
+        v.updateOutput(m.getCurrentPlayer() + " bought a hotel on: "+ v.getSelection());
     }
 
     public void roll(){
@@ -327,7 +337,7 @@ public class Controller implements ActionListener
         }
     }
 
-    private void propertyBuildingOptions()
+    public void propertyBuildingOptions()
     {
         // Player can build houses
         if(m.canBuyHouse(m.getPropertyByName(v.getSelection())))

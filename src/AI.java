@@ -30,11 +30,16 @@ public class AI extends Player{
         else if(model.canBuy()){
             controller.buy();
         }
-        /*for(Property p : this.getProperties()){
+        for(Property p : this.getProperties()){
             if (model.canBuyHouse(p) && p.getHousePrice() < this.getBalance()){
                 model.buyHouse(p.toString());
+                controller.houseOutput();
             }
-        }*/
+            if (model.canBuyHotel() && p.getHousePrice() < this.getBalance()){
+                model.buyHotel(p.toString());
+                controller.hotelOutput();
+            }
+        }
     }
 
 }
