@@ -37,6 +37,14 @@ public class Player {
     }
 
     /**
+     * Check whether Player is in jail
+     * @return boolean
+     */
+    public boolean isInJail(){
+        return inJail;
+    }
+
+    /**
      * Getter for the Player balance
      *
      * @return int

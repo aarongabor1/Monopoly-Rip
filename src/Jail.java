@@ -1,13 +1,11 @@
 public class Jail implements Square {
 
-    private int index;
-
     public Jail(int index){
-        index = this.index;
     }
+
     @Override
     public int getIndex() {
-        return index;
+        return 10;
     }
 
     @Override
@@ -17,7 +15,7 @@ public class Jail implements Square {
 
     @Override
     public String getName() {
-        return "Just Visiting";
+        return "Jail";
     }
 
     @Override
