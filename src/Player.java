@@ -134,7 +134,7 @@ public class Player {
         System.out.println("This player owns the following properties: ");
         if(properties.size()>0) {
             for (Property p : properties) {
-                System.out.print("  " + p.getName() + "(Set:" + p.getSet() + " ");
+                System.out.print("  " + p.getName() + "(Set " + p.getSet() + ") ");
             }
             System.out.println("");
         }else{
@@ -170,7 +170,7 @@ public class Player {
             roll2Double = roll1Double;
             roll1Double = (die1.getValue() == die2.getValue());
             roll = die1.getValue() + die2.getValue();
-            System.out.println("They rolled a " + die1.getValue() + "and a " + die2.getValue());
+            System.out.println("They rolled a " + die1.getValue() + " and a " + die2.getValue());
             if (roll1Double && roll2Double && roll3Double) {
                 inJail = true;
                 Square jail = board.getProperty(10);
@@ -187,9 +187,13 @@ public class Player {
                 }
             }
         }else{
+            System.out.println("This Player is in jail");
             die1.roll();
             die2.roll();
-            if(die1.getValue() == die2.getValue()) inJail = false;
+            if(die1.getValue() == die2.getValue()){
+                System.out.println("This Player got out of jail!");
+                inJail = false;
+            }
         }
     }
 

@@ -1,11 +1,13 @@
 public class Jail implements Square {
 
-    public Jail(int index){
+    private int index;
 
+    public Jail(int index){
+        index = this.index;
     }
     @Override
     public int getIndex() {
-        return 0;
+        return index;
     }
 
     @Override
