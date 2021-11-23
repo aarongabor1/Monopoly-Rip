@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.0.3
+ * @version 3.1.1
  */
 public class View
 {
@@ -15,7 +15,7 @@ public class View
     private static final Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
     private static final Font font4 = new Font("Times New Roman", Font.BOLD, 85);
     private static final Font font5 = new Font("Times New Roman", Font.BOLD, 50);
-    private static final Font font6 = new Font("Times New Roman", Font.BOLD, 40);
+    private static final Font font6 = new Font("Times New Roman", Font.BOLD, 25);
 
     private JFrame frame;
     private JPanel mainPanel;
@@ -30,10 +30,12 @@ public class View
     private JButton endTurnButton;
     private JButton rentButton;
     private JTextField playerSelection;
+    private JTextField aiSelection;
     private JLabel playerName;
     private JPanel playerSelectionPanel;
     private JButton submit;
     private JLabel selectionText;
+    private JLabel aISelectionText;
     private JButton houseHotelButton;
 
     private JFrame houseFrame;
@@ -62,21 +64,32 @@ public class View
 
         //Creates the player selection panel
         playerSelectionPanel = new JPanel();
-        playerSelectionPanel.setLayout(new GridLayout(3, 1));
+        playerSelectionPanel.setLayout(new GridLayout(3, 2));
         playerSelectionPanel.setBackground(Color.white);
         playerSelectionPanel.setVisible(true);
         frame.add(playerSelectionPanel);
 
         //Creates the player selection label
-        selectionText = new JLabel("Please Select The Amount of Players (2+):");
+        selectionText = new JLabel("Please Select The Amount of Players:");
         selectionText.setHorizontalAlignment(JLabel.CENTER);
         selectionText.setFont(font6);
+
+        //Creates the AI selection label
+        aISelectionText = new JLabel("Please Select The Amount of AI Players:");
+        aISelectionText.setHorizontalAlignment(JLabel.CENTER);
+        aISelectionText.setFont(font6);
 
         //Creates the Player selection entering area
         playerSelection = new JTextField();
         playerSelection.setEditable(true);
         playerSelection.setActionCommand("Player Number");
         playerSelection.setFont(font5);
+
+        //Creates the AI selection entering area
+        aiSelection = new JTextField();
+        aiSelection.setEditable(true);
+        aiSelection.setActionCommand("AI Number");
+        aiSelection.setFont(font5);
 
         //Creates a button to allow users to submit their number of players
         submit = new JButton("Submit");
@@ -85,7 +98,9 @@ public class View
 
         //Adds all elements to the player selection panel
         playerSelectionPanel.add(selectionText);
+        playerSelectionPanel.add(aISelectionText);
         playerSelectionPanel.add(playerSelection);
+        playerSelectionPanel.add(aiSelection);
         playerSelectionPanel.add(submit);
 
         //Creates the output of game information
@@ -210,10 +225,14 @@ public class View
         //Creates buttons for buying houses and hotels
         buyHouseButton = new JButton("Buy House");
         buyHouseButton.setFont(font5);
+        buyHouseButton.setEnabled(false);
         houseButtonPanel.add(buyHouseButton);
+
         buyHotelButton = new JButton("Buy Hotel");
         buyHotelButton.setFont(font5);
+        buyHotelButton.setEnabled(false);
         houseButtonPanel.add(buyHotelButton);
+
         closeButton = new JButton("Close");
         closeButton.setFont(font5);
         houseButtonPanel.add(closeButton);
@@ -250,7 +269,8 @@ public class View
      */
     public void inputFailed()
     {
-        selectionText.setText("Please Enter a Valid Number of Players (2+):");
+        selectionText.setText("Please Enter a Valid Number of Players:");
+        aISelectionText.setText("Please Enter a Valid Number of AI Players:");
     }
 
     /**
@@ -280,6 +300,11 @@ public class View
         return playerSelection.getText();
     }
 
+    public String getAIAmount()
+    {
+        return aiSelection.getText();
+    }
+
     /**
      * A method that will add the action listener that has been passed to the elements of the
      * GUI that needs an action listener.
@@ -291,9 +316,21 @@ public class View
         buyButton.addActionListener(o);
         endTurnButton.addActionListener(o);
         playerSelection.addActionListener(o);
+        aiSelection.addActionListener(o);
         submit.addActionListener(o);
         rentButton.addActionListener(o);
         houseHotelButton.addActionListener(o);
+    }
+
+    /**
+     * This is a method that will update the player name that is being displayed.
+     */
+    public int getPlayerNumber()
+    {
+        String pn = playerSelection.getText();
+        pn.substring(23);
+        pn.replaceAll("\\s+", "");
+        return Integer.valueOf(pn);
     }
 
     /**
@@ -375,6 +412,29 @@ public class View
         houseHotelButton.setEnabled(true);
     }
 
+    public void enableBuyHouseButton()
+    {
+        buyHouseButton.setEnabled(true);
+        buyHotelButton.setEnabled(false);
+    }
+
+    public void enableBuyHotelButton()
+    {
+       buyHotelButton.setEnabled(true);
+       buyHouseButton.setEnabled(false);
+    }
+
+    public void disableHouseHotelBuyable()
+    {
+        houseHotelButton.setEnabled(false);
+    }
+
+    public void disableHotelAndHouse()
+    {
+        buyHotelButton.setEnabled(false);
+        buyHouseButton.setEnabled(false);
+    }
+
     public void openHouseBuy()
     {
         houseFrame.setVisible(true);
@@ -387,12 +447,13 @@ public class View
 
     public void setUpDropdown(ArrayList<Property> arrayList)
     {
-        String[] names = new String[arrayList.size()-1];
+        String[] names = new String[arrayList.size()];
         for(int i = 0; i < arrayList.size(); i++)
         {
             names[i] = arrayList.get(i).getName();
         }
         dropdown = new JComboBox<String>(names);
+        dropdown.setActionCommand("dropdown");
         dropdown.setVisible(true);
         dropdown.setFont(font2);
         dropdownPanel.add(dropdown);
@@ -403,6 +464,11 @@ public class View
         buyHouseButton.addActionListener(al);
         buyHotelButton.addActionListener(al);
         closeButton.addActionListener(al);
+    }
+
+    public void setDropdownActionListener(ActionListener al)
+    {
+        dropdown.addActionListener(al);
     }
 
     public String getSelection()
@@ -417,8 +483,9 @@ public class View
 
     public void aITurn()
     {
-        rentButton.setVisible(false);
-        buyButton.setVisible(false);
-        houseHotelButton.setVisible(false);
+        rentButton.setEnabled(false);
+        buyButton.setEnabled(false);
+        houseHotelButton.setEnabled(false);
+        endTurnButton.setEnabled(true);
     }
 }

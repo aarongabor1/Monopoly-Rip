@@ -29,7 +29,6 @@ public class AI extends Player{
         controller.roll();
 
         if(model.isPropertyEmpty()){
-            //controller.endTurn();
             return;
         }
         else if(model.isRentOwed()){
@@ -38,7 +37,7 @@ public class AI extends Player{
         else if(model.canBuy()){
             controller.buy();
         }
-        //controller.endTurn();
+
     }
 
 }

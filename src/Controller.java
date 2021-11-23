@@ -1,6 +1,15 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Milestone 3 TO-DO:
+ *
+ * 1. Buy house function
+ * 2. Buy hotel function
+ * 3. Process "Go" square
+ * 4. Process "Jail" square
+ *
+ */
 public class Controller implements ActionListener
 {
 
@@ -50,18 +59,26 @@ public class Controller implements ActionListener
         {
             payRent();
         }
+        else if (o.equals("House/Hotel"))
+        {
+            // Update View
+            v.openHouseBuy();
+
+        }
         else if(o.equals("Submit"))
         {
             System.out.println("Players Selected: " + v.getPlayerAmount());
 
             // Check if input is valid
-            if(m.checkPlayerAmount(v.getPlayerAmount()))
+            if(m.checkPlayerAmount(v.getPlayerAmount()) && m.checkPlayerAmount(v.getAIAmount()))
             {
                 // Test
                 System.out.println("Player number selected is valid");
 
                 // Setup the Model
                 startGame();
+                //buyHouseTest();
+                //buildProperty();
 
                 // Setup View
                 updatePlayer(m.getCurrentPlayer());
@@ -71,6 +88,36 @@ public class Controller implements ActionListener
                 System.out.println("Player number selected is invalid");
                 v.inputFailed();
             }
+        }
+        else if(o.equals("Buy House"))
+        {
+            System.out.println("Buy House Selected");
+            // Update Model
+            m.buyHouse(v.getSelection());
+
+            // Update View
+            propertyBuildingOptions();
+
+            System.out.println(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
+        }
+        else if(o.equals("Buy Hotel"))
+        {
+            System.out.println("Buy Hotel Selected");
+
+            m.buyHotel(v.getSelection());
+        }
+        else if(o.equals("dropdown"))
+        {
+            System.out.println(v.getSelection()+ " Selected");
+
+            // Set the appropriate buttons for the selected property
+            propertyBuildingOptions();
+
+        }
+        else if(o.equals("Close"))
+        {
+            System.out.println("Close Selected");
+            v.closeHouseFrame();
         }
         else
         {
@@ -114,6 +161,7 @@ public class Controller implements ActionListener
         v.updateOutput("End Turn Selected");
         m.endTurn();
         endTurnUpdate();
+        buildProperty();
     }
 
     /**
@@ -122,11 +170,12 @@ public class Controller implements ActionListener
     private void startGame()
     {
         // Setup the Model
-        m.setup(Integer.parseInt(v.getPlayerAmount()),this);
+        m.setup(Integer.parseInt(v.getPlayerAmount()),Integer.parseInt(v.getAIAmount()),this);
 
         // Setup the View
         v.startGame();
         v.setRoll();
+        v.setHouseHotelBuyable();
 
         // Test
         System.out.println("Current Player: "+m.getCurrentPlayer().getName());
@@ -249,4 +298,38 @@ public class Controller implements ActionListener
         // Update the View for the next Player
         else {updatePlayer(m.getCurrentPlayer());}
     }
+
+    public void buildProperty()
+    {
+        if(m.doesPlayerOwnFullSet())
+        {
+            v.setHouseHotelBuyable();
+            v.setUpDropdown(m.getCurrentPlayer().getProperties());
+
+            v.setDropdownActionListener(this);
+            v.setHouseActionListener(this);
+        }
+        else
+        {
+            v.disableHouseHotelBuyable();
+        }
+    }
+
+    private void propertyBuildingOptions()
+    {
+        // Player can build houses
+        if(m.canBuyHouse(m.getPropertyByName(v.getSelection())))
+        {
+            v.enableBuyHouseButton();
+        }
+        else if(m.canBuyHotel())
+        {
+            v.enableBuyHotelButton();
+        }
+        else
+        {
+            v.disableHouseHotelBuyable();
+        }
+    }
+
 }

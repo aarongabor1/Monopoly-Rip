@@ -135,23 +135,42 @@ public class Game
         return false;
     }
 
-    public boolean canBuyHouse(){
-        if(isSquareProperty()) {
-            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
-                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0) {
-                    if(((Property)currentPlayer.getPosition()).getHouses() < 4) return true;
+    public boolean canBuyHouse(Property p)
+    {
+        ArrayList<Integer> houseAmounts = new ArrayList<>();
+
+        for(int i=0; i<players.get(currentTurn).getProperties().size();++i)
+        {
+            houseAmounts.add(players.get(currentTurn).getProperties().get(i).getHouses());
+        }
+
+        System.out.println("Max Houses: " + Collections.max(houseAmounts));
+
+        if(p.getHouses() <= Collections.max(houseAmounts))
+        {
+            if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >=0)
+            {
+                if(getNumInSetOwned(players.get(currentTurn),p)==board.getPropertySet(p.getSet()).size())
+                {
+                    return true;
                 }
             }
         }
         return false;
     }
 
-    public boolean canBuyHotel(){
-        if(isSquareProperty()) {
-            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
-                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0)
-                    if(((Property)currentPlayer.getPosition()).getHouses() == 4) {
-                    return true;
+    public boolean canBuyHotel()
+    {
+        for(Property p:players.get(currentTurn).getProperties())
+        {
+            if(fullSet(players.get(currentTurn),p))
+            {
+                if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >= 0)
+                {
+                    if(maxHousesBuilt(p.getSet()))
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -165,6 +184,18 @@ public class Game
         }
         if(count == prop.getNumInSet()) return true;
         return false;
+    }
+
+    public boolean maxHousesBuilt(int setNumber)
+    {
+        for(int i=0;i<board.getPropertySet(setNumber).size();++i)
+        {
+            if(players.get(currentTurn).getProperties().get(i).getHouses()<4)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -196,27 +227,35 @@ public class Game
     }
 
     /**
-     *  Requests the number of players from the user using a scanner
+     *  Requests the number of players from the user
      *  Value is accepted If the entered int is equal to or greater than 2
      *  Corresponding amount of players are created using a loop then added to the game
      *
      *  Once all players are created and added, boolean running is set to true and every players position is set to 0
      *
      */
-    public void setup(int playerAmount, Controller controller){
+    public void setup(int playerAmount, int AIAmount, Controller controller){
 
-        for (int i = 0; i < playerAmount; i++)
-        {
-            addPlayer("Player" + (i+1));
-            System.out.println("Player " + (i+1) + " added");
+        if(playerAmount > 0) {
+            for (int i = 0; i < playerAmount; i++) {
+                addPlayer("Player " + (i + 1));
+                System.out.println("Player " + (i + 1) + " added");
+            }
         }
 
-        //AI test
+        if(AIAmount > 0) {
+            for (int i = 0; i < AIAmount; i++) {
+                players.add(new AI("AI " + (i + 1), board, controller));
+                System.out.println("AI " + (i + 1) + " added");
+            }
+        }
+
+        /*//AI test
         players.add(new AI("AI1", board, controller));
         players.add(new AI("AI2", board, controller));
         players.add(new AI("AI3", board, controller));
         players.add(new AI("AI4", board, controller));
-        playerAmount += 4;
+        playerAmount += 4;*/
 
         running = true;
 
@@ -229,7 +268,7 @@ public class Game
             System.out.println(players.get(i).getName());
         }
 
-        startingPlayerAmount = playerAmount;
+        startingPlayerAmount = playerAmount + AIAmount;
         currentPlayer = players.get(0);
         currentTurn = 0;
     }
@@ -246,7 +285,7 @@ public class Game
         {
             // Parse the input from user
             int i = Integer.parseInt(playerAmount);
-            if(i>1)
+            if(i >= 0)
             {
                 return true;
             }
@@ -353,4 +392,90 @@ public class Game
         return currentPlayer;
     }
 
+    /**
+    void buyHouseTest()
+    {
+        // Setup Players
+        players.add(new Player("P1",board));
+        players.add(new Player("P2",board));
+
+        // Start Players at "Go"
+        for(Player p : players){
+            p.setPosition(board.getProperty(0));
+        }
+
+        // Print each player for testing
+        for(int i=0; i<players.size();++i)
+        {
+            System.out.println(players.get(i).getName());
+        }
+
+        startingPlayerAmount = players.size();
+        currentPlayer = players.get(0);
+        currentTurn = 0;
+
+        // Add properties to players
+        currentPlayer.setPosition(board.getProperty(1));
+        buyProperty();
+        System.out.println(currentPlayer.getName()+" bought: " + currentPlayer.getPosition().getName());
+
+        currentPlayer.setPosition(board.getProperty(3));
+        buyProperty();
+        System.out.println(currentPlayer.getName()+" bought: " + currentPlayer.getPosition().getName());
+
+        // Test if we can build a hotel
+        currentPlayer.getProperties().get(0).setHouse(4);
+        currentPlayer.getProperties().get(1).setHouse(4);
+
+
+        running = true;
+    }
+     **/
+
+    public Property getPropertyByName(String propertyName)
+    {
+        int propertyIndex=0;
+        for(int i=0; i<currentPlayer.getProperties().size(); ++i)
+        {
+            if(propertyName.equals(board.getProperty(i).getName()))
+            {
+                propertyIndex = i;
+            }
+        }
+        return ((Property)board.getProperty(propertyIndex));
+    }
+
+    boolean doesPlayerOwnFullSet()
+    {
+        if(players.get(currentTurn).getProperties().size()>1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void buyHouse(String p)
+    {
+        for(int i=0; i<players.get(currentTurn).getProperties().size();++i)
+        {
+            if(players.get(currentTurn).getProperties().get(i).getName().equals(p))
+            {
+                // Update House Amount
+                players.get(currentTurn).getProperties().get(i).setHouse();
+
+                // Update player amount
+                players.get(currentTurn).buyHouse(players.get(currentTurn).getProperties().get(i).getHousePrice());
+            }
+        }
+    }
+
+    public void buyHotel(String p)
+    {
+        // Set Hotel
+        getPropertyByName(p).setHotel(true);
+
+        // Update players bank
+        players.get(currentTurn).buyHouse(getPropertyByName(p).getHousePrice());
+
+    }
 }

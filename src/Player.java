@@ -209,4 +209,9 @@ public class Player {
        return -1;
     }
 
+    public void buyHouse(int cost)
+    {
+        balance = balance - cost;
+    }
+
 }

@@ -68,6 +68,20 @@ public class Board {
         return squares.get(index);
     }
 
+    public ArrayList<Square> getPropertySet(int setNumber)
+    {
+        ArrayList<Square> set = new ArrayList<>();
+
+        for(Square s:squares)
+        {
+            if(s.getSet()==setNumber)
+            {
+                set.add(s);
+            }
+        }
+        return set;
+    }
+
     /**
      *  toString method
      *
