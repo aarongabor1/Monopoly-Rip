@@ -21,6 +21,10 @@ public class View
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
+    private JMenuBar menuBar;
+    private JMenu game;
+    private JMenuItem saveGame;
+    private JMenuItem mainScreen;
 
     private JTextField balance;
     private JTextArea properties;
@@ -48,11 +52,6 @@ public class View
     private JPanel houseButtonPanel;
     private JTextField outputHouse;
     private JTextField balance2;
-
-    private JMenuBar menuBar;
-    private JMenu game;
-    private JMenuItem saveGame;
-    private JMenuItem mainScreen;
 
     // Default List Model Variables
     private DefaultListModel propertyModel;
