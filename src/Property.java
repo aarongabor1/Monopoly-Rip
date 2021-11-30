@@ -1,3 +1,10 @@
+/**
+ * Represents a purchasable property
+ * @author Cam Sommerville
+ * @author Brady Norton
+ * @author Braxton Martin
+ * @author Aaron Gabor
+ */
 public class Property implements Square {
     private String name;
     private int index;
@@ -113,9 +120,9 @@ public class Property implements Square {
     /**
      * Setter for house
      *
-     * @param houseBuilt
+     * @param
      */
-    public void setHouse(boolean houseBuilt){
+    public void setHouse(){
         numOfhouses++;
     }
 
@@ -166,6 +173,11 @@ public class Property implements Square {
 
     public void setFullSetTrue(){
         isFullSet = true;
+    }
+
+    public boolean isFullSetTrue()
+    {
+        return isFullSet;
     }
 
 }

@@ -5,22 +5,23 @@ import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
- * @version 3.1.2
+ * @version 4.0.0
  */
 public class View
 {
     //Set fonts for all text in the GUI
-    private static final Font font1 = new Font("Times New Roman", Font.BOLD, 75);
-    private static final Font font2 = new Font("Times New Roman", Font.PLAIN, 25);
-    private static final Font font3 = new Font("Times New Roman", Font.PLAIN, 15);
-    private static final Font font4 = new Font("Times New Roman", Font.BOLD, 85);
-    private static final Font font5 = new Font("Times New Roman", Font.BOLD, 50);
-    private static final Font font6 = new Font("Times New Roman", Font.BOLD, 25);
+    private static final Font font75B = new Font("Times New Roman", Font.BOLD, 75);
+    private static final Font font25P = new Font("Times New Roman", Font.PLAIN, 25);
+    private static final Font font15P = new Font("Times New Roman", Font.PLAIN, 15);
+    private static final Font font85B = new Font("Times New Roman", Font.BOLD, 85);
+    private static final Font font50B = new Font("Times New Roman", Font.BOLD, 50);
+    private static final Font font25B = new Font("Times New Roman", Font.BOLD, 25);
 
     private JFrame frame;
     private JPanel mainPanel;
     private JTextArea output;
     private JPanel updatePanel;
+
     private JTextField balance;
     private JTextArea properties;
     private JPanel rollPanel;
@@ -48,6 +49,16 @@ public class View
     private JTextField outputHouse;
     private JTextField balance2;
 
+    private JMenuBar menuBar;
+    private JMenu game;
+    private JMenuItem saveGame;
+    private JMenuItem mainScreen;
+
+    // Default List Model Variables
+    private DefaultListModel propertyModel;
+
+    private JComboBox cb;
+
     /**
      * A constructor for the View class that will create a GUI and will configure the settings
      * of all the frames, panels, text areas, text fields, labels, and buttons.
@@ -62,39 +73,38 @@ public class View
         mainPanel = new JPanel(new GridLayout(3, 1));
         mainPanel.setVisible(true);
 
+        //Creates the menu bar
+        menuBar = new JMenuBar();
+        game = new JMenu("Game");
+        menuBar.add(game);
+        saveGame = new JMenuItem("Save Game");
+        mainScreen = new JMenuItem("Go to Main Screen");
+        game.add(saveGame);
+        game.add(mainScreen);
+        frame.setJMenuBar(menuBar);
+
         //Creates the player selection panel
-        playerSelectionPanel = new JPanel();
-        playerSelectionPanel.setLayout(new GridLayout(3, 2));
+        playerSelectionPanel = new JPanel(new GridLayout(3, 1));
         playerSelectionPanel.setBackground(Color.white);
         playerSelectionPanel.setVisible(true);
         frame.add(playerSelectionPanel);
 
         //Creates the player selection label
-        selectionText = new JLabel("Please Select The Amount of Players:");
-        selectionText.setHorizontalAlignment(JLabel.CENTER);
-        selectionText.setFont(font6);
+        selectionText = setupLabel(selectionText, font25B, "Please Select The Amount of Players (2+):");
 
         //Creates the AI selection label
-        aISelectionText = new JLabel("Please Select The Amount of AI Players:");
-        aISelectionText.setHorizontalAlignment(JLabel.CENTER);
-        aISelectionText.setFont(font6);
+        aISelectionText = setupLabel(aISelectionText, font25B, "Please Select The Amount of AI Players:");
 
         //Creates the Player selection entering area
-        playerSelection = new JTextField();
-        playerSelection.setEditable(true);
+        playerSelection = setupTextField(playerSelection, font50B, true, false);
         playerSelection.setActionCommand("Player Number");
-        playerSelection.setFont(font5);
 
         //Creates the AI selection entering area
-        aISelection = new JTextField();
-        aISelection.setEditable(true);
+        aISelection = setupTextField(aISelection, font50B, true, false);
         aISelection.setActionCommand("AI Number");
-        aISelection.setFont(font5);
 
         //Creates a button to allow users to submit their number of players
-        submit = new JButton("Submit");
-        submit.setFont(font1);
-        submit.setBackground(Color.cyan);
+        submit = setupButton(submit, font75B, Color.CYAN, true, "Submit");
 
         //Creates a blank space to place the submit button better
         JLabel temp = new JLabel();
@@ -108,9 +118,7 @@ public class View
         playerSelectionPanel.add(submit);
 
         //Creates the output of game information
-        output = new JTextArea();
-        output.setFont(font2);
-        output.setEditable(false);
+        output = setupTextArea(output, font25P, false);
         JScrollPane scrollPane = new JScrollPane(output, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         mainPanel.add(scrollPane);
 
@@ -118,24 +126,15 @@ public class View
         updatePanel = new JPanel(new GridLayout(1, 3));
 
         //Creates the display for the player's money balance
-        balance = new JTextField();
-        balance.setFont(font1);
-        balance.setEditable(false);
-        balance.setBackground(Color.white);
-        balance.setHorizontalAlignment(JTextField.CENTER);
+        balance = setupTextField(balance, font75B, false, true);
 
         //Creates the display for the player's name
-        playerName = new JLabel();
-        playerName.setHorizontalAlignment(SwingConstants.CENTER);
-        playerName.setVisible(true);
-        playerName.setFont(font1);
+        playerName = setupLabel(playerName, font75B, "");
         playerName.setBackground(Color.white);
         playerName.setOpaque(true);
 
         //Creates the display for the properties that the player own
-        properties = new JTextArea();
-        properties.setFont(font3);
-        properties.setEditable(false);
+        properties = setupTextArea(properties, font15P, false);
         JScrollPane scrollPane1 = new JScrollPane(properties, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         //Adds the three items above to the update panel
@@ -150,10 +149,7 @@ public class View
 
         //Creates the roll panel and the roll button
         rollPanel = new JPanel(new GridLayout(1, 2));
-        rollButton = new JButton("Roll");
-        rollButton.setEnabled(true);
-        rollButton.setFont(font4);
-        rollButton.setBackground(Color.CYAN);
+        rollButton = setupButton(rollButton, font85B, Color.CYAN, true, "Roll");
         rollPanel.add(rollButton);
         rollPanel.setVisible(false);
         rollPanel.setBackground(Color.white);
@@ -165,36 +161,24 @@ public class View
         buttonPanel.setBackground(Color.white);
 
         //Creates the buy button and adds it to the button panel
-        buyButton = new JButton("Buy");
-        buyButton.setEnabled(false);
-        buyButton.setFont(font4);
-        buyButton.setBackground(new Color(124, 252, 0));
+        buyButton = setupButton(buyButton, font85B, new Color(124, 252, 0), false, "Buy");
         buttonPanel.add(buyButton);
 
         //Creates the rent button and adds it to the button panel
-        rentButton = new JButton("Pay Rent");
-        rentButton.setEnabled(false);
-        rentButton.setFont(font4);
-        rentButton.setBackground(Color.ORANGE);
+        rentButton = setupButton(rentButton, font85B, Color.orange, false, "Pay Rent");
         buttonPanel.add(rentButton);
 
         //Creates the house/hotel button and adds it to the button panel
-        houseHotelButton = new JButton("House/Hotel");
-        houseHotelButton.setEnabled(false);
-        houseHotelButton.setBackground(new Color(98, 252, 224));
-        houseHotelButton.setFont(font4);
+        houseHotelButton = setupButton(houseHotelButton, font85B, new Color(98, 252, 224), false,"House/Hotel");
         buttonPanel.add(houseHotelButton);
 
         //Creates the end turn button and adds it to the button panel
-        endTurnButton = new JButton("End Turn");
-        endTurnButton.setEnabled(true);
-        endTurnButton.setFont(font4);
-        endTurnButton.setBackground(Color.pink);
+        endTurnButton = setupButton(endTurnButton, font85B, Color.pink, true, "End Turn");
         buttonPanel.add(endTurnButton);
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
         frame.setVisible(true);
-
+      
         //House Frame
         houseFrame = new JFrame("Buy Houses and Hotels");
         houseFrame.setLayout(new GridLayout(3,1));
@@ -205,18 +189,8 @@ public class View
         JPanel panel = new JPanel(new GridLayout(1,2));
         panel.setVisible(true);
         houseFrame.add(panel);
-        outputHouse = new JTextField();
-        outputHouse.setVisible(true);
-        outputHouse.setEditable(false);
-        outputHouse.setFont(font2);
-        outputHouse.setBackground(Color.white);
-        outputHouse.setHorizontalAlignment(JTextField.CENTER);
-        balance2 = new JTextField();
-        balance2.setVisible(true);
-        balance2.setEditable(false);
-        balance2.setFont(font1);
-        balance2.setBackground(Color.white);
-        balance2.setHorizontalAlignment(JTextField.CENTER);
+        outputHouse = setupTextField(outputHouse, font25P, false, true);
+        balance2 = setupTextField(balance2, font75B, false, true);
         panel.add(balance2);
         panel.add(outputHouse);
 
@@ -232,18 +206,48 @@ public class View
         houseFrame.add(houseButtonPanel);
 
         //Creates button for buying houses and hotels
-        buyHouseButton = new JButton("Buy House");
-        buyHouseButton.setFont(font5);
-        buyHouseButton.setBackground(new Color(240, 255, 77));
+        buyHouseButton = setupButton(buyHouseButton, font50B, new Color(240, 255, 77), false, "Buy House");
         houseButtonPanel.add(buyHouseButton);
-        buyHotelButton = new JButton("Buy Hotel");
-        buyHotelButton.setFont(font5);
-        buyHotelButton.setBackground(new Color(246, 77, 255));
+        buyHotelButton = setupButton(buyHotelButton, font50B, new Color(246, 77, 255), false, "Buy Hotel");
         houseButtonPanel.add(buyHotelButton);
-        closeButton = new JButton("Close");
-        closeButton.setFont(font5);
-        closeButton.setBackground(new Color(237, 24, 24));
+        closeButton = setupButton(closeButton, font50B, new Color(237, 24, 24), true, "Close");
         houseButtonPanel.add(closeButton);
+    }
+
+    private JButton setupButton(JButton button, Font font, Color color, boolean enabled, String Name)
+    {
+        button = new JButton(Name);
+        button.setFont(font);
+        button.setBackground(color);
+        button.setEnabled(enabled);
+        return button;
+    }
+
+    private JLabel setupLabel(JLabel label, Font font, String text)
+    {
+        label = new JLabel(text);
+        label.setFont(font);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        return label;
+    }
+
+    private JTextField setupTextField(JTextField textField, Font font, boolean editable, boolean isCenter)
+    {
+        textField = new JTextField();
+        textField.setFont(font);
+        textField.setEditable(editable);
+        textField.setBackground(Color.white);
+        if(isCenter)
+            textField.setHorizontalAlignment(JTextField.CENTER);
+        return textField;
+    }
+
+    private JTextArea setupTextArea(JTextArea textArea, Font font, boolean editable)
+    {
+        textArea = new JTextArea();
+        textArea.setFont(font);
+        textArea.setEditable(editable);
+        return textArea;
     }
 
     /**
@@ -290,7 +294,12 @@ public class View
         properties.setText(null);
         for (Property p : arrayList)
         {
-            properties.append(p.getName() + " Set: " + p.getSet() + "\n");
+            if (p instanceof Utility || p instanceof Railroad){
+                properties.append(p.getName() + "\n");
+            }
+            else {
+                properties.append(p.getName() + " Set: " + p.getSet() + " Houses: " + p.getHouses() + " Hotel: " + p.hasHotel() + "\n");
+            }
         }
     }
 
@@ -338,7 +347,10 @@ public class View
         submit.addActionListener(o);
         rentButton.addActionListener(o);
         houseHotelButton.addActionListener(o);
+        saveGame.addActionListener(o);
+        mainScreen.addActionListener(o);
     }
+
 
     /**
      * This is a method that will update the player name that is being displayed.
@@ -395,6 +407,7 @@ public class View
     public void setBuyable()
     {
         buyButton.setEnabled(true);
+        buyButton.setVisible(true);
     }
 
     /**
@@ -402,6 +415,7 @@ public class View
      */
     public void setRentable()
     {
+        rentButton.setText("Pay Rent");
         rentButton.setEnabled(true);
         endTurnButton.setEnabled(false);
     }
@@ -434,6 +448,30 @@ public class View
     /**
      * This method will show the house frame
      */
+    public void enableBuyHouseButton()
+    {
+        buyHouseButton.setEnabled(true);
+        buyHotelButton.setEnabled(false);
+    }
+
+
+    public void enableBuyHotelButton()
+    {
+       buyHotelButton.setEnabled(true);
+       buyHouseButton.setEnabled(false);
+    }
+
+    public void disableHouseHotelBuyable()
+    {
+        houseHotelButton.setEnabled(false);
+    }
+
+    public void disableHotelAndHouse()
+    {
+        buyHotelButton.setEnabled(false);
+        buyHouseButton.setEnabled(false);
+    }
+
     public void openHouseBuy()
     {
         houseFrame.setVisible(true);
@@ -456,15 +494,31 @@ public class View
      */
     public void setUpDropdown(ArrayList<Property> arrayList)
     {
-        String[] names = new String[arrayList.size()-1];
+        // Set up property list
+        propertyModel = new DefaultListModel<>();
+
         for(int i = 0; i < arrayList.size(); i++)
         {
-            names[i] = arrayList.get(i).getName();
+            // Populate Model
+            propertyModel.addElement(arrayList.get(i).getName());
         }
-        dropdown = new JComboBox<String>(names);
-        dropdown.setVisible(true);
-        dropdown.setFont(font2);
-        dropdownPanel.add(dropdown);
+
+        // Get property names
+        String[] p = new String[propertyModel.getSize()];
+        propertyModel.copyInto(p);
+
+        // Set up default combo box model
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel(p);
+        cb = new JComboBox();
+        cb.setModel(cbm);
+        cb.insertItemAt(" ",0);
+        cb.setSelectedIndex(0);
+        cb.setActionCommand("Selected Property");
+
+        // Add to panel
+        cb.setVisible(true);
+        cb.setFont(font25P);
+        dropdownPanel.add(cb);
     }
 
     /**
@@ -477,7 +531,7 @@ public class View
         buyHouseButton.addActionListener(al);
         buyHotelButton.addActionListener(al);
         closeButton.addActionListener(al);
-        dropdown.addActionListener(al);
+        cb.addActionListener(al);
     }
 
     /**
@@ -487,7 +541,7 @@ public class View
      */
     public String getSelection()
     {
-        return dropdown.getSelectedItem().toString();
+        return cb.getSelectedItem().toString();
     }
 
     /**
@@ -511,6 +565,7 @@ public class View
         houseHotelButton.setEnabled(false);
         endTurnButton.setEnabled(true);
     }
+
 
     /**
      * This method is used to toggle the buy house button.
@@ -542,6 +597,18 @@ public class View
         }
     }
 
+    /**
+     * This method allows a user to pay to get out of Jail
+     * @param hasToPay a boolean that when true the user has to pay to get out
+     *                 of jail before they can end their turn.
+     */
+    public void setJailed(boolean hasToPay)
+    {
+        rentButton.setText("Pay 50");
+        rentButton.setEnabled(true);
+        endTurnButton.setEnabled(!hasToPay);
+    }
+
     public static void main(String[] args)
     {
         View n = new View();
@@ -551,10 +618,10 @@ public class View
         n.updateOutput("Test 2");
         n.updateOutput("Test 3");
         //n.startGame();
-        n.openHouseBuy();
-        n.setRoll();
-        n.setButtons();
-        n.setBuyable();
-        n.setHouseHotelBuyable();
+        //n.openHouseBuy();
+        //n.setRoll();
+        //n.setButtons();
+        //n.setBuyable();
+        //n.setHouseHotelBuyable();
     }
 }

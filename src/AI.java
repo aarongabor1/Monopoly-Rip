@@ -5,13 +5,6 @@ import java.util.ArrayList;
  * @Author Cam Sommerville
  */
 public class AI extends Player{
-    private String name;
-    private ArrayList<Property> properties;
-    private int balance;
-    private Die die1;
-    private Die die2;
-    private Board board;
-    private Square position;
     private Controller controller;
 
     /**
@@ -25,11 +18,14 @@ public class AI extends Player{
         this.controller = controller;
     }
 
+    /**
+     * Method simulates an AI taking its turn
+     * @param model
+     */
     public void AITurn(Game model){
         controller.roll();
 
         if(model.isPropertyEmpty()){
-            controller.endTurn();
             return;
         }
         else if(model.isRentOwed()){
@@ -38,7 +34,16 @@ public class AI extends Player{
         else if(model.canBuy()){
             controller.buy();
         }
-        controller.endTurn();
+        for(Property p : this.getProperties()){
+            if (model.canBuyHouse(p) && p.getHousePrice() < this.getBalance()){
+                model.buyHouse(p.toString());
+                controller.houseOutput();
+            }
+            if (model.canBuyHotel() && p.getHousePrice() < this.getBalance()){
+                model.buyHotel(p.toString());
+                controller.hotelOutput();
+            }
+        }
     }
 
 }

@@ -1,6 +1,11 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Controller Class for the Monopoly GUI
+ * @author Brady Norton
+ * Modifications by Cam Sommerville
+ */
 public class Controller implements ActionListener
 {
 
@@ -18,11 +23,8 @@ public class Controller implements ActionListener
      */
     public Controller(Game m, View v)
     {
-        // Initiate Model and View
         this.m = m;
         this.v = v;
-
-        // Initiate Actions
         v.monopolyActionListener(this);
     }
 
@@ -50,18 +52,26 @@ public class Controller implements ActionListener
         {
             payRent();
         }
+        else if (o.equals("House/Hotel"))
+        {
+            // Update View
+            v.openHouseBuy();
+
+        }
         else if(o.equals("Submit"))
         {
             System.out.println("Players Selected: " + v.getPlayerAmount());
 
             // Check if input is valid
-            if(m.checkPlayerAmount(v.getPlayerAmount()))
+            if(m.checkPlayerAmount(v.getPlayerAmount()) && m.checkPlayerAmount(v.getAIAmount()))
             {
                 // Test
                 System.out.println("Player number selected is valid");
 
                 // Setup the Model
                 startGame();
+                //buyHouseTest();
+                //buildProperty();
 
                 // Setup View
                 updatePlayer(m.getCurrentPlayer());
@@ -72,6 +82,38 @@ public class Controller implements ActionListener
                 v.inputFailed();
             }
         }
+        else if(o.equals("Buy House"))
+        {
+            System.out.println("Buy House Selected");
+            // Update Model
+            m.buyHouse(v.getSelection());
+
+            // Update View
+            propertyBuildingOptions();
+
+            houseOutput();
+        }
+        else if(o.equals("Buy Hotel"))
+        {
+            System.out.println("Buy Hotel Selected");
+
+            m.buyHotel(v.getSelection());
+
+            hotelOutput();
+        }
+        else if(o.equals("Selected Property"))
+        {
+            System.out.println(v.getSelection()+ " Selected");
+
+            // Set the appropriate buttons for the selected property
+            propertyBuildingOptions();
+
+        }
+        else if(o.equals("Close"))
+        {
+            System.out.println("Close Selected");
+            v.closeHouseFrame();
+        }
         else
         {
             endTurn();
@@ -79,6 +121,23 @@ public class Controller implements ActionListener
 
     }
 
+    /**
+     * Outputs that a house has been bought
+     */
+    public void houseOutput(){
+        v.updateOutput(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
+    }
+
+    /**
+     * Outputs that a hotel has been bought
+     */
+    public void hotelOutput(){
+        v.updateOutput(m.getCurrentPlayer() + " bought a hotel on: "+ v.getSelection());
+    }
+
+    /**
+     * method to simulate a roll in the model and update the view accordingly
+     */
     public void roll(){
         // Tell Model that user selected Roll command
         m.roll();
@@ -90,28 +149,49 @@ public class Controller implements ActionListener
         propertyOptions();
     }
 
+    /**
+     * method to simulate a purchase in the model and update the view accordingly
+     */
     public void buy(){
         // Test
         v.updateOutput("Buy Selected");
 
         // Update Model and View
         buyUpdate();
+        v.turnOffButtons();
     }
 
+    /**
+     * method to pay rent and update the view accordingly
+     */
     public void payRent(){
         v.updateOutput("Pay Rent Selected");
-        int numInSet = this.m.getNumInSetOwned(((Property)this.m.getCurrentPlayer().getPosition()).getOwner(), (Property)this.m.getCurrentPlayer().getPosition());
-        boolean hotel = ((Property)this.m.getCurrentPlayer().getPosition()).hasHotel();
-        v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Property)m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Property)m.getLandedOnProperty()).getRent(numInSet,hotel));
+        int numInSet;
+        if(m.getLandedOnProperty() instanceof Railroad){
+            numInSet = this.m.getNumInSetOwned(((Railroad) this.m.getCurrentPlayer().getPosition()).getOwner(), (Railroad) this.m.getCurrentPlayer().getPosition());
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Railroad) m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Railroad) m.getLandedOnProperty()).getRent(numInSet));
+        }else if(m.getLandedOnProperty() instanceof Utility) {
+            numInSet = this.m.getNumInSetOwned(((Utility) this.m.getCurrentPlayer().getPosition()).getOwner(), (Utility) this.m.getCurrentPlayer().getPosition());
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Utility) m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Utility) m.getLandedOnProperty()).getRent(numInSet,m.getCurrentRoll()));
+        }else{
+            numInSet = this.m.getNumInSetOwned(((Property) this.m.getCurrentPlayer().getPosition()).getOwner(), (Property) this.m.getCurrentPlayer().getPosition());
+            boolean hotel = ((Property) this.m.getCurrentPlayer().getPosition()).hasHotel();
+            v.updateOutput(m.getCurrentPlayer().getName() + " paid " + ((Property) m.getLandedOnProperty()).getOwner().getName() + ": $" + ((Property) m.getLandedOnProperty()).getRent(numInSet, hotel));
+        }
         m.payRent();
         v.updateBalance(String.valueOf(m.getCurrentPlayer().getBalance()));
         v.setEndTurn();
+        v.turnOffButtons();
     }
 
+    /**
+     * Method used to end the current players turn
+     */
     public void endTurn(){
         v.updateOutput("End Turn Selected");
         m.endTurn();
         endTurnUpdate();
+        buildProperty();
     }
 
     /**
@@ -120,11 +200,12 @@ public class Controller implements ActionListener
     private void startGame()
     {
         // Setup the Model
-        m.setup(Integer.parseInt(v.getPlayerAmount()),this);
+        m.setup(Integer.parseInt(v.getPlayerAmount()),Integer.parseInt(v.getAIAmount()),this);
 
         // Setup the View
         v.startGame();
         v.setRoll();
+        v.setHouseHotelBuyable();
 
         // Test
         System.out.println("Current Player: "+m.getCurrentPlayer().getName());
@@ -142,8 +223,12 @@ public class Controller implements ActionListener
         v.updatePlayerName(cp.getName());
         v.updateBalance(String.valueOf(cp.getBalance()));
         v.updateProperties(cp.getProperties());
+        if(cp.isInJail()){
+            v.updateOutput("This Player is in Jail");
+        }
 
         if(cp instanceof AI){
+            v.aITurn();
             ((AI) cp).AITurn(m);
         }
         else {
@@ -160,7 +245,8 @@ public class Controller implements ActionListener
         v.updateOutput("Roll Selected");
 
         // Players roll number
-        v.updateOutput(m.getCurrentPlayer().getName() + " rolled: " + m.getCurrentPlayer().getRoll());
+        v.updateOutput(m.getCurrentPlayer().getName() + " rolled a " + m.getCurrentPlayer().getRoll(1)
+                + " and a " + m.getCurrentPlayer().getRoll(2));
 
         // Players New Position on board
         v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
@@ -172,8 +258,11 @@ public class Controller implements ActionListener
         {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on an empty space");
         }
-        else
-        {
+        else if (m.getCurrentPlayer().getPosition() instanceof Property){
+            v.updateOutput(m.getCurrentPlayer().getName()+" landed on: "+m.getCurrentPlayer().getPosition().getName()
+                    + " Set: " + m.getCurrentPlayer().getPosition().getSet());
+        }
+        else {
             v.updateOutput(m.getCurrentPlayer().getName()+" landed on: "+m.getCurrentPlayer().getPosition().getName());
         }
     }
@@ -236,10 +325,59 @@ public class Controller implements ActionListener
         {
             v.updateOutput("GAME OVER:");
             v.updateOutput(m.getCurrentPlayer().getName() + " has won!");
-            v.gameOver();
+            //v.gameOver();
         }
 
         // Update the View for the next Player
         else {updatePlayer(m.getCurrentPlayer());}
     }
+
+    /**
+     * Builds the Property Buying interface
+     */
+    public void buildProperty()
+    {
+        if(m.doesPlayerOwnFullSet())
+        {
+            // Update View
+            v.setHouseHotelBuyable();
+            v.setUpDropdown(m.getCurrentPlayer().getProperties());
+
+            // Set action listeners
+            v.setHouseActionListener(this);
+        }
+        else
+        {
+            v.disableHouseHotelBuyable();
+        }
+    }
+
+    /**
+     * Informs the view whether houses/hotels can be purchased
+     */
+    public void propertyBuildingOptions()
+    {
+        // Start the options initially disabled
+        v.disableHotelAndHouse();
+
+        // Player can build houses
+        if(m.canBuyHouse(m.getPropertyByName(v.getSelection())))
+        {
+            v.enableBuyHouseButton();
+        }
+        else if(m.canBuyHotel())
+        {
+            v.enableBuyHotelButton();
+        }
+        else if(v.getSelection().equals(" "))
+        {
+            // Disable options
+            v.disableHotelAndHouse();
+        }
+        else
+        {
+            v.disableHouseHotelBuyable();
+        }
+    }
+
 }
