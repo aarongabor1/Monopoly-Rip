@@ -191,10 +191,13 @@ public class Player {
                 Square jail = board.getProperty(10);
                 setPosition(jail);
             } else {
-                if (checkPassedGo(roll)) balance += 200;
+                int lastIndex = position.getIndex();
                 int destinationIndex = (position.getIndex() + roll) % 40;
                 Square destination = board.getProperty(destinationIndex);
                 setPosition(destination);
+                if(lastIndex > position.getIndex()){
+                    balance += 200;
+                }
                 if(position.getIndex() == 30){
                     inJail = true;
                     Square jail = board.getProperty(10);
