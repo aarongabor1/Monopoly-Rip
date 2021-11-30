@@ -565,7 +565,6 @@ public class View
         endTurnButton.setEnabled(true);
     }
 
-
     /**
      * This method is used to toggle the buy house button.
      */
@@ -606,21 +605,5 @@ public class View
         rentButton.setText("Pay 50");
         rentButton.setEnabled(true);
         endTurnButton.setEnabled(!hasToPay);
-    }
-
-    public static void main(String[] args)
-    {
-        View n = new View();
-        n.updatePlayerName("Player 1");
-        n.updateBalance("1000");
-        n.updateOutput("Test 1");
-        n.updateOutput("Test 2");
-        n.updateOutput("Test 3");
-        //n.startGame();
-        //n.openHouseBuy();
-        //n.setRoll();
-        //n.setButtons();
-        //n.setBuyable();
-        //n.setHouseHotelBuyable();
     }
 }
