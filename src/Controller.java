@@ -114,6 +114,10 @@ public class Controller implements ActionListener
             System.out.println("Close Selected");
             v.closeHouseFrame();
         }
+        else if(o.equals("Pay 50"))
+        {
+            m.getCurrentPlayer().payJailor();
+        }
         else
         {
             endTurn();
@@ -188,9 +192,16 @@ public class Controller implements ActionListener
      * Method used to end the current players turn
      */
     public void endTurn(){
-        if (m.getCurrentPlayer().getRoll(1) == m.getCurrentPlayer().getRoll(2)){
-            v.updateOutput("Player Rolled Doubles, Roll again");
-            v.setRoll();
+        if (m.getCurrentPlayer().getRoll(1) == m.getCurrentPlayer().getRoll(2)
+                && !m.getCurrentPlayer().isInJail() && m.getCurrentPlayer().getNumDoubles() < 3){
+            if(m.getCurrentPlayer() instanceof AI){
+                v.updateOutput("AI rolled doubles, It will roll again");
+                ((AI) m.getCurrentPlayer()).AITurn(m);
+            }
+            else {
+                v.updateOutput("Player rolled doubles, roll again");
+                v.setRoll();
+            }
             return;
         }
         v.updateOutput("End Turn Selected");
@@ -230,6 +241,7 @@ public class Controller implements ActionListener
         v.updateProperties(cp.getProperties());
         if(cp.isInJail()){
             v.updateOutput("This Player is in Jail");
+            v.setJailed((m.getCurrentPlayer().getJailedTurns() == 3));
         }
 
         if(cp instanceof AI){
@@ -252,6 +264,22 @@ public class Controller implements ActionListener
         // Players roll number
         v.updateOutput(m.getCurrentPlayer().getName() + " rolled a " + m.getCurrentPlayer().getRoll(1)
                 + " and a " + m.getCurrentPlayer().getRoll(2));
+
+        if(m.getCurrentPlayer().getJailedTurns() > 0 && (m.getCurrentPlayer().getJailedTurns() > 1)){
+            if (m.getCurrentPlayer().getRoll(1) == m.getCurrentPlayer().getRoll(2)){
+                v.updateOutput("Rolled doubles and escaped Jail");
+                endTurnUpdate();
+            }
+            else{
+                v.updateOutput("Player still in jail");
+            }
+            return;
+        }
+
+        if(m.getCurrentPlayer().isInJail() && m.getCurrentPlayer().getJailedTurns() == 0){
+            v.updateOutput("Rolled doubles three times and sent to Jail");
+            return;
+        }
 
         // Players New Position on board
         v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());

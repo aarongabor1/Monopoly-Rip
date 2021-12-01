@@ -17,7 +17,9 @@ public class Player {
     private Square position;
     private Property landedOnProperty;
     private boolean inJail = false;
-    private boolean roll1Double = false, roll2Double = false, roll3Double = false;
+    private int jailedTurns;
+    //private boolean roll1Double = false, roll2Double = false, roll3Double = false;
+    private int numDoubles;
 
     /**
      * Constructor for the Player class
@@ -32,6 +34,7 @@ public class Player {
         die1 = new Die();
         die2 = new Die();
         properties = new ArrayList<>();
+        jailedTurns = 0;
     }
 
     /**
@@ -177,41 +180,41 @@ public class Player {
      * Prints the Property they landed on
      */
     private void rollDice(){
-        int roll;
         if(!inJail) {
             die1.roll();
             die2.roll();
-            roll3Double = roll2Double;
-            roll2Double = roll1Double;
-            roll1Double = (die1.getValue() == die2.getValue());
-            roll = die1.getValue() + die2.getValue();
-            System.out.println("They rolled a " + die1.getValue() + " and a " + die2.getValue());
-            if (roll1Double && roll2Double && roll3Double) {
-                inJail = true;
-                Square jail = board.getProperty(10);
-                setPosition(jail);
-            } else {
-                int lastIndex = position.getIndex();
-                int destinationIndex = (position.getIndex() + roll) % 40;
-                Square destination = board.getProperty(destinationIndex);
-                setPosition(destination);
-                if(lastIndex > position.getIndex()){
-                    balance += 200;
-                }
-                if(position.getIndex() == 30){
+            if(die1.getValue() == die2.getValue()) {
+                numDoubles++;
+                if (numDoubles == 3) {
                     inJail = true;
                     Square jail = board.getProperty(10);
                     setPosition(jail);
+                    numDoubles = 0;
                 }
             }
-        }else{
+            else {numDoubles = 0;}
+            int lastIndex = position.getIndex();
+            int destinationIndex = (position.getIndex() + die1.getValue() + die2.getValue()) % 40;
+            Square destination = board.getProperty(destinationIndex);
+            setPosition(destination);
+            if(lastIndex > position.getIndex()){
+                balance += 200;
+            }
+            if(position.getIndex() == 30){
+                inJail = true;
+            }
+        }
+        else {
             System.out.println("This Player is in jail");
+            setPosition(board.getProperty(10));
             die1.roll();
             die2.roll();
             if(die1.getValue() == die2.getValue()){
                 System.out.println("This Player got out of jail!");
                 inJail = false;
+                jailedTurns = 0;
             }
+            else{jailedTurns++;}
         }
     }
 
@@ -245,4 +248,28 @@ public class Player {
         balance = balance - cost;
     }
 
+    /**
+     * Pay the Jailor to get out of Jail
+     */
+    public void payJailor(){
+        balance -= 50;
+        inJail = false;
+        jailedTurns = 0;
+    }
+
+    /**
+     * Get number of turn the player has been jailed
+     * @return
+     */
+    public int getJailedTurns(){
+        return jailedTurns;
+    }
+
+    /**
+     * Get number doubles rolled in a row
+     * @return
+     */
+    public int getNumDoubles(){
+        return numDoubles;
+    }
 }
