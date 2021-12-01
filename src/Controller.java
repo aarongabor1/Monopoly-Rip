@@ -188,6 +188,11 @@ public class Controller implements ActionListener
      * Method used to end the current players turn
      */
     public void endTurn(){
+        if (m.getCurrentPlayer().getRoll(1) == m.getCurrentPlayer().getRoll(2)){
+            v.updateOutput("Player Rolled Doubles, Roll again");
+            v.setRoll();
+            return;
+        }
         v.updateOutput("End Turn Selected");
         m.endTurn();
         endTurnUpdate();
