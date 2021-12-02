@@ -140,7 +140,10 @@ public class Controller implements ActionListener, Serializable
             if (r == JFileChooser.APPROVE_OPTION) {
                 file = fc.getSelectedFile();
             }
-            if (file == null){return;}
+            if (!(file.getName().equals("save.ser"))){
+                v.updateOutput("Invalid File");
+                return;
+            }
             try {
                 loadedGame = Controller.loadFromFile(file);
             } catch (IOException ioException) {
