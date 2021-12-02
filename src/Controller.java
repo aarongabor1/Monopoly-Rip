@@ -241,6 +241,7 @@ public class Controller implements ActionListener
         v.updatePlayerName(cp.getName());
         v.updateBalance(String.valueOf(cp.getBalance()));
         v.updateProperties(cp.getProperties());
+        v.setRoll();
         if(cp.isInJail()){
             v.updateOutput("This Player is in Jail");
             v.setJailed((m.getCurrentPlayer().getJailedTurns() == 4));
@@ -275,6 +276,7 @@ public class Controller implements ActionListener
         if(m.getCurrentPlayer().getJailedTurns() > 0){
             if (m.getCurrentPlayer().isInJail()){
                 v.updateOutput("Player still in jail");
+                v.setJailed((m.getCurrentPlayer().getJailedTurns() == 4));
             }
             else if (m.getCurrentPlayer().getRoll(1) == m.getCurrentPlayer().getRoll(2)){
                 v.updateOutput("Rolled doubles and escaped Jail");
@@ -284,10 +286,16 @@ public class Controller implements ActionListener
             return;
         }
 
-        // Players New Position on board
-        v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
+        if(m.getCurrentPlayer().getPosition().getIndex() != 30) {
+            // Players New Position on board
+            v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
+        }
+        else{
+            v.updateOutput("Landed on: Go To Jail");
+            return;
+        }
 
-        // Players new position
+                // Players new position
         String property = m.getCurrentPlayer().getPosition().getName();
 
         if(m.isPropertyEmpty())

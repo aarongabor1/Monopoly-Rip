@@ -207,15 +207,15 @@ public class Player {
             }
         }
         else {
+            jailedTurns++;
             System.out.println("This Player is in jail");
             setPosition(board.getProperty(10));
             die1.roll();
             die2.roll();
-            if(die1.getValue() == die2.getValue()){
+            if(die1.getValue() == die2.getValue()) {
                 System.out.println("This Player got out of jail!");
                 inJail = false;
             }
-            else{jailedTurns++;}
         }
     }
 
