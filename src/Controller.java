@@ -117,6 +117,7 @@ public class Controller implements ActionListener
         else if(o.equals("Pay 50"))
         {
             m.getCurrentPlayer().payJailor();
+            v.updateOutput("Player paid to get out of jail");
         }
         else
         {
