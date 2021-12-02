@@ -1,12 +1,14 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 /**
  * Controller Class for the Monopoly GUI
  * @author Brady Norton
  * Modifications by Cam Sommerville
  */
-public class Controller implements ActionListener
+public class Controller implements ActionListener, Serializable
 {
 
     // Monopoly Model
@@ -118,6 +120,36 @@ public class Controller implements ActionListener
         {
             m.getCurrentPlayer().payJailor();
             v.updateOutput("Player paid to get out of jail");
+        }
+        else if(o.equals("Save Game"))
+        {
+            try {
+                saveToFile("save.ser");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            v.updateOutput("Game Saved");
+        }
+        else if(o.equals("Load Game"))
+        {
+            Controller loadedGame = null;
+            File file = null;
+            JFileChooser fc = new JFileChooser();
+            int r = fc.showOpenDialog(null);
+
+            if (r == JFileChooser.APPROVE_OPTION) {
+                file = fc.getSelectedFile();
+            }
+            if (file == null){return;}
+            try {
+                loadedGame = Controller.loadFromFile(file);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            }
+            this.disableGUI();
+            loadedGame.displayGUI();
         }
         else
         {
@@ -425,4 +457,41 @@ public class Controller implements ActionListener
         }
     }
 
+    /**
+     * Method to save the game to a file using Java Serializable
+     * @param fileName
+     * @throws IOException
+     */
+    public void saveToFile(String fileName) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(this);
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    /**
+     * Method to create a new game from a saved file.
+     * @param file
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static Controller loadFromFile(File file) throws IOException, ClassNotFoundException {
+        Controller c = null;
+        FileInputStream fileInputStream = new FileInputStream(file);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        c = (Controller) objectInputStream.readObject();
+        objectInputStream.close();
+        fileInputStream.close();
+        return c;
+    }
+
+    public  void displayGUI(){
+        v.displayGUI();
+    }
+
+    public void disableGUI(){
+        v.disableGUI();
+    }
 }

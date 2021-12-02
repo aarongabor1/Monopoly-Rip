@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Simple AI that plays the Monopoly Game
  * @Author Cam Sommerville
  */
-public class AI extends Player{
+public class AI extends Player implements Serializable {
     private Controller controller;
 
     /**

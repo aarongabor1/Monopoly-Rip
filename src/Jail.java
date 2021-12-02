@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * Represents the Jail Square
  * @author Braxton Martin
  */
-public class Jail implements Square {
+public class Jail implements Square, Serializable {
 
     public Jail(int index){
     }

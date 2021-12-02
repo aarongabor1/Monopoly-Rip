@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -5,7 +6,7 @@ import java.util.*;
  * @author Cam Sommerville
  * @author Braxton Martin
  */
-public class Board {
+public class Board implements Serializable {
     private List<Square> squares;
     private final int numSquares = 40;
 

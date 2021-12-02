@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Represents a purchasable property
  * @author Cam Sommerville
@@ -5,7 +7,7 @@
  * @author Braxton Martin
  * @author Aaron Gabor
  */
-public class Property implements Square {
+public class Property implements Square, Serializable {
     private String name;
     private int index;
     private int price;

@@ -5,5 +5,6 @@ public class Main {
         Game game = new Game();
         View view = new View();
         Controller controller = new Controller(game, view);
+        view.displayGUI();
     }
 }

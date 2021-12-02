@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * Represents a Railroad
  * @author Braxton Martin
  */
-public class Railroad extends Property{
+public class Railroad extends Property implements Serializable {
     /**
      * Constructor for Property class that creates a Property object
      *

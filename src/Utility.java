@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * Represents a Utility Square
  * @author Braxton Martin
  */
-public class Utility extends Property{
+public class Utility extends Property implements Serializable {
 
     /**
      * Constructor for Property class that creates a Property object

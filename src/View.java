@@ -1,13 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Aaron Gabor
  * @version 4.0.0
  */
-public class View
+public class View implements Serializable
 {
     //Set fonts for all text in the GUI
     private static final Font font75B = new Font("Times New Roman", Font.BOLD, 75);
@@ -24,7 +25,7 @@ public class View
     private JMenuBar menuBar;
     private JMenu game;
     private JMenuItem saveGame;
-    private JMenuItem mainScreen;
+    private JMenuItem loadGame;
 
     private JTextField balance;
     private JTextArea properties;
@@ -77,9 +78,9 @@ public class View
         game = new JMenu("Game");
         menuBar.add(game);
         saveGame = new JMenuItem("Save Game");
-        mainScreen = new JMenuItem("Go to Main Screen");
+        loadGame = new JMenuItem("Load Game");
         game.add(saveGame);
-        game.add(mainScreen);
+        game.add(loadGame);
         frame.setJMenuBar(menuBar);
 
         //Creates the player selection panel
@@ -176,7 +177,7 @@ public class View
         buttonPanel.add(endTurnButton);
         buttonPanel.setVisible(false);
         bottomPanel.add(buttonPanel);
-        frame.setVisible(true);
+        //frame.setVisible(true);
       
         //House Frame
         houseFrame = new JFrame("Buy Houses and Hotels");
@@ -347,7 +348,7 @@ public class View
         rentButton.addActionListener(o);
         houseHotelButton.addActionListener(o);
         saveGame.addActionListener(o);
-        mainScreen.addActionListener(o);
+        loadGame.addActionListener(o);
     }
 
 
@@ -605,5 +606,13 @@ public class View
         rentButton.setText("Pay 50");
         rentButton.setEnabled(true);
         endTurnButton.setEnabled(!hasToPay);
+    }
+
+    public void displayGUI(){
+        frame.setVisible(true);
+    }
+
+    public void disableGUI() {
+        frame.setVisible(false);
     }
 }

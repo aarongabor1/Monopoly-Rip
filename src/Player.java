@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  * @author Braxton Martin
  * @author Aaron Gabor
  */
-public class Player {
+public class Player implements Serializable {
     private String name;
     private ArrayList<Property> properties;
     private int balance;

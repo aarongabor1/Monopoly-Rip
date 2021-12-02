@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  * @author Braxton Martin
  * @author Aaron Gabor
  */
-public class Game
+public class Game implements Serializable
 {
     private List<Player> players;
     private Board board;
