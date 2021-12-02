@@ -255,7 +255,6 @@ public class Player {
     public void payJailor(){
         balance -= 50;
         inJail = false;
-        jailedTurns = 0;
     }
 
     /**
