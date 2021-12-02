@@ -181,12 +181,14 @@ public class Player {
      */
     private void rollDice(){
         if(!inJail) {
+            jailedTurns = 0;
             die1.roll();
             die2.roll();
             if(die1.getValue() == die2.getValue()) {
                 numDoubles++;
                 if (numDoubles == 3) {
                     inJail = true;
+                    jailedTurns++;
                     Square jail = board.getProperty(10);
                     setPosition(jail);
                     numDoubles = 0;
@@ -212,7 +214,6 @@ public class Player {
             if(die1.getValue() == die2.getValue()){
                 System.out.println("This Player got out of jail!");
                 inJail = false;
-                jailedTurns = 0;
             }
             else{jailedTurns++;}
         }
