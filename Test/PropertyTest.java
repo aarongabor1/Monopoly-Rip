@@ -36,7 +36,7 @@ public class PropertyTest {
     }
 
     @Test
-    public void buyProperty() {
+    public void buyProperty() throws Exception {
         Board b = new Board();
         Player p1 = new Player("P1",b);
 

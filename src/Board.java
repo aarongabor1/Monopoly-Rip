@@ -1,5 +1,9 @@
+import java.io.FileReader;
+import java.io.Reader;
 import java.io.Serializable;
 import java.util.*;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
 
 /**
  * Class that simulates the Monopoly board
@@ -9,12 +13,14 @@ import java.util.*;
 public class Board implements Serializable {
     private List<Square> squares;
     private final int numSquares = 40;
+    private String currency = "$";
 
     /**
      * Constructor for Board class
      */
-    public Board(){
+    public Board() throws Exception {
         squares = new ArrayList<>();
+        initializeMap("NormalBoard.json");
         createBoard();
     }
 
@@ -63,6 +69,55 @@ public class Board implements Serializable {
         squares.add(new Property("Samsung", 37, 350,8,2,-1));
         squares.add(new Property("Empty", 38, -1,-1,0,-1));
         squares.add(new Property("Apple", 39, 400,8,2,-1));
+    }
+
+    public void initializeMap(String fileName) throws Exception {
+        JSONParser parser = new JSONParser();
+
+        try {
+
+            Reader reader = new FileReader(fileName);
+
+            Object obj = parser.parse(reader);
+            JSONObject jsonObject = (JSONObject) obj;
+
+            Set keys = jsonObject.keySet();
+
+            Object[] obArr = keys.toArray();
+
+            for(int i = 0; i < 3; i++){
+                JSONObject squareObject = (JSONObject)jsonObject.get(obArr[i]);
+                Set attributes = squareObject.keySet();
+                System.out.println(attributes);
+                Object[] attributesArr = attributes.toArray();
+
+                if(attributesArr[6].toString().equals("Property")){
+                    System.out.println(attributesArr[6]);
+                    Property p = new Property((String)attributesArr[4],(int)attributesArr[5],(int)attributesArr[2],(int)attributesArr[0],(int)attributesArr[1],(int)attributesArr[3]);
+                    squares.add(p);
+                }else  if(attributesArr[6].equals("Utility")){
+                    Utility u = new Utility((String)attributesArr[4],(int)attributesArr[5],(int)attributesArr[2],(int)attributesArr[0],(int)attributesArr[1],(int)attributesArr[3]);
+                    squares.add(u);
+                }else  if(attributesArr[6].equals("Railroad")){
+                    Railroad r = new Railroad((String)attributesArr[4],(int)attributesArr[5],(int)attributesArr[2],(int)attributesArr[0],(int)attributesArr[1],(int)attributesArr[3]);
+                    squares.add(r);
+                }else  if(attributesArr[0].equals("Jail")){
+                    Jail j = new Jail((int)attributesArr[0]);
+                    squares.add(j);
+                }
+            }
+            JSONObject squareObject = (JSONObject)jsonObject.get(obArr[3]);
+            Set currency = squareObject.keySet();
+            Object[] currencyArr = currency.toArray();
+
+
+            //currency = (String)currencyArr[0];
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
     /**

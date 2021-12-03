@@ -7,7 +7,7 @@ public class GameTest {
     Game game;
 
     @Test
-    public void testAddPlayer() {
+    public void testAddPlayer() throws Exception {
         game = new Game();
 
         game.addPlayer("Player1");

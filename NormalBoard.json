@@ -1,0 +1,33 @@
+{
+  "0" : {
+    "squareType": "Property",
+    "name": "Go",
+    "index": 0,
+    "price": -1,
+    "set": 0,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+  "1": {
+    "squareType": "Property",
+    "name": "Ottawa U",
+    "index": 1,
+    "price": 60,
+    "set": 1,
+    "numInSet": 2,
+    "housePrice": 50
+  },
+
+  "12": {
+    "squareType": "Utility",
+    "name": "Electric Company",
+    "index": 12,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+  "currency": {
+    "type": "$"
+  }
+}

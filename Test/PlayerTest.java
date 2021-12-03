@@ -9,7 +9,7 @@ public class PlayerTest {
     Board board;
 
     @Before
-    public void beforeEachTestMethod() {
+    public void beforeEachTestMethod() throws Exception {
         System.out.println("Invoked before each test method");
         board = new Board();
         player = new Player("Player1", board);
