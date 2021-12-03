@@ -88,27 +88,30 @@ public class Board implements Serializable {
             for(int i = 0; i < 3; i++){
                 JSONObject squareObject = (JSONObject)jsonObject.get(obArr[i]);
                 Set attributes = squareObject.keySet();
-                System.out.println(attributes);
+               // System.out.println(attributes);
                 Object[] attributesArr = attributes.toArray();
+              //  System.out.println(squareObject.get(attributesArr[6]));
 
-                if(attributesArr[6].toString().equals("Property")){
-                    System.out.println(attributesArr[6]);
-                    Property p = new Property((String)attributesArr[4],(int)attributesArr[5],(int)attributesArr[2],(int)attributesArr[0],(int)attributesArr[1],(int)attributesArr[3]);
+                if(squareObject.get(attributesArr[6]).toString().equals("Property")){
+                    Property p = new Property(squareObject.get(attributesArr[4]).toString(),Integer.parseInt(squareObject.get(attributesArr[5]).toString()),Integer.parseInt(squareObject.get(attributesArr[2]).toString()),Integer.parseInt(squareObject.get(attributesArr[0]).toString()),Integer.parseInt(squareObject.get(attributesArr[1]).toString()),Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
                     squares.add(p);
                 }else  if(attributesArr[6].equals("Utility")){
-                    Utility u = new Utility((String)attributesArr[4],(int)attributesArr[5],(int)attributesArr[2],(int)attributesArr[0],(int)attributesArr[1],(int)attributesArr[3]);
+                    Utility u = new Utility(squareObject.get(attributesArr[4]).toString(),Integer.parseInt(squareObject.get(attributesArr[5]).toString()),Integer.parseInt(squareObject.get(attributesArr[2]).toString()),Integer.parseInt(squareObject.get(attributesArr[0]).toString()),Integer.parseInt(squareObject.get(attributesArr[1]).toString()),Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
                     squares.add(u);
                 }else  if(attributesArr[6].equals("Railroad")){
-                    Railroad r = new Railroad((String)attributesArr[4],(int)attributesArr[5],(int)attributesArr[2],(int)attributesArr[0],(int)attributesArr[1],(int)attributesArr[3]);
+                    Railroad r = new Railroad(squareObject.get(attributesArr[4]).toString(),Integer.parseInt(squareObject.get(attributesArr[5]).toString()),Integer.parseInt(squareObject.get(attributesArr[2]).toString()),Integer.parseInt(squareObject.get(attributesArr[0]).toString()),Integer.parseInt(squareObject.get(attributesArr[1]).toString()),Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
                     squares.add(r);
                 }else  if(attributesArr[0].equals("Jail")){
-                    Jail j = new Jail((int)attributesArr[0]);
+                    Jail j = new Jail(Integer.parseInt(squareObject.get(attributesArr[0]).toString()));
                     squares.add(j);
                 }
             }
-            JSONObject squareObject = (JSONObject)jsonObject.get(obArr[3]);
-            Set currency = squareObject.keySet();
-            Object[] currencyArr = currency.toArray();
+            JSONObject currencyJSONObject = (JSONObject)jsonObject.get(obArr[3]);
+            Set currencySet = currencyJSONObject.keySet();
+            // System.out.println(attributes);
+            Object[] currencyObj = currencySet.toArray();
+            currency = currencyJSONObject.get(currencyObj[0]).toString();
+
 
 
             //currency = (String)currencyArr[0];
