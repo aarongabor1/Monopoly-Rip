@@ -84,34 +84,46 @@ public class Board implements Serializable {
             Set keys = jsonObject.keySet();
 
             Object[] obArr = keys.toArray();
+            if(obArr.length ==41) {
+                int indexCheck = 0;
+                for (int i = 0; i <= obArr.length-2; i++) {
+                    JSONObject squareObject = (JSONObject) jsonObject.get(obArr[i]);
+                    Set attributes = squareObject.keySet();
+                     System.out.println(attributes);
+                    //attributesArr has order [set, numInSet, price, housePrice, name, index, squareType]
 
-            for(int i = 0; i < 3; i++){
-                JSONObject squareObject = (JSONObject)jsonObject.get(obArr[i]);
-                Set attributes = squareObject.keySet();
-               // System.out.println(attributes);
-                Object[] attributesArr = attributes.toArray();
-              //  System.out.println(squareObject.get(attributesArr[6]));
-
-                if(squareObject.get(attributesArr[6]).toString().equals("Property")){
-                    Property p = new Property(squareObject.get(attributesArr[4]).toString(),Integer.parseInt(squareObject.get(attributesArr[5]).toString()),Integer.parseInt(squareObject.get(attributesArr[2]).toString()),Integer.parseInt(squareObject.get(attributesArr[0]).toString()),Integer.parseInt(squareObject.get(attributesArr[1]).toString()),Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
-                    squares.add(p);
-                }else  if(attributesArr[6].equals("Utility")){
-                    Utility u = new Utility(squareObject.get(attributesArr[4]).toString(),Integer.parseInt(squareObject.get(attributesArr[5]).toString()),Integer.parseInt(squareObject.get(attributesArr[2]).toString()),Integer.parseInt(squareObject.get(attributesArr[0]).toString()),Integer.parseInt(squareObject.get(attributesArr[1]).toString()),Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
-                    squares.add(u);
-                }else  if(attributesArr[6].equals("Railroad")){
-                    Railroad r = new Railroad(squareObject.get(attributesArr[4]).toString(),Integer.parseInt(squareObject.get(attributesArr[5]).toString()),Integer.parseInt(squareObject.get(attributesArr[2]).toString()),Integer.parseInt(squareObject.get(attributesArr[0]).toString()),Integer.parseInt(squareObject.get(attributesArr[1]).toString()),Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
-                    squares.add(r);
-                }else  if(attributesArr[0].equals("Jail")){
-                    Jail j = new Jail(Integer.parseInt(squareObject.get(attributesArr[0]).toString()));
-                    squares.add(j);
+                    Object[] attributesArr = attributes.toArray();
+                    //System.out.println(indexCheck);
+                    if(indexCheck ==Integer.parseInt(squareObject.get(attributesArr[5]).toString())) {
+                        if (squareObject.get(attributesArr[6]).toString().equals("Property")) {
+                            Property p = new Property(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
+                            squares.add(p);
+                        } else if (attributesArr[6].equals("Utility")) {
+                            Utility u = new Utility(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
+                            squares.add(u);
+                        } else if (attributesArr[6].equals("Railroad")) {
+                            Railroad r = new Railroad(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
+                            squares.add(r);
+                        } else if (attributesArr[0].equals("Jail")) {
+                            Jail j = new Jail(Integer.parseInt(squareObject.get(attributesArr[0]).toString()));
+                            squares.add(j);
+                        }
+                    }else{
+                        System.out.println("Invalid Map Format");
+                        System.out.println(squares);
+                        squares.clear();
+                        break;
+                    }
+                    indexCheck++;
                 }
+                JSONObject currencyJSONObject = (JSONObject) jsonObject.get(obArr[40]);
+                Set currencySet = currencyJSONObject.keySet();
+                // System.out.println(attributes);
+                Object[] currencyObj = currencySet.toArray();
+                currency = currencyJSONObject.get(currencyObj[0]).toString();
+            }else{
+                System.out.println("Not enough Squares in Map File");
             }
-            JSONObject currencyJSONObject = (JSONObject)jsonObject.get(obArr[3]);
-            Set currencySet = currencyJSONObject.keySet();
-            // System.out.println(attributes);
-            Object[] currencyObj = currencySet.toArray();
-            currency = currencyJSONObject.get(currencyObj[0]).toString();
-
 
 
             //currency = (String)currencyArr[0];
