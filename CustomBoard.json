@@ -1,0 +1,531 @@
+{
+  "_comment": "To make a custom board for the game please go through this document a make all of the changes",
+  "_comment": "that it ask you to make in the _comment lines, please make sure that you to not change any",
+  "_comment": "values or any other aspect of this files that the _comment lines doesn't tell you to change.",
+  "_comment": "MAKING ANY UNAUTHORIZED CHANGES TO THIS FILE WILL RESULT IN CRASHING THE GAME WHEN IT IS RAN.",
+
+  "_comment": "DO NOT TOUCH",
+  "0" : {
+    "squareType": "Property",
+    "name": "Go",
+    "index": 0,
+    "price": -1,
+    "set": 0,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "1": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 1,
+    "price": -5,
+    "set": 1,
+    "numInSet": 2,
+    "housePrice": -5
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "2": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 2,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "3": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 3,
+    "price": -5,
+    "set": 1,
+    "numInSet": 2,
+    "housePrice": -5
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "4": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 4,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "5": {
+    "squareType": "Railroad",
+    "name": "NAME HERE",
+    "index": 5,
+    "price": -5,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "6": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 6,
+    "price": -5,
+    "set": 2,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "7": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 7,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "8": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 8,
+    "price": -5,
+    "set": 2,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "9": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 9,
+    "price": -5,
+    "set": 2,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, for Jail.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "10": {
+    "squareType": "NAME HERE",
+    "index": 10
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "11": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 11,
+    "price": -5,
+    "set": 3,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "12": {
+    "squareType": "Utility",
+    "name": "NAME HERE",
+    "index": 12,
+    "price": -5,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "13": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 13,
+    "price": -5,
+    "set": 3,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "14": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 14,
+    "price": -5,
+    "set": 3,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "15": {
+    "squareType": "Railroad",
+    "name": "NAME HERE",
+    "index": 15,
+    "price": -5,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "16": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 16,
+    "price": -5,
+    "set": 4,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "17": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 17,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "18": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 18,
+    "price": -5,
+    "set": 4,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "19": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 19,
+    "price": -5,
+    "set": 4,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, for Free Parking.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "20": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 20,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "21": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 21,
+    "price": -5,
+    "set": 5,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "22": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 22,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "23": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 23,
+    "price": -5,
+    "set": 5,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "24": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 24,
+    "price": -5,
+    "set": 5,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "25": {
+    "squareType": "Railroad",
+    "name": "NAME HERE",
+    "index": 25,
+    "price": -5,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "26": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 26,
+    "price": -5,
+    "set": 6,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "27": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 27,
+    "price": -5,
+    "set": 6,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "28": {
+    "squareType": "Utility",
+    "name": "NAME HERE",
+    "index": 28,
+    "price": -5,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "29": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 29,
+    "price": -5,
+    "set": 6,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, for Go to Jail.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "30": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 30,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "31": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 31,
+    "price": -5,
+    "set": 7,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "32": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 32,
+    "price": -5,
+    "set": 7,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "33": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 33,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "34": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 34,
+    "price": -5,
+    "set": 7,
+    "numInSet": 3,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "35": {
+    "squareType": "Railroad",
+    "name": "NAME HERE",
+    "index": 35,
+    "price": -5,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "36": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 36,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "37": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 37,
+    "price": -5,
+    "set": 8,
+    "numInSet": 2,
+    "housePrice": -5
+  },
+
+  "_comment": "DO NOT TOUCH",
+  "38": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 38,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "39": {
+    "squareType": "Property",
+    "name": "NAME HERE",
+    "index": 39,
+    "price": -5,
+    "set": 8,
+    "numInSet": 2,
+    "housePrice": -5
+  },
+
+  "_comment": "Replace the $ with what you want the visual representation of the currency before,",
+  "_comment": "an example of what the outcome during the game will look like is $1000",
+  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "currency": {
+    "type": "$"
+  },
+
+
+  "_comment": "For this next part for each block of writing you are to replace NAME HERE",
+  "_comment": "Do not touch any other value or words other than the one stated above.",
+
+  "player1": {
+    "name": "NAME HERE"
+  },
+
+  "player2": {
+    "name": "NAME HERE"
+  },
+
+  "player3": {
+    "name": "NAME HERE"
+  },
+
+  "player4": {
+    "name": "NAME HERE"
+  },
+
+  "player5": {
+    "name": "NAME HERE"
+  },
+
+  "player6": {
+    "name": "NAME HERE"
+  },
+
+  "aI1": {
+    "name": "NAME HERE"
+  },
+
+  "aI2": {
+    "name": "NAME HERE"
+  },
+
+  "aI3": {
+    "name": "NAME HERE"
+  },
+
+  "aI4": {
+    "name": "NAME HERE"
+  },
+
+  "aI5": {
+    "name": "NAME HERE"
+  },
+
+  "aI6": {
+    "name": "NAME HERE"
+  }
+}
