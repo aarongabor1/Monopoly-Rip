@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.*;
 
 /**
@@ -154,9 +156,13 @@ public class Controller implements ActionListener, Serializable
             this.disableGUI();
             loadedGame.displayGUI();
         }
-        else
+        else if(o.equals("End Turn"))
         {
             endTurn();
+        }
+        else
+        {
+            System.out.println("Action Not Recognized");
         }
 
     }

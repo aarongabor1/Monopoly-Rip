@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -615,4 +616,63 @@ public class View implements Serializable
     public void disableGUI() {
         frame.setVisible(false);
     }
+}
+
+
+/**
+ ===========================================================================
+ **/
+
+
+class MainGameView extends JFrame
+{
+    // Variables
+
+    // JTextArea
+    private JTextArea output;
+
+    private JTextField balance;
+    private JTextArea properties;
+
+    // Constructor
+    public MainGameView()
+    {
+
+    }
+
+    // Initialize Frame Options
+    void initializeOptions()
+    {
+
+    }
+
+    /**
+    private JPanel mainGamePanel()
+    {
+
+    }
+     **/
+
+}
+
+
+/**
+ ===========================================================================
+ **/
+
+class BuildPropertyView extends JFrame
+{
+    // Variables
+
+    public BuildPropertyView()
+    {
+
+    }
+
+    void initializeOptions()
+    {
+
+    }
+
+
 }
