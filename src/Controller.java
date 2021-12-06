@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.*;
 
 /**
@@ -18,6 +16,9 @@ public class Controller implements ActionListener, Serializable
 
     // GUI
     private View v;
+
+    // Build Property Frame
+    private BuildPropertyView buildView;
 
     /**
      * constructor for controller class
@@ -59,7 +60,9 @@ public class Controller implements ActionListener, Serializable
         else if (o.equals("House/Hotel"))
         {
             // Update View
-            v.openHouseBuy();
+            //v.openHouseBuy();
+            buildView = new BuildPropertyView(m.getCurrentPlayer().getProperties());
+            buildView.buildPropertyActionListeners(new BuildPropertyController(m,buildView));
 
         }
         else if(o.equals("Submit"))
@@ -502,5 +505,26 @@ public class Controller implements ActionListener, Serializable
 
     public void disableGUI(){
         v.disableGUI();
+    }
+}
+
+class BuildPropertyController implements ActionListener
+{
+    // Monopoly Model
+    private Game model;
+
+    // Monopoly View
+    private BuildPropertyView view;
+
+    public BuildPropertyController(Game m, BuildPropertyView v)
+    {
+        this.model = m;
+        this.view = v;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent)
+    {
+
     }
 }

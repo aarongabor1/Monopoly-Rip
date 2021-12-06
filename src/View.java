@@ -621,42 +621,7 @@ public class View implements Serializable
 
 /**
  ===========================================================================
- **/
 
-
-class MainGameView extends JFrame
-{
-    // Variables
-
-    // JTextArea
-    private JTextArea output;
-
-    private JTextField balance;
-    private JTextArea properties;
-
-    // Constructor
-    public MainGameView()
-    {
-
-    }
-
-    // Initialize Frame Options
-    void initializeOptions()
-    {
-
-    }
-
-    /**
-    private JPanel mainGamePanel()
-    {
-
-    }
-     **/
-
-}
-
-
-/**
  ===========================================================================
  **/
 
@@ -664,15 +629,154 @@ class BuildPropertyView extends JFrame
 {
     // Variables
 
-    public BuildPropertyView()
-    {
+    // Fonts
+    private static final Font font50B = new Font("Times New Roman", Font.BOLD, 50);
+    private static final Font font25P = new Font("Times New Roman", Font.PLAIN, 25);
+    private static final Font font75B = new Font("Times New Roman", Font.BOLD, 75);
 
+    // Buttons
+    private JButton buyHouseButton;
+    private JButton buyHotelButton;
+    private JButton closeButton;
+
+    // Default List Model
+    private DefaultListModel propertyModel;
+
+    // Combo Box
+    private JComboBox cb;
+
+    // Text Fields
+    private JTextField balance;
+    private JTextField outputHouse;
+
+
+    public BuildPropertyView(ArrayList<Property> arrayList)
+    {
+        // Initialize Frame
+        setTitle("Buy Houses and Hotels");
+        setPreferredSize(new Dimension(1000,650));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        // Add Components
+        initializeOptions();
+        setUpDropdown(arrayList);
+        add(buildPropertyPanel());
+
+        // Finish Initialization
+        pack();
+        setVisible(true);
+        toFront();
     }
 
-    void initializeOptions()
+    private JPanel buildPropertyPanel()
     {
+        // Initialize Panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(3,1));
 
+        // Top Panel
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new GridLayout(1,2));
+        topPanel.add(balance);
+        topPanel.add(outputHouse);
+        topPanel.setVisible(true);
+
+        // Middle Panel
+        JPanel midPanel = new JPanel();
+        midPanel.setBackground(Color.white);
+        midPanel.add(cb);
+        midPanel.setVisible(true);
+
+        // Bottom Panel
+        JPanel botPanel = new JPanel();
+        botPanel.setLayout(new GridLayout(1,3));
+        botPanel.add(buyHouseButton);
+        botPanel.add(buyHotelButton);
+        botPanel.add(closeButton);
+        botPanel.setVisible(true);
+
+        // Finish initialization
+        mainPanel.add(topPanel);
+        mainPanel.add(midPanel);
+        mainPanel.add(botPanel);
+        mainPanel.setVisible(true);
+
+        // Return Panel
+        return mainPanel;
     }
 
+    private void initializeOptions()
+    {
+        // Buttons
+        buyHouseButton = setupButton(buyHouseButton, font50B, new Color(240, 255, 77), false, "Buy House");
+        buyHotelButton = setupButton(buyHotelButton, font50B, new Color(246, 77, 255), false, "Buy Hotel");
+        closeButton = setupButton(closeButton, font50B, new Color(237, 24, 24), true, "Close");
+
+        // Text Fields
+        outputHouse = setupTextField(outputHouse, font25P, false, true);
+        balance = setupTextField(balance, font75B, false, true);
+    }
+
+    private JButton setupButton(JButton button, Font font, Color color, boolean enabled, String Name)
+    {
+        button = new JButton(Name);
+        button.setFont(font);
+        button.setBackground(color);
+        button.setEnabled(enabled);
+        return button;
+    }
+
+    private JTextField setupTextField(JTextField textField, Font font, boolean editable, boolean isCenter)
+    {
+        textField = new JTextField();
+        textField.setFont(font);
+        textField.setEditable(editable);
+        textField.setBackground(Color.white);
+        if(isCenter)
+            textField.setHorizontalAlignment(JTextField.CENTER);
+        return textField;
+    }
+
+    /**
+     * This is a method that will set up the dropdown menu of the properties
+     * that the user can buy houses and hotels on.
+     * @param arrayList A ArrayList of Property that can have houses or hotels.
+     */
+    public void setUpDropdown(ArrayList<Property> arrayList)
+    {
+        // Set up property list
+        propertyModel = new DefaultListModel<>();
+
+        for(int i = 0; i < arrayList.size(); i++)
+        {
+            // Populate Model
+            propertyModel.addElement(arrayList.get(i).getName());
+        }
+
+        // Get property names
+        String[] p = new String[propertyModel.getSize()];
+        propertyModel.copyInto(p);
+
+        // Set up default combo box model
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel(p);
+        cb = new JComboBox();
+        cb.setModel(cbm);
+        cb.insertItemAt(" ",0);
+        cb.setSelectedIndex(0);
+        cb.setActionCommand("Selected Property");
+
+        // Add to panel
+        cb.setVisible(true);
+        cb.setFont(font25P);
+    }
+
+    public void buildPropertyActionListeners(ActionListener o)
+    {
+        buyHouseButton.addActionListener(o);
+        buyHotelButton.addActionListener(o);
+        closeButton.addActionListener(o);
+        cb.addActionListener(o);
+    }
 
 }
