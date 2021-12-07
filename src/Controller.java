@@ -256,7 +256,7 @@ public class Controller implements ActionListener, Serializable
      *
      * @param cp
      */
-    private void updatePlayer(Player cp)
+    public void updatePlayer(Player cp)
     {
         // Update View Player Data
         v.updatePlayerName(cp.getName());
@@ -504,6 +504,7 @@ class BuildPropertyController implements ActionListener
         }
         else if(o.equals("Close"))
         {
+            mainView.updateProperties(model.getCompleteSetProperties(model.getCurrentPlayer()));
             // Close View
             view.dispose();
         }
@@ -530,7 +531,7 @@ class BuildPropertyController implements ActionListener
         {
            view.setBuyHouseButton();
         }
-        else if(model.canBuyHotel(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()==4)
+        else if(model.canBuyHotel(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()==4 && !(model.getPropertyByName(s).hasHotel()))
         {
             view.setBuyHotelButton();
         }
@@ -538,16 +539,21 @@ class BuildPropertyController implements ActionListener
 
     private void buyHouse(String s)
     {
-        Property temp = model.getPropertyByName(s);
-
         // Update Model
         System.out.println("Houses Before: " + model.getPropertyByName(s).getHouses());
         model.buyHouse(s);
         System.out.println("Houses After: " + model.getPropertyByName(s).getHouses());
+        updateView();
     }
 
     private void buyHotel(String s)
     {
         model.buyHotel(s);
+        updateView();
+    }
+
+    private void updateView()
+    {
+        mainView.updateBalance(""+model.getCurrentPlayer().getBalance());
     }
 }

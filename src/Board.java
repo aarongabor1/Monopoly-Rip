@@ -26,7 +26,7 @@ public class Board implements Serializable {
      *
      */
     private void createBoard() {
-        squares.add(new Property("Go", 0, -1,-1,0,-1));
+        squares.add(new Property("Empty", 0, -1,-1,0,-1));
         squares.add(new Property("Ottawa U", 1, 60,1,2,50));
         squares.add(new Property("Empty", 2, -1,-1,0,-1));
         squares.add(new Property("Carleton U", 3, 60,1,2,50));
