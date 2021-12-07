@@ -1,0 +1,448 @@
+{
+  "0" : {
+    "squareType": "Property",
+    "name": "Go",
+    "index": 0,
+    "price": -1,
+    "set": 0,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "1": {
+    "squareType": "Property",
+    "name": "Ottawa U",
+    "index": 1,
+    "price": 60,
+    "set": 1,
+    "numInSet": 2,
+    "housePrice": 50
+  },
+
+  "2": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 2,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "3": {
+    "squareType": "Property",
+    "name": "Carleton U",
+    "index": 3,
+    "price": 60,
+    "set": 1,
+    "numInSet": 2,
+    "housePrice": 50
+  },
+
+  "4": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 4,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "5": {
+    "squareType": "Railroad",
+    "name": "LRT",
+    "index": 5,
+    "price": 200,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "6": {
+    "squareType": "Property",
+    "name": "Chevrolet",
+    "index": 6,
+    "price": 100,
+    "set": 2,
+    "numInSet": 3,
+    "housePrice": 50
+  },
+
+  "7": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 7,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "8": {
+    "squareType": "Property",
+    "name": "Honda",
+    "index": 8,
+    "price": 100,
+    "set": 2,
+    "numInSet": 3,
+    "housePrice": 50
+  },
+
+  "9": {
+    "squareType": "Property",
+    "name": "Toyota",
+    "index": 9,
+    "price": 120,
+    "set": 2,
+    "numInSet": 3,
+    "housePrice": 50
+  },
+
+  "10": {
+    "squareType": "Jail",
+    "index": 10
+  },
+
+  "11": {
+    "squareType": "Property",
+    "name": "Home Depot",
+    "index": 11,
+    "price": 140,
+    "set": 3,
+    "numInSet": 3,
+    "housePrice": 100
+  },
+
+  "12": {
+    "squareType": "Utility",
+    "name": "Electric Company",
+    "index": 12,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "13": {
+    "squareType": "Property",
+    "name": "CostCo",
+    "index": 13,
+    "price": 140,
+    "set": 3,
+    "numInSet": 3,
+    "housePrice": 100
+  },
+
+  "14": {
+    "squareType": "Property",
+    "name": "Walmart",
+    "index": 14,
+    "price": 160,
+    "set": 3,
+    "numInSet": 3,
+    "housePrice": 100
+  },
+
+  "15": {
+    "squareType": "Railroad",
+    "name": "VIA Rail",
+    "index": 15,
+    "price": 200,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "16": {
+    "squareType": "Property",
+    "name": "Skip the Dishes",
+    "index": 16,
+    "price": 180,
+    "set": 4,
+    "numInSet": 3,
+    "housePrice": 100
+  },
+
+  "17": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 17,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "18": {
+    "squareType": "Property",
+    "name": "Lyft",
+    "index": 18,
+    "price": 180,
+    "set": 4,
+    "numInSet": 3,
+    "housePrice": 100
+  },
+
+  "19": {
+    "squareType": "Property",
+    "name": "Uber",
+    "index": 19,
+    "price": 200,
+    "set": 4,
+    "numInSet": 3,
+    "housePrice": 100
+  },
+
+  "20": {
+    "squareType": "Property",
+    "name": "Free Parking",
+    "index": 20,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "21": {
+    "squareType": "Property",
+    "name": "Ebay",
+    "index": 21,
+    "price": 220,
+    "set": 5,
+    "numInSet": 3,
+    "housePrice": 150
+  },
+
+  "22": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 22,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "23": {
+    "squareType": "Property",
+    "name": "Shopify",
+    "index": 23,
+    "price": 220,
+    "set": 5,
+    "numInSet": 3,
+    "housePrice": 150
+  },
+
+  "24": {
+    "squareType": "Property",
+    "name": "Amazon",
+    "index": 24,
+    "price": 240,
+    "set": 5,
+    "numInSet": 3,
+    "housePrice": 150
+  },
+
+  "25": {
+    "squareType": "Railroad",
+    "name": "GO Train",
+    "index": 25,
+    "price": 200,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "26": {
+    "squareType": "Property",
+    "name": "Facebook",
+    "index": 26,
+    "price": 260,
+    "set": 6,
+    "numInSet": 3,
+    "housePrice": 150
+  },
+
+  "27": {
+    "squareType": "Property",
+    "name": "LinkedIn",
+    "index": 27,
+    "price": 260,
+    "set": 6,
+    "numInSet": 3,
+    "housePrice": 150
+  },
+
+  "28": {
+    "squareType": "Utility",
+    "name": "Water Works",
+    "index": 28,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "29": {
+    "squareType": "Property",
+    "name": "Twitter",
+    "index": 29,
+    "price": 280,
+    "set": 6,
+    "numInSet": 3,
+    "housePrice": 150
+  },
+
+  "30": {
+    "squareType": "Property",
+    "name": "Go to Jail",
+    "index": 30,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "31": {
+    "squareType": "Property",
+    "name": "Disney Plus",
+    "index": 31,
+    "price": 300,
+    "set": 7,
+    "numInSet": 3,
+    "housePrice": 200
+  },
+
+  "32": {
+    "squareType": "Property",
+    "name": "Crave",
+    "index": 32,
+    "price": 300,
+    "set": 7,
+    "numInSet": 3,
+    "housePrice": 200
+  },
+
+  "33": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 33,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "34": {
+    "squareType": "Property",
+    "name": "Netflix",
+    "index": 34,
+    "price": 320,
+    "set": 7,
+    "numInSet": 3,
+    "housePrice": 200
+  },
+
+  "35": {
+    "squareType": "Railroad",
+    "name": "Exo Train",
+    "index": 35,
+    "price": 200,
+    "set": 9,
+    "numInSet": 4,
+    "housePrice": -1
+  },
+
+  "36": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 36,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "37": {
+    "squareType": "Property",
+    "name": "Samsung",
+    "index": 37,
+    "price": 350,
+    "set": 8,
+    "numInSet": 2,
+    "housePrice": 250
+  },
+
+  "38": {
+    "squareType": "Property",
+    "name": "Empty",
+    "index": 38,
+    "price": -1,
+    "set": -1,
+    "numInSet": 0,
+    "housePrice": -1
+  },
+
+  "39": {
+    "squareType": "Property",
+    "name": "Apple",
+    "index": 39,
+    "price": 400,
+    "set": 8,
+    "numInSet": 2,
+    "housePrice": 250
+  },
+
+  "currency": {
+    "type": "$"
+  },
+
+  "player1": {
+    "name": "Player 1"
+  },
+
+  "player2": {
+    "name": "Player 2"
+  },
+
+  "player3": {
+    "name": "Player 3"
+  },
+
+  "player4": {
+    "name": "Player 4"
+  },
+
+  "player5": {
+    "name": "Player 5"
+  },
+
+  "player6": {
+    "name": "Player 6"
+  },
+
+  "aI1": {
+    "name": "AI 1"
+  },
+
+  "aI2": {
+    "name": "AI 2"
+  },
+
+  "aI3": {
+    "name": "AI 3"
+  },
+
+  "aI4": {
+    "name": "AI 4"
+  },
+
+  "aI5": {
+    "name": "AI 5"
+  },
+
+  "aI6": {
+    "name": "AI 6"
+  }
+}
