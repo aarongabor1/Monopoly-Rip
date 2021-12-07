@@ -31,7 +31,7 @@ public class Board implements Serializable {
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
         initializeMap(jfc.getSelectedFile().getName());
-        createBoard();
+        //createBoard();
     }
 
     /**
@@ -94,11 +94,13 @@ public class Board implements Serializable {
             Set keys = jsonObject.keySet();
 
             Object[] obArr = keys.toArray();
+            int count = 0;
             if(obArr.length ==41) {
-                for (int i = 0; i <= obArr.length-14; i++) {
+                for (int i = 0; i <= obArr.length-2; i++) {
+                    System.out.println(count);
                     JSONObject squareObject = (JSONObject) jsonObject.get(obArr[i]);
                     Set attributes = squareObject.keySet();
-                     System.out.println(attributes);
+                    // System.out.println(attributes);
                     //attributesArr has order [set, numInSet, price, housePrice, name, index, squareType]
 
                     Object[] attributesArr = attributes.toArray();
@@ -123,6 +125,7 @@ public class Board implements Serializable {
                         squares.clear();
                         break;
                     }
+                    count++;
                 }
 
             }else{
