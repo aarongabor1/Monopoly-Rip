@@ -1,11 +1,17 @@
-public class Jail implements Square {
+import java.io.Serializable;
+
+/**
+ * Represents the Jail Square
+ * @author Braxton Martin
+ */
+public class Jail implements Square, Serializable {
 
     public Jail(int index){
-
     }
+
     @Override
     public int getIndex() {
-        return 0;
+        return 10;
     }
 
     @Override
@@ -15,7 +21,7 @@ public class Jail implements Square {
 
     @Override
     public String getName() {
-        return "Just Visiting";
+        return "Jail";
     }
 
     @Override
@@ -31,5 +37,10 @@ public class Jail implements Square {
     @Override
     public int getRent(int numOwnedInSet, boolean hotel) {
         return 0;
+    }
+
+    @Override
+    public int getSet() {
+        return -1;
     }
 }

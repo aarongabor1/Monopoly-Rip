@@ -256,7 +256,7 @@ public class Controller implements ActionListener, Serializable
      *
      * @param cp
      */
-    private void updatePlayer(Player cp)
+    public void updatePlayer(Player cp)
     {
         // Update View Player Data
         v.updatePlayerName(cp.getName());
@@ -320,7 +320,32 @@ public class Controller implements ActionListener, Serializable
             v.updateOutput("Landed on: Go To Jail");
             return;
         }
+        if(m.getCurrentPlayer().isInJail() && m.getCurrentPlayer().getJailedTurns() == 1){
+            v.updateOutput("Rolled doubles three times and sent to Jail");
+            return;
+        }
 
+        if(m.getCurrentPlayer().getJailedTurns() > 0){
+            if (m.getCurrentPlayer().isInJail()){
+                v.updateOutput("Player still in jail");
+                v.setJailed((m.getCurrentPlayer().getJailedTurns() == 4));
+            }
+            else if (m.getCurrentPlayer().getRoll(1) == m.getCurrentPlayer().getRoll(2)){
+                v.updateOutput("Rolled doubles and escaped Jail");
+                //m.endTurn();
+                //endTurnUpdate();
+            }
+            return;
+        }
+
+        if(m.getCurrentPlayer().getPosition().getIndex() != 30) {
+            // Players New Position on board
+            v.updateOutput("Position on board: " + m.getCurrentPlayer().getPosition().getIndex());
+        }
+        else{
+            v.updateOutput("Landed on: Go To Jail");
+            return;
+        }
                 // Players new position
         String property = m.getCurrentPlayer().getPosition().getName();
 
@@ -455,10 +480,10 @@ public class Controller implements ActionListener, Serializable
     public void disableGUI(){
         v.disableGUI();
     }
-
     public void updateGUIOutput(String str){
         v.updateOutput(str);
     }
+
 }
 
 /**
@@ -513,6 +538,8 @@ class BuildPropertyController implements ActionListener
         }
         else if(o.equals("Close"))
         {
+            mainView.updateProperties(model.getCompleteSetProperties(model.getCurrentPlayer()));
+
             // Close View
             view.dispose();
         }
@@ -539,7 +566,10 @@ class BuildPropertyController implements ActionListener
         {
            view.setBuyHouseButton();
         }
+
         else if(model.canBuyHotel(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()==4)
+
+        else if(model.canBuyHotel(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()==4 && !(model.getPropertyByName(s).hasHotel()))
         {
             view.setBuyHotelButton();
         }
@@ -553,10 +583,20 @@ class BuildPropertyController implements ActionListener
         System.out.println("Houses Before: " + model.getPropertyByName(s).getHouses());
         model.buyHouse(s);
         System.out.println("Houses After: " + model.getPropertyByName(s).getHouses());
+
+        updateView();
+
     }
 
     private void buyHotel(String s)
     {
         model.buyHotel(s);
+
+        updateView();
+    }
+
+    private void updateView()
+    {
+        mainView.updateBalance(""+model.getCurrentPlayer().getBalance());
     }
 }

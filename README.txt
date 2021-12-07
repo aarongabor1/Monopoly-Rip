@@ -1,5 +1,5 @@
 SYSC 3110 Fall 2021 Group Project
-11.08.2021
+11.22.2021
 Monopoly
 
 
@@ -28,20 +28,26 @@ ____________________
 7.	Then the Game will start
 8.	Players will receive information through a read out.
 9.	Players will be promoted with buttons that will allow them to roll, buy a property,
-	pay rent, and end their turn.
+	pay rent, open a window to by houses and hotels, and end their turn.
 10.	Game will continue till there is a winner
 
 Project Files:
 ______________
-The project is made of 8 file:
+The project is made of 13 file:
+AI.java			Creates and implements the AI players.
 Board.java 		Creates and stores the board for the game.
+Controller.java		Implements the functions of the buttons for the GUI and updates it.
 Die.java		Creates and implements the dice in the game.
+Game.java 		Stores and Runs the main game functions.
+Jail.java		Implements Square to add jail functions.
+Main.java		Runs the game.
 Player.java		Creates and stores player information.
 Property.java		Creates and stores property Information.
-Game.java 		Stores and Runs the main game functions.
+Railroad.java		Implements Square to add railroad functions.
 Square.java		Adds extra functions to Property.java.
+Utility.java		Implements Square to add utility property functions.
 View.java		Creates and implements the GUI for the game.
-Controller.java		Implements the functions of the buttons for the GUI and updates it.
+
 
 PLEASE NOTE: MONOPOLY IS A COPYRIGHT GAME AND 
 THIS RECREATION OF GAME IS BEING USED FOR EDUCATIONAL PURPOSES ONLY. 

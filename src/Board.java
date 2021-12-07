@@ -1,15 +1,24 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Board {
+/**
+ * Class that simulates the Monopoly board
+ * @author Cam Sommerville
+ * @author Braxton Martin
+ */
+public class Board implements Serializable {
     private List<Square> squares;
     private final int numSquares = 40;
+    private ArrayList<Property> properties;
 
     /**
      * Constructor for Board class
      */
     public Board(){
+        properties = new ArrayList<>();
         squares = new ArrayList<>();
         createBoard();
+        setPropertyList();
     }
 
     /**
@@ -17,22 +26,22 @@ public class Board {
      *
      */
     private void createBoard() {
-        squares.add(new Property("Go", 0, -1,-1,0,-1));
+        squares.add(new Property("Empty", 0, -1,-1,0,-1));
         squares.add(new Property("Ottawa U", 1, 60,1,2,50));
         squares.add(new Property("Empty", 2, -1,-1,0,-1));
         squares.add(new Property("Carleton U", 3, 60,1,2,50));
         squares.add(new Property("Empty", 4, -1,-1,0,-1));
-        squares.add(new Property("Empty", 5, -1,-1,0,-1));
+        squares.add(new Railroad("LRT", 5, 200,9,4,-1));
         squares.add(new Property("Chevrolet", 6, 100,2,3,50));
         squares.add(new Property("Empty", 7, -1,-1,0,3-1));
         squares.add(new Property("Honda", 8, 100,2,3,50));
         squares.add(new Property("Toyota", 9, 120,2,3, 50));
         squares.add(new Jail(10));
         squares.add(new Property("Home Depot", 11, 140,3,3,100));
-        squares.add(new Property("Empty", 12, -1,-1,0,-1));
+        squares.add(new Utility("Electric Company", 12, -1,-1,0,-1));
         squares.add(new Property("CostCo", 13, 140,3,3,100));
         squares.add(new Property("Walmart", 14, 160,3,3,100));
-        squares.add(new Property("Empty", 15, -1,-1,0,-1));
+        squares.add(new Railroad("VIA Rail", 15, 200,9,4,-1));
         squares.add(new Property("Skip the Dishes", 16, 180,4,3,100));
         squares.add(new Property("Empty", 17, -1,-1,0,-1));
         squares.add(new Property("Lyft", 18, 180,4,3,100));
@@ -42,21 +51,21 @@ public class Board {
         squares.add(new Property("Empty", 22, -1,-1,0,-1));
         squares.add(new Property("Shopify", 23, 220,5,3,150));
         squares.add(new Property("Amazon", 24, 240,5,3,150));
-        squares.add(new Property("Empty", 25, -1,-1,0,150));
+        squares.add(new Railroad("GO Train", 25, 200,9,4,150));
         squares.add(new Property("Facebook", 26, 260,6,3,150));
         squares.add(new Property("LinkedIn", 27, 260,6,3,150));
-        squares.add(new Property("Empty", 28, -1,-1,0,-1));
+        squares.add(new Utility("Water Works", 28, -1,-1,0,-1));
         squares.add(new Property("Twitter", 29, 280,6,3,150));
         squares.add(new Property("Go to Jail", 30, -1,-1,0,-1));
         squares.add(new Property("Disney Plus", 31, 300,7,3,200));
         squares.add(new Property("Crave", 32, 300,7,3,200));
         squares.add(new Property("Empty", 33, -1,-1,0,-1));
         squares.add(new Property("Netflix", 34, 320,7,3,200));
-        squares.add(new Property("Empty", 35, -1,-1,0,-1));
+        squares.add(new Railroad("Exo Train", 35, 200,9,4,-1));
         squares.add(new Property("Empty", 36, -1,-1,0,-1));
-        squares.add(new Property("Samsung", 37, 350,8,2,-1));
+        squares.add(new Property("Samsung", 37, 350,8,2,200));
         squares.add(new Property("Empty", 38, -1,-1,0,-1));
-        squares.add(new Property("Apple", 39, 400,8,2,-1));
+        squares.add(new Property("Apple", 39, 400,8,2,200));
     }
 
     /**
@@ -64,8 +73,43 @@ public class Board {
      * @param index
      * @return Property object
      */
-    public Square getProperty(int index){
+    public Square getProperty(int index)
+    {
         return squares.get(index);
+    }
+
+    public void setPropertyList()
+    {
+        for(int i=0; i< squares.size();++i)
+        {
+            if(Railroad.class.isInstance(squares.get(i)))
+            {
+                System.out.println(squares.get(i).getName());
+            }
+            else if(Jail.class.isInstance(squares.get(i)))
+            {
+                // Do nothing
+            }
+            else
+            {
+                properties.add((Property) squares.get(i));
+            }
+        }
+        System.out.println(properties.size());
+    }
+
+    public ArrayList<Square> getPropertySet(int setNumber)
+    {
+        ArrayList<Square> set = new ArrayList<>();
+
+        for(Square s:squares)
+        {
+            if(s.getSet()==setNumber)
+            {
+                set.add(s);
+            }
+        }
+        return set;
     }
 
     /**

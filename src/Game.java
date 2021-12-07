@@ -1,6 +1,14 @@
+import java.io.*;
 import java.util.*;
 
-public class Game
+/**
+ * Simulates the Monopoly Game
+ * @author Cam Sommerville
+ * @author Brady Norton
+ * @author Braxton Martin
+ * @author Aaron Gabor
+ */
+public class Game implements Serializable
 {
     private List<Player> players;
     private Board board;
@@ -64,15 +72,39 @@ public class Game
      * Pay rent from one user to another
      */
     public void payRent(){
-        int numInSet = getNumInSetOwned(((Property) currentPlayer.getPosition()).getOwner(), (Property) currentPlayer.getPosition());
-        boolean hotel = ((Property) currentPlayer.getPosition()).hasHotel();
-        int rent = ((Property) getLandedOnProperty()).getRent(numInSet, hotel);
-        int rentPayed = players.get(currentTurn).payRent(rent);
-        ((Property)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
-        if(rent != rentPayed)
-            bankrupt(players.get(currentTurn), ((Property)getLandedOnProperty()).getOwner());
+        int numInSet;
+        int rent;
+        if(isSquareRailroad()){
+            numInSet = getNumInSetOwned(((Railroad) currentPlayer.getPosition()).getOwner(), (Railroad) currentPlayer.getPosition());
+            rent = ((Railroad) getLandedOnProperty()).getRent(numInSet);
+            int rentPayed = players.get(currentTurn).payRent(rent);
+            ((Railroad)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
+            if(rent != rentPayed)
+                bankrupt(players.get(currentTurn), ((Railroad)getLandedOnProperty()).getOwner());
+        }else if(isSquareProperty()){
+            numInSet = getNumInSetOwned(((Property) currentPlayer.getPosition()).getOwner(), (Property) currentPlayer.getPosition());
+            boolean hotel = ((Property) currentPlayer.getPosition()).hasHotel();
+            rent = ((Property) getLandedOnProperty()).getRent(numInSet, hotel);
+            int rentPayed = players.get(currentTurn).payRent(rent);
+            ((Property)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
+            if(rent != rentPayed)
+                bankrupt(players.get(currentTurn), ((Property)getLandedOnProperty()).getOwner());
+        }else if(isSquareUtility()){
+            numInSet = getNumInSetOwned(((Utility) currentPlayer.getPosition()).getOwner(), (Railroad) currentPlayer.getPosition());
+            rent = ((Utility) getLandedOnProperty()).getRent(numInSet,getCurrentRoll());
+            int rentPayed = players.get(currentTurn).payRent(rent);
+            ((Utility)getLandedOnProperty()).getOwner().acceptRent(rentPayed);
+            if(rent != rentPayed)
+                bankrupt(players.get(currentTurn), ((Utility)getLandedOnProperty()).getOwner());
+        }
     }
 
+    /**
+     * returns the number of properties in the set the player owns
+     * @param play
+     * @param prop
+     * @return int
+     */
     public int getNumInSetOwned(Player play, Property prop){
         int num = 0;
         for(Property p : play.getProperties()){
@@ -95,7 +127,7 @@ public class Game
      * they will be told they have insufficient funds, the Property will remain unowned, and their
      * balance will remain the same
      *
-     * If the Player chooses not to buy the Property, he Property will remain unowned, and
+     * If the Player chooses not to guy the Property, he Property will remain unowned, and
      * their balance will remain the same
      *
      */
@@ -131,26 +163,15 @@ public class Game
                     return true;
                 }
             }
-        }
-        return false;
-    }
-
-    public boolean canBuyHouse(){
-        if(isSquareProperty()) {
-            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
-                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0) {
-                    if(((Property)currentPlayer.getPosition()).getHouses() < 4) return true;
+        }else if(isSquareRailroad()) {
+            if (((Railroad) getLandedOnProperty()).getOwner() == null) {
+                if (players.get(currentTurn).getBalance() - getLandedOnProperty().getPrice() >= 0) {
+                    return true;
                 }
             }
-        }
-        return false;
-    }
-
-    public boolean canBuyHotel(){
-        if(isSquareProperty()) {
-            if (((Property) getLandedOnProperty()).getOwner().equals(currentPlayer)) {
-                if (players.get(currentTurn).getBalance() - ((Property) getLandedOnProperty()).getHousePrice() >= 0)
-                    if(((Property)currentPlayer.getPosition()).getHouses() == 4) {
+        }else if(isSquareUtility()){
+            if (((Utility) getLandedOnProperty()).getOwner() == null) {
+                if (players.get(currentTurn).getBalance() - getLandedOnProperty().getPrice() >= 0) {
                     return true;
                 }
             }
@@ -158,6 +179,189 @@ public class Game
         return false;
     }
 
+    /**
+     * returns whether the player can buy a house
+     * @param p
+     * @return boolean
+     */
+    public boolean canBuyHouse(Property p)
+    {
+        ArrayList<Property> temp = new ArrayList<>();
+
+        for(int i=0; i<currentPlayer.getProperties().size();++i)
+        {
+            if(currentPlayer.getProperties().get(i).getSet()==p.getSet())
+            {
+                temp.add(currentPlayer.getProperties().get(i));
+            }
+        }
+
+        if(p.getNumInSet()==2)
+        {
+            System.out.println("Number in set 2 loop entered");
+             if(temp.get(0).getHouses()==temp.get(1).getHouses())
+             {
+                 return true;
+             }
+             else if(temp.get(0).getHouses() - temp.get(1).getHouses() > 0)
+             {
+                 if(temp.get(1).getName().equals(p.getName()))
+                 {
+                     return true;
+                 }
+                 else
+                 {
+                     return false;
+                 }
+             }
+             else
+             {
+                 return false;
+             }
+        }
+        else if(p.getNumInSet()==3)
+        {
+            System.out.println("Number in set 3 loop entered");
+            if(temp.get(0).getHouses()==temp.get(1).getHouses() && temp.get(0).getHouses()==temp.get(2).getHouses())
+            {
+                return true;
+            }
+            else if((temp.get(0).getHouses() > temp.get(1).getHouses() || temp.get(0).getHouses() > temp.get(2).getHouses()) && p.getName().equals(temp.get(0).getName()))
+            {
+                return false;
+            }
+            else if((temp.get(1).getHouses() > temp.get(0).getHouses() || temp.get(1).getHouses()>temp.get(2).getHouses()) && p.getName().equals(temp.get(1).getName()))
+            {
+                return false;
+            }
+            else if((temp.get(2).getHouses() > temp.get(0).getHouses() || temp.get(2).getHouses()>temp.get(1).getHouses()) && p.getName().equals(temp.get(2).getName()))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /**
+     * returns whether the current player can buy a hotel
+     * @return boolean
+     */
+    public boolean canBuyHotel(Property p)
+    {
+        /**
+        for(Property p:players.get(currentTurn).getProperties())
+        {
+            if(fullSet(players.get(currentTurn),p))
+            {
+                if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >= 0)
+                {
+                    if(maxHousesBuilt(p.getSet()))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+         **/
+        ArrayList<Property> temp = new ArrayList<>();
+
+        for(int i=0; i<currentPlayer.getProperties().size();++i)
+        {
+            if(currentPlayer.getProperties().get(i).getSet()==p.getSet())
+            {
+                temp.add(currentPlayer.getProperties().get(i));
+            }
+        }
+
+        if(p.getNumInSet()==2)
+        {
+            if(temp.get(0).getHouses() == 4 && temp.get(1).getHouses()==4)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(p.getNumInSet()==3)
+        {
+            if(temp.get(0).getHouses()==4 && temp.get(1).getHouses()==4 && temp.get(2).getHouses()==4)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * returns whether the player can buy a house
+     * @param p
+     * @return boolean
+     */
+    public boolean canBuyHouseAI(Property p)
+    {
+        ArrayList<Integer> houseAmounts = new ArrayList<>();
+
+        for(int i=0; i<players.get(currentTurn).getProperties().size();++i)
+        {
+            houseAmounts.add(players.get(currentTurn).getProperties().get(i).getHouses());
+        }
+
+        System.out.println("Max Houses: " + Collections.max(houseAmounts));
+
+        if(p.getHouses() <= Collections.max(houseAmounts))
+        {
+            if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >=0)
+            {
+                if(getNumInSetOwned(players.get(currentTurn),p)==board.getPropertySet(p.getSet()).size())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean canBuyHotelAI()
+    {
+        for(Property p:players.get(currentTurn).getProperties())
+        {
+            if(fullSet(players.get(currentTurn),p))
+            {
+                if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >= 0)
+                {
+                    if(maxHousesBuilt(p.getSet()))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the player has the full set
+     * @param play
+     * @param prop
+     * @return
+     */
     public boolean fullSet(Player play, Property prop){
         int count =0;
         for(Property p : play.getProperties()){
@@ -168,6 +372,23 @@ public class Game
     }
 
     /**
+     * checks if max number of houses has been reached
+     * @param setNumber
+     * @return
+     */
+    public boolean maxHousesBuilt(int setNumber)
+    {
+        for(int i=0;i<board.getPropertySet(setNumber).size();++i)
+        {
+            if(players.get(currentTurn).getProperties().get(i).getHouses()<4)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * checks if property is an empty square
      * @return
      */
@@ -175,8 +396,31 @@ public class Game
     {
         return players.get(currentTurn).getPosition().getPrice() < 0;
     }
+
+    /**
+     * Checks if the Square is a Property
+     * @return
+     */
     public boolean isSquareProperty(){
         if(currentPlayer.getPosition() instanceof Property ) return true;
+        return false;
+    }
+
+    /**
+     * Checks if the Square is a Railroad
+     * @return
+     */
+    public boolean isSquareRailroad(){
+        if(currentPlayer.getPosition() instanceof Railroad ) return true;
+        return false;
+    }
+
+    /**
+     * Checks if the Square is a Utility
+     * @return
+     */
+    public boolean isSquareUtility(){
+        if(currentPlayer.getPosition() instanceof Utility ) return true;
         return false;
     }
 
@@ -186,37 +430,36 @@ public class Game
      */
     public boolean isRentOwed()
     {
-        if(players.get(currentTurn)!= ((Property)getLandedOnProperty()).getOwner() && ((Property)getLandedOnProperty()).getOwner()!=null)
+        if(players.get(currentTurn)!= (getLandedOnProperty()).getOwner() && (getLandedOnProperty()).getOwner()!=null)
         {
-            //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
             return true;
         }
-        //System.out.println(getLandedOnProperty().getOwner().getName() + " owns this property");
         return false;
     }
 
     /**
-     *  Requests the number of players from the user using a scanner
+     *  Requests the number of players from the user
      *  Value is accepted If the entered int is equal to or greater than 2
      *  Corresponding amount of players are created using a loop then added to the game
      *
      *  Once all players are created and added, boolean running is set to true and every players position is set to 0
      *
      */
-    public void setup(int playerAmount, Controller controller){
+    public void setup(int playerAmount, int AIAmount, Controller controller){
 
-        for (int i = 0; i < playerAmount; i++)
-        {
-            addPlayer("Player" + (i+1));
-            System.out.println("Player " + (i+1) + " added");
+        if(playerAmount > 0) {
+            for (int i = 0; i < playerAmount; i++) {
+                addPlayer("Player " + (i + 1));
+                System.out.println("Player " + (i + 1) + " added");
+            }
         }
 
-        //AI test
-        players.add(new AI("AI1", board, controller));
-        players.add(new AI("AI2", board, controller));
-        players.add(new AI("AI3", board, controller));
-        players.add(new AI("AI4", board, controller));
-        playerAmount += 4;
+        if(AIAmount > 0) {
+            for (int i = 0; i < AIAmount; i++) {
+                players.add(new AI("AI " + (i + 1), board, controller));
+                System.out.println("AI " + (i + 1) + " added");
+            }
+        }
 
         running = true;
 
@@ -229,7 +472,7 @@ public class Game
             System.out.println(players.get(i).getName());
         }
 
-        startingPlayerAmount = playerAmount;
+        startingPlayerAmount = playerAmount + AIAmount;
         currentPlayer = players.get(0);
         currentTurn = 0;
     }
@@ -246,7 +489,7 @@ public class Game
         {
             // Parse the input from user
             int i = Integer.parseInt(playerAmount);
-            if(i>1)
+            if(i >= 0)
             {
                 return true;
             }
@@ -271,7 +514,7 @@ public class Game
 
     public int getCurrentRoll()
     {
-        return currentPlayer.getRoll();
+        return currentPlayer.getRoll(1) + currentPlayer.getRoll(2);
     }
 
     /**
@@ -304,7 +547,6 @@ public class Game
             currentPlayer = players.get(0);
             currentTurn = 0;
             // Test
-            //System.out.println("Current Player: "+currentPlayer.getName());
         }
         else if(players.size()!=startingPlayerAmount)
         {
@@ -313,7 +555,6 @@ public class Game
         // Switch the currentPlayer to the next player in the list
         else
         {
-            //currentPlayer = players.get(currentTurn);
             currentTurn++;
             System.out.println("Current Player: "+currentPlayer.getName());
         }
@@ -352,5 +593,78 @@ public class Game
     {
         return currentPlayer;
     }
+  
+    public Property getPropertyByName(String propertyName)
+    {
+        int propertyIndex=0;
+        for(int i=0; i<currentPlayer.getProperties().size(); ++i)
+        {
+            if(propertyName.equals(board.getProperty(i).getName()))
+            {
+                propertyIndex = i;
+            }
+        }
+        return ((Property)board.getProperty(propertyIndex));
+    }
 
+    /**
+     * checks if the player has the full set
+     * @return
+     */
+    boolean doesPlayerOwnFullSet()
+    {
+        if(players.get(currentTurn).getProperties().size()>1)
+        {
+            for(int i=0; i<players.get(currentTurn).getProperties().size(); ++i)
+            {
+                if(players.get(currentTurn).getProperties().get(i).isFullSetTrue())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Makes the current player buy a house
+     * @param p
+     */
+    public void buyHouse(String p)
+    {
+        Property temp = getPropertyByName(p);
+
+        temp.setHouse();
+
+        currentPlayer.buyHouse(temp.getHousePrice());
+    }
+
+    /**
+     * Makes the current player buy a hotel
+     * @param p
+     */
+    public void buyHotel(String p)
+    {
+        // Set Hotel
+        getPropertyByName(p).setHotel(true);
+
+        // Update players bank
+        players.get(currentTurn).buyHouse(getPropertyByName(p).getHousePrice());
+
+    }
+
+    public ArrayList<Property> getCompleteSetProperties(Player player)
+    {
+        ArrayList<Property> temp = new ArrayList<>();
+
+        for(Property p:player.getProperties())
+        {
+            if(p.isFullSetTrue())
+            {
+                temp.add(p);
+            }
+        }
+
+        return temp;
+    }
 }

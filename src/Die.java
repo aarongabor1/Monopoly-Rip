@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 /**
  * Die class representing a normal D6
  * @author Cam Sommerville
  */
-public class Die {
+public class Die implements Serializable {
     private final int max = 6;
     private int value;
 
