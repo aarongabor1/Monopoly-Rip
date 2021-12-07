@@ -94,7 +94,7 @@ public class Board implements Serializable {
             Set keys = jsonObject.keySet();
 
             Object[] obArr = keys.toArray();
-            if(obArr.length ==53) {
+            if(obArr.length ==41) {
                 for (int i = 0; i <= obArr.length-14; i++) {
                     JSONObject squareObject = (JSONObject) jsonObject.get(obArr[i]);
                     Set attributes = squareObject.keySet();
@@ -102,18 +102,19 @@ public class Board implements Serializable {
                     //attributesArr has order [set, numInSet, price, housePrice, name, index, squareType]
 
                     Object[] attributesArr = attributes.toArray();
-                    //System.out.println(indexCheck);
-                    System.out.println(squareObject.get(attributesArr[1]));
-                    if(squareObject.get(attributesArr[1]).toString().equals("Jail")){
+                    //System.out.println(indexCheck)
+                    if(attributes.size() == 1){
+                        currency = squareObject.get(attributesArr[0]).toString();
+                    }else if(squareObject.get(attributesArr[1]).toString().equals("Jail")){
                         Jail j = new Jail(Integer.parseInt(squareObject.get(attributesArr[0]).toString()));
                         squares.add(j);
                     }else if (squareObject.get(attributesArr[6]).toString().equals("Property")) {
                             Property p = new Property(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
                             squares.add(p);
-                    } else if (attributesArr[6].equals("Utility")) {
+                    } else if (squareObject.get(attributesArr[6]).toString().equals("Utility")) {
                             Utility u = new Utility(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
                             squares.add(u);
-                    } else if (attributesArr[6].equals("Railroad")) {
+                    } else if (squareObject.get(attributesArr[6]).toString().equals("Railroad")) {
                             Railroad r = new Railroad(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
                             squares.add(r);
                     }else{
@@ -123,11 +124,7 @@ public class Board implements Serializable {
                         break;
                     }
                 }
-                JSONObject currencyJSONObject = (JSONObject) jsonObject.get(obArr[40]);
-                Set currencySet = currencyJSONObject.keySet();
-                // System.out.println(attributes);
-                Object[] currencyObj = currencySet.toArray();
-                currency = currencyJSONObject.get(currencyObj[0]).toString();
+
             }else{
                 System.out.println("Not enough Squares in Map File");
             }

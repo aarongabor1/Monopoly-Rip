@@ -396,53 +396,5 @@
 
   "currency": {
     "type": "$"
-  },
-
-  "player1": {
-    "name": "Player 1"
-  },
-
-  "player2": {
-    "name": "Player 2"
-  },
-
-  "player3": {
-    "name": "Player 3"
-  },
-
-  "player4": {
-    "name": "Player 4"
-  },
-
-  "player5": {
-    "name": "Player 5"
-  },
-
-  "player6": {
-    "name": "Player 6"
-  },
-
-  "aI1": {
-    "name": "AI 1"
-  },
-
-  "aI2": {
-    "name": "AI 2"
-  },
-
-  "aI3": {
-    "name": "AI 3"
-  },
-
-  "aI4": {
-    "name": "AI 4"
-  },
-
-  "aI5": {
-    "name": "AI 5"
-  },
-
-  "aI6": {
-    "name": "AI 6"
   }
 }
