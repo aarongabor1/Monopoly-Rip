@@ -552,14 +552,9 @@ class BuildPropertyController implements ActionListener
     {
         Property temp = model.getPropertyByName(s);
 
-        // Update the property
+        // Update Model
         System.out.println("Houses Before: " + model.getPropertyByName(s).getHouses());
         model.buyHouse(s);
         System.out.println("Houses After: " + model.getPropertyByName(s).getHouses());
-
-        // Update the player
-        System.out.println("Balance Before: " + model.getCurrentPlayer().getBalance());
-        model.getCurrentPlayer().buyHouse(temp.getHousePrice());
-        System.out.println("Balance After: " + model.getCurrentPlayer().getBalance());
     }
 }

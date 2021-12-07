@@ -309,6 +309,35 @@ public class Game implements Serializable
         }
     }
 
+    /**
+     * returns whether the player can buy a house
+     * @param p
+     * @return boolean
+     */
+    public boolean canBuyHouseAI(Property p)
+    {
+        ArrayList<Integer> houseAmounts = new ArrayList<>();
+
+        for(int i=0; i<players.get(currentTurn).getProperties().size();++i)
+        {
+            houseAmounts.add(players.get(currentTurn).getProperties().get(i).getHouses());
+        }
+
+        System.out.println("Max Houses: " + Collections.max(houseAmounts));
+
+        if(p.getHouses() <= Collections.max(houseAmounts))
+        {
+            if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >=0)
+            {
+                if(getNumInSetOwned(players.get(currentTurn),p)==board.getPropertySet(p.getSet()).size())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean canBuyHotelAI()
     {
         for(Property p:players.get(currentTurn).getProperties())
