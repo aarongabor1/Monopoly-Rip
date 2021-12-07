@@ -196,7 +196,7 @@ public class Game implements Serializable
             }
         }
 
-        if(p.getNumInSet()==2 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+        if(p.getNumInSet()==2)
         {
             System.out.println("Number in set 2 loop entered");
              if(temp.get(0).getHouses()==temp.get(1).getHouses())
@@ -219,7 +219,7 @@ public class Game implements Serializable
                  return false;
              }
         }
-        else if(p.getNumInSet()==3 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+        else if(p.getNumInSet()==3)
         {
             System.out.println("Number in set 3 loop entered");
             if(temp.get(0).getHouses()==temp.get(1).getHouses() && temp.get(0).getHouses()==temp.get(2).getHouses())
@@ -283,7 +283,7 @@ public class Game implements Serializable
 
         if(p.getNumInSet()==2)
         {
-            if(temp.get(0).getHouses() == 4 && temp.get(1).getHouses()==4 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+            if(temp.get(0).getHouses() == 4 && temp.get(1).getHouses()==4)
             {
                 return true;
             }
@@ -294,7 +294,7 @@ public class Game implements Serializable
         }
         else if(p.getNumInSet()==3)
         {
-            if(temp.get(0).getHouses()==4 && temp.get(1).getHouses()==4 && temp.get(2).getHouses()==4 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+            if(temp.get(0).getHouses()==4 && temp.get(1).getHouses()==4 && temp.get(2).getHouses()==4)
             {
                 return true;
             }
@@ -632,19 +632,11 @@ public class Game implements Serializable
      */
     public void buyHouse(String p)
     {
-        for(int i=0; i<players.get(currentTurn).getProperties().size();++i)
-        {
-            if(players.get(currentTurn).getProperties().get(i).getName().equals(p))
-            {
-                // Update House Amount
-                players.get(currentTurn).getProperties().get(i).setHouse();
+        Property temp = getPropertyByName(p);
 
-                // Update player amount
-                players.get(currentTurn).buyHouse(players.get(currentTurn).getProperties().get(i).getHousePrice());
-            }
-        }
+        temp.setHouse();
 
-
+        currentPlayer.buyHouse(temp.getHousePrice());
     }
 
     /**
@@ -669,7 +661,6 @@ public class Game implements Serializable
         {
             if(p.isFullSetTrue())
             {
-                //System.out.println(p.getName());
                 temp.add(p);
             }
         }

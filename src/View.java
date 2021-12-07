@@ -446,37 +446,12 @@ public class View implements Serializable
         houseHotelButton.setEnabled(true);
     }
 
-    /**
-     * This method will show the house frame
-     */
-    public void enableBuyHouseButton()
-    {
-        buyHouseButton.setEnabled(true);
-        buyHotelButton.setEnabled(false);
-    }
-
-
-    public void enableBuyHotelButton()
-    {
-       buyHotelButton.setEnabled(true);
-       buyHouseButton.setEnabled(false);
-    }
 
     public void disableHouseHotelBuyable()
     {
         houseHotelButton.setEnabled(false);
     }
 
-    public void disableHotelAndHouse()
-    {
-        buyHotelButton.setEnabled(false);
-        buyHouseButton.setEnabled(false);
-    }
-
-    public void openHouseBuy()
-    {
-        houseFrame.setVisible(true);
-    }
 
     /**
      * This method will update the output text area in the house and hotel
@@ -489,53 +464,6 @@ public class View implements Serializable
     }
 
     /**
-     * This is a method that will set up the dropdown menu of the properties
-     * that the user can buy houses and hotels on.
-     * @param arrayList A ArrayList of Property that can have houses or hotels.
-     */
-    public void setUpDropdown(ArrayList<Property> arrayList)
-    {
-        // Set up property list
-        propertyModel = new DefaultListModel<>();
-
-        for(int i = 0; i < arrayList.size(); i++)
-        {
-            // Populate Model
-            propertyModel.addElement(arrayList.get(i).getName());
-        }
-
-        // Get property names
-        String[] p = new String[propertyModel.getSize()];
-        propertyModel.copyInto(p);
-
-        // Set up default combo box model
-        DefaultComboBoxModel cbm = new DefaultComboBoxModel(p);
-        cb = new JComboBox();
-        cb.setModel(cbm);
-        cb.insertItemAt(" ",0);
-        cb.setSelectedIndex(0);
-        cb.setActionCommand("Selected Property");
-
-        // Add to panel
-        cb.setVisible(true);
-        cb.setFont(font25P);
-        dropdownPanel.add(cb);
-    }
-
-    /**
-     * This is a method that will add ActionListener to everything that needs one
-     * on the house and hotel buying frame.
-     * @param al An ActionListener object to be added.
-     */
-    public void setHouseActionListener(ActionListener al)
-    {
-        buyHouseButton.addActionListener(al);
-        buyHotelButton.addActionListener(al);
-        closeButton.addActionListener(al);
-        cb.addActionListener(al);
-    }
-
-    /**
      * This method will return what the user has selected from the
      * dropdown menu.
      * @return A String that contains the selection.
@@ -543,14 +471,6 @@ public class View implements Serializable
     public String getSelection()
     {
         return cb.getSelectedItem().toString();
-    }
-
-    /**
-     * This method will close the house and hotel buying frame.
-     */
-    public void closeHouseFrame()
-    {
-        houseFrame.setVisible(false);
     }
 
     /**
@@ -565,36 +485,6 @@ public class View implements Serializable
         buyButton.setEnabled(false);
         houseHotelButton.setEnabled(false);
         endTurnButton.setEnabled(true);
-    }
-
-    /**
-     * This method is used to toggle the buy house button.
-     */
-    public void setBuyHouseButton()
-    {
-        if(buyHouseButton.isEnabled())
-        {
-            buyHouseButton.setEnabled(false);
-        }
-        else
-        {
-            buyHouseButton.setEnabled(true);
-        }
-    }
-
-    /**
-     * This method is used to toggle the buy hotel button.
-     */
-    public void setBuyHotelButton()
-    {
-        if(buyHotelButton.isEnabled())
-        {
-            buyHotelButton.setEnabled(false);
-        }
-        else
-        {
-            buyHotelButton.setEnabled(true);
-        }
     }
 
     /**
@@ -615,41 +505,6 @@ public class View implements Serializable
 
     public void disableGUI() {
         frame.setVisible(false);
-    }
-}
-
-
-/**
- ===========================================================================
-**/
-
-class MainGameView extends JFrame
-{
-
-    // Variables
-
-    // Buttons
-    private JButton rollButton;
-    private JButton buyButton;
-    private JButton rentButton;
-    private JButton endTurnButton;
-    private JButton houseHotelButton;
-
-    // Text Components
-    private JTextField balance;
-    private JLabel name;
-    private JTextArea properties;
-    private JTextArea output;
-
-    // Menu
-    private JMenuBar menuBar;
-    private JMenu game;
-    private JMenuItem saveGame;
-    private JMenuItem loadGame;
-
-    public MainGameView()
-    {
-
     }
 }
 

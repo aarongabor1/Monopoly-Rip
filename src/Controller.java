@@ -67,7 +67,7 @@ public class Controller implements ActionListener, Serializable
             // Update View
             //v.openHouseBuy();
             buildView = new BuildPropertyView(m.getCompleteSetProperties(m.getCurrentPlayer()));
-            buildView.buildPropertyActionListeners(new BuildPropertyController(m,buildView));
+            buildView.buildPropertyActionListeners(new BuildPropertyController(m,buildView,v));
 
         }
         else if(o.equals("Submit"))
@@ -96,8 +96,9 @@ public class Controller implements ActionListener, Serializable
         {
             m.getCurrentPlayer().payJailor();
             v.updateOutput("Player paid to get out of jail");
+            v.turnOffButtons();
 
-                    }
+        }
         else if(o.equals("Save Game"))
         {
             try {
@@ -147,15 +148,15 @@ public class Controller implements ActionListener, Serializable
      * Outputs that a house has been bought
      *
      **/
-    public void houseOutput(){
-        v.updateOutput(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
+    public void houseOutput(String p){
+        v.updateOutput(m.getCurrentPlayer() + " bought a house on: "+ p);
     }
 
     /**
      * Outputs that a hotel has been bought
      **/
-    public void hotelOutput(){
-        v.updateOutput(m.getCurrentPlayer() + " bought a hotel on: "+ v.getSelection());
+    public void hotelOutput(String p){
+        v.updateOutput(m.getCurrentPlayer() + " bought a hotel on: "+ p);
     }
 
 
@@ -405,38 +406,6 @@ public class Controller implements ActionListener, Serializable
         {
             // Update View
             v.setHouseHotelBuyable();
-            v.setUpDropdown(m.getCurrentPlayer().getProperties());
-
-            // Set action listeners
-            v.setHouseActionListener(this);
-        }
-        else
-        {
-            v.disableHouseHotelBuyable();
-        }
-    }
-
-    /**
-     * Informs the view whether houses/hotels can be purchased
-     */
-    public void propertyBuildingOptions()
-    {
-        // Start the options initially disabled
-        v.disableHotelAndHouse();
-
-        // Player can build houses
-        if(m.canBuyHouse(m.getPropertyByName(v.getSelection())))
-        {
-            v.enableBuyHouseButton();
-        }
-        else if(m.canBuyHotel(m.getPropertyByName(v.getSelection())))
-        {
-            v.enableBuyHotelButton();
-        }
-        else if(v.getSelection().equals(" "))
-        {
-            // Disable options
-            v.disableHotelAndHouse();
         }
         else
         {
@@ -483,6 +452,14 @@ public class Controller implements ActionListener, Serializable
     }
 }
 
+/**
+ *
+ */
+
+/**
+ *
+ */
+
 class BuildPropertyController implements ActionListener
 {
     // Monopoly Model
@@ -491,10 +468,14 @@ class BuildPropertyController implements ActionListener
     // Monopoly View
     private BuildPropertyView view;
 
-    public BuildPropertyController(Game m, BuildPropertyView v)
+    // Main Game View
+    private View mainView;
+
+    public BuildPropertyController(Game m, BuildPropertyView v, View v2)
     {
         this.model = m;
         this.view = v;
+        this.mainView = v2;
     }
 
     @Override
@@ -508,11 +489,18 @@ class BuildPropertyController implements ActionListener
             // Update the Model
             buyHouse(view.getSelection());
 
+            // Update view
+            mainView.updateOutput(model.getCurrentPlayer().getName() + " just bought a house on: " + view.getSelection());
+
             // Close frame
             view.dispose();
         }
         else if(o.equals("Buy Hotel"))
         {
+            buyHotel(view.getSelection());
+            mainView.updateOutput(model.getCurrentPlayer().getName() + " just bought a hotel on: " + view.getSelection());
+            view.dispose();
+
         }
         else if(o.equals("Close"))
         {
@@ -523,6 +511,8 @@ class BuildPropertyController implements ActionListener
         {
             // Check if house can be purchased for selected property
             setViewOptions(view.getSelection());
+
+            System.out.println(model.getPropertyByName(view.getSelection()).getName()+" house amount: " + model.getPropertyByName(view.getSelection()).getHouses());
         }
         else
         {
@@ -533,16 +523,14 @@ class BuildPropertyController implements ActionListener
 
     private void setViewOptions(String s)
     {
-        Property temp = model.getPropertyByName(s);
-
         // Both buttons disabled by default
         view.disableHotelAndHouse();
 
-        if(model.canBuyHouse(temp))
+        if(model.canBuyHouse(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()<4)
         {
-            view.setBuyHouseButton();
+           view.setBuyHouseButton();
         }
-        else if(temp.getHouses()==4)
+        else if(model.canBuyHotel(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()==4)
         {
             view.setBuyHotelButton();
         }
@@ -556,5 +544,10 @@ class BuildPropertyController implements ActionListener
         System.out.println("Houses Before: " + model.getPropertyByName(s).getHouses());
         model.buyHouse(s);
         System.out.println("Houses After: " + model.getPropertyByName(s).getHouses());
+    }
+
+    private void buyHotel(String s)
+    {
+        model.buyHotel(s);
     }
 }
