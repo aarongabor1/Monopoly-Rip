@@ -26,7 +26,17 @@ public class AI extends Player implements Serializable {
     public void AITurn(Game model){
         controller.roll();
 
-        if(model.isPropertyEmpty()){
+
+        if(this.isInJail()){
+            if(this.getJailedTurns() == 4){
+                this.payJailor();
+                controller.updateGUIOutput("AI paid to get out of jail");
+            }
+            else
+                return;
+        }
+        else if(model.isPropertyEmpty()){
+
             return;
         }
         else if(model.isRentOwed()){
