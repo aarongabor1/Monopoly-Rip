@@ -48,6 +48,11 @@ public class Controller implements ActionListener, Serializable
         if(o.equals("Roll"))
         {
            roll();
+
+           if(m.doesPlayerOwnFullSet())
+           {
+               v.setHouseHotelBuyable();
+           }
         }
         else if(o.equals("Buy"))
         {
@@ -61,7 +66,7 @@ public class Controller implements ActionListener, Serializable
         {
             // Update View
             //v.openHouseBuy();
-            buildView = new BuildPropertyView(m.getCurrentPlayer().getProperties());
+            buildView = new BuildPropertyView(m.getCompleteSetProperties(m.getCurrentPlayer()));
             buildView.buildPropertyActionListeners(new BuildPropertyController(m,buildView));
 
         }
@@ -77,8 +82,6 @@ public class Controller implements ActionListener, Serializable
 
                 // Setup the Model
                 startGame();
-                //buyHouseTest();
-                //buildProperty();
 
                 // Setup View
                 updatePlayer(m.getCurrentPlayer());
@@ -89,43 +92,12 @@ public class Controller implements ActionListener, Serializable
                 v.inputFailed();
             }
         }
-        else if(o.equals("Buy House"))
-        {
-            System.out.println("Buy House Selected");
-            // Update Model
-            m.buyHouse(v.getSelection());
-
-            // Update View
-            propertyBuildingOptions();
-
-            houseOutput();
-        }
-        else if(o.equals("Buy Hotel"))
-        {
-            System.out.println("Buy Hotel Selected");
-
-            m.buyHotel(v.getSelection());
-
-            hotelOutput();
-        }
-        else if(o.equals("Selected Property"))
-        {
-            System.out.println(v.getSelection()+ " Selected");
-
-            // Set the appropriate buttons for the selected property
-            propertyBuildingOptions();
-
-        }
-        else if(o.equals("Close"))
-        {
-            System.out.println("Close Selected");
-            v.closeHouseFrame();
-        }
         else if(o.equals("Pay 50"))
         {
             m.getCurrentPlayer().payJailor();
             v.updateOutput("Player paid to get out of jail");
-        }
+
+                    }
         else if(o.equals("Save Game"))
         {
             try {
@@ -170,19 +142,22 @@ public class Controller implements ActionListener, Serializable
 
     }
 
+
     /**
      * Outputs that a house has been bought
-     */
+     *
+     **/
     public void houseOutput(){
         v.updateOutput(m.getCurrentPlayer() + " bought a house on: "+ v.getSelection());
     }
 
     /**
      * Outputs that a hotel has been bought
-     */
+     **/
     public void hotelOutput(){
         v.updateOutput(m.getCurrentPlayer() + " bought a hotel on: "+ v.getSelection());
     }
+
 
     /**
      * method to simulate a roll in the model and update the view accordingly
@@ -454,7 +429,7 @@ public class Controller implements ActionListener, Serializable
         {
             v.enableBuyHouseButton();
         }
-        else if(m.canBuyHotel())
+        else if(m.canBuyHotel(m.getPropertyByName(v.getSelection())))
         {
             v.enableBuyHotelButton();
         }
@@ -523,8 +498,68 @@ class BuildPropertyController implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent)
+    public void actionPerformed(ActionEvent e)
     {
+        // Get action command
+        String o = e.getActionCommand();
 
+        if(o.equals("Buy House"))
+        {
+            // Update the Model
+            buyHouse(view.getSelection());
+
+            // Close frame
+            view.dispose();
+        }
+        else if(o.equals("Buy Hotel"))
+        {
+        }
+        else if(o.equals("Close"))
+        {
+            // Close View
+            view.dispose();
+        }
+        else if(o.equals("Selected Property"))
+        {
+            // Check if house can be purchased for selected property
+            setViewOptions(view.getSelection());
+        }
+        else
+        {
+            // In-Line Test
+            System.out.println("Command not recognized");
+        }
+    }
+
+    private void setViewOptions(String s)
+    {
+        Property temp = model.getPropertyByName(s);
+
+        // Both buttons disabled by default
+        view.disableHotelAndHouse();
+
+        if(model.canBuyHouse(temp))
+        {
+            view.setBuyHouseButton();
+        }
+        else if(temp.getHouses()==4)
+        {
+            view.setBuyHotelButton();
+        }
+    }
+
+    private void buyHouse(String s)
+    {
+        Property temp = model.getPropertyByName(s);
+
+        // Update the property
+        System.out.println("Houses Before: " + model.getPropertyByName(s).getHouses());
+        model.buyHouse(s);
+        System.out.println("Houses After: " + model.getPropertyByName(s).getHouses());
+
+        // Update the player
+        System.out.println("Balance Before: " + model.getCurrentPlayer().getBalance());
+        model.getCurrentPlayer().buyHouse(temp.getHousePrice());
+        System.out.println("Balance After: " + model.getCurrentPlayer().getBalance());
     }
 }

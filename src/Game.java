@@ -186,33 +186,130 @@ public class Game implements Serializable
      */
     public boolean canBuyHouse(Property p)
     {
-        ArrayList<Integer> houseAmounts = new ArrayList<>();
+        ArrayList<Property> temp = new ArrayList<>();
 
-        for(int i=0; i<players.get(currentTurn).getProperties().size();++i)
+        for(int i=0; i<currentPlayer.getProperties().size();++i)
         {
-            houseAmounts.add(players.get(currentTurn).getProperties().get(i).getHouses());
-        }
-
-        System.out.println("Max Houses: " + Collections.max(houseAmounts));
-
-        if(p.getHouses() <= Collections.max(houseAmounts))
-        {
-            if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >=0)
+            if(currentPlayer.getProperties().get(i).getSet()==p.getSet())
             {
-                if(getNumInSetOwned(players.get(currentTurn),p)==board.getPropertySet(p.getSet()).size())
-                {
-                    return true;
-                }
+                temp.add(currentPlayer.getProperties().get(i));
             }
         }
-        return false;
+
+        if(p.getNumInSet()==2 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+        {
+            System.out.println("Number in set 2 loop entered");
+             if(temp.get(0).getHouses()==temp.get(1).getHouses())
+             {
+                 return true;
+             }
+             else if(temp.get(0).getHouses() - temp.get(1).getHouses() > 0)
+             {
+                 if(temp.get(1).getName().equals(p.getName()))
+                 {
+                     return true;
+                 }
+                 else
+                 {
+                     return false;
+                 }
+             }
+             else
+             {
+                 return false;
+             }
+        }
+        else if(p.getNumInSet()==3 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+        {
+            System.out.println("Number in set 3 loop entered");
+            if(temp.get(0).getHouses()==temp.get(1).getHouses() && temp.get(0).getHouses()==temp.get(2).getHouses())
+            {
+                return true;
+            }
+            else if((temp.get(0).getHouses() > temp.get(1).getHouses() || temp.get(0).getHouses() > temp.get(2).getHouses()) && p.getName().equals(temp.get(0).getName()))
+            {
+                return false;
+            }
+            else if((temp.get(1).getHouses() > temp.get(0).getHouses() || temp.get(1).getHouses()>temp.get(2).getHouses()) && p.getName().equals(temp.get(1).getName()))
+            {
+                return false;
+            }
+            else if((temp.get(2).getHouses() > temp.get(0).getHouses() || temp.get(2).getHouses()>temp.get(1).getHouses()) && p.getName().equals(temp.get(2).getName()))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
     }
 
     /**
      * returns whether the current player can buy a hotel
      * @return boolean
      */
-    public boolean canBuyHotel()
+    public boolean canBuyHotel(Property p)
+    {
+        /**
+        for(Property p:players.get(currentTurn).getProperties())
+        {
+            if(fullSet(players.get(currentTurn),p))
+            {
+                if(players.get(currentTurn).getBalance() - (p.getHousePrice()) >= 0)
+                {
+                    if(maxHousesBuilt(p.getSet()))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+         **/
+        ArrayList<Property> temp = new ArrayList<>();
+
+        for(int i=0; i<currentPlayer.getProperties().size();++i)
+        {
+            if(currentPlayer.getProperties().get(i).getSet()==p.getSet())
+            {
+                temp.add(currentPlayer.getProperties().get(i));
+            }
+        }
+
+        if(p.getNumInSet()==2)
+        {
+            if(temp.get(0).getHouses() == 4 && temp.get(1).getHouses()==4 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(p.getNumInSet()==3)
+        {
+            if(temp.get(0).getHouses()==4 && temp.get(1).getHouses()==4 && temp.get(2).getHouses()==4 && currentPlayer.getBalance() - p.getHousePrice() >=0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean canBuyHotelAI()
     {
         for(Property p:players.get(currentTurn).getProperties())
         {
@@ -496,7 +593,6 @@ public class Game implements Serializable
                     return true;
                 }
             }
-
         }
         return false;
     }
@@ -518,6 +614,8 @@ public class Game implements Serializable
                 players.get(currentTurn).buyHouse(players.get(currentTurn).getProperties().get(i).getHousePrice());
             }
         }
+
+
     }
 
     /**
@@ -532,5 +630,21 @@ public class Game implements Serializable
         // Update players bank
         players.get(currentTurn).buyHouse(getPropertyByName(p).getHousePrice());
 
+    }
+
+    public ArrayList<Property> getCompleteSetProperties(Player player)
+    {
+        ArrayList<Property> temp = new ArrayList<>();
+
+        for(Property p:player.getProperties())
+        {
+            if(p.isFullSetTrue())
+            {
+                //System.out.println(p.getName());
+                temp.add(p);
+            }
+        }
+
+        return temp;
     }
 }

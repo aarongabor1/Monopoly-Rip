@@ -9,13 +9,16 @@ import java.util.*;
 public class Board implements Serializable {
     private List<Square> squares;
     private final int numSquares = 40;
+    private ArrayList<Property> properties;
 
     /**
      * Constructor for Board class
      */
     public Board(){
+        properties = new ArrayList<>();
         squares = new ArrayList<>();
         createBoard();
+        setPropertyList();
     }
 
     /**
@@ -60,9 +63,9 @@ public class Board implements Serializable {
         squares.add(new Property("Netflix", 34, 320,7,3,200));
         squares.add(new Railroad("Exo Train", 35, 200,9,4,-1));
         squares.add(new Property("Empty", 36, -1,-1,0,-1));
-        squares.add(new Property("Samsung", 37, 350,8,2,-1));
+        squares.add(new Property("Samsung", 37, 350,8,2,200));
         squares.add(new Property("Empty", 38, -1,-1,0,-1));
-        squares.add(new Property("Apple", 39, 400,8,2,-1));
+        squares.add(new Property("Apple", 39, 400,8,2,200));
     }
 
     /**
@@ -70,8 +73,29 @@ public class Board implements Serializable {
      * @param index
      * @return Property object
      */
-    public Square getProperty(int index){
+    public Square getProperty(int index)
+    {
         return squares.get(index);
+    }
+
+    public void setPropertyList()
+    {
+        for(int i=0; i< squares.size();++i)
+        {
+            if(Railroad.class.isInstance(squares.get(i)))
+            {
+                System.out.println(squares.get(i).getName());
+            }
+            else if(Jail.class.isInstance(squares.get(i)))
+            {
+                // Do nothing
+            }
+            else
+            {
+                properties.add((Property) squares.get(i));
+            }
+        }
+        System.out.println(properties.size());
     }
 
     public ArrayList<Square> getPropertySet(int setNumber)

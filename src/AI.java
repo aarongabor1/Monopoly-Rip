@@ -40,7 +40,7 @@ public class AI extends Player implements Serializable {
                 model.buyHouse(p.toString());
                 controller.houseOutput();
             }
-            if (model.canBuyHotel() && p.getHousePrice() < this.getBalance()){
+            if (model.canBuyHotelAI() && p.getHousePrice() < this.getBalance()){
                 model.buyHotel(p.toString());
                 controller.hotelOutput();
             }

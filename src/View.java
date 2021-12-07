@@ -621,7 +621,39 @@ public class View implements Serializable
 
 /**
  ===========================================================================
+**/
 
+class MainGameView extends JFrame
+{
+
+    // Variables
+
+    // Buttons
+    private JButton rollButton;
+    private JButton buyButton;
+    private JButton rentButton;
+    private JButton endTurnButton;
+    private JButton houseHotelButton;
+
+    // Text Components
+    private JTextField balance;
+    private JLabel name;
+    private JTextArea properties;
+    private JTextArea output;
+
+    // Menu
+    private JMenuBar menuBar;
+    private JMenu game;
+    private JMenuItem saveGame;
+    private JMenuItem loadGame;
+
+    public MainGameView()
+    {
+
+    }
+}
+
+/**
  ===========================================================================
  **/
 
@@ -762,7 +794,7 @@ class BuildPropertyView extends JFrame
         DefaultComboBoxModel cbm = new DefaultComboBoxModel(p);
         cb = new JComboBox();
         cb.setModel(cbm);
-        cb.insertItemAt(" ",0);
+        cb.insertItemAt("",0);
         cb.setSelectedIndex(0);
         cb.setActionCommand("Selected Property");
 
@@ -777,6 +809,38 @@ class BuildPropertyView extends JFrame
         buyHotelButton.addActionListener(o);
         closeButton.addActionListener(o);
         cb.addActionListener(o);
+    }
+
+    /**
+     * This method will return what the user has selected from the
+     * dropdown menu.
+     * @return A String that contains the selection.
+     */
+    public String getSelection()
+    {
+        return cb.getSelectedItem().toString();
+    }
+
+    /**
+     * This method is used to toggle the buy house button.
+     */
+    public void setBuyHouseButton()
+    {
+        buyHouseButton.setEnabled(true);
+    }
+
+    /**
+     * This method is used to toggle the buy hotel button.
+     */
+    public void setBuyHotelButton()
+    {
+        buyHotelButton.setEnabled(true);
+    }
+
+    public void disableHotelAndHouse()
+    {
+        buyHotelButton.setEnabled(false);
+        buyHouseButton.setEnabled(false);
     }
 
 }
