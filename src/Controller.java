@@ -66,7 +66,7 @@ public class Controller implements ActionListener, Serializable
         {
             // Update View
             //v.openHouseBuy();
-            buildView = new BuildPropertyView(m.getCompleteSetProperties(m.getCurrentPlayer()));
+            buildView = new BuildPropertyView(m.getCompleteSetProperties(m.getCurrentPlayer()),m.getCurrentPlayer());
             buildView.buildPropertyActionListeners(new BuildPropertyController(m,buildView,v));
 
         }

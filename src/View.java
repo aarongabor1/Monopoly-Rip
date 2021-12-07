@@ -537,7 +537,7 @@ class BuildPropertyView extends JFrame
     private JTextField outputHouse;
 
 
-    public BuildPropertyView(ArrayList<Property> arrayList)
+    public BuildPropertyView(ArrayList<Property> arrayList, Player cp)
     {
         // Initialize Frame
         setTitle("Buy Houses and Hotels");
@@ -549,6 +549,9 @@ class BuildPropertyView extends JFrame
         initializeOptions();
         setUpDropdown(arrayList);
         add(buildPropertyPanel());
+
+        balance.setText(""+ cp.getBalance());
+        outputHouse.setText(cp.getName());
 
         // Finish Initialization
         pack();
