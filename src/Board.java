@@ -1,5 +1,9 @@
+import java.io.FileReader;
+import java.io.Reader;
 import java.io.Serializable;
 import java.util.*;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
 
 /**
  * Class that simulates the Monopoly board
@@ -9,16 +13,15 @@ import java.util.*;
 public class Board implements Serializable {
     private List<Square> squares;
     private final int numSquares = 40;
-    private ArrayList<Property> properties;
+    private String currency = "$";
 
     /**
      * Constructor for Board class
      */
-    public Board(){
-        properties = new ArrayList<>();
+    public Board() throws Exception {
         squares = new ArrayList<>();
+        initializeMap("NormalBoard.json");
         createBoard();
-        setPropertyList();
     }
 
     /**
@@ -26,7 +29,7 @@ public class Board implements Serializable {
      *
      */
     private void createBoard() {
-        squares.add(new Property("Empty", 0, -1,-1,0,-1));
+        squares.add(new Property("Go", 0, -1,-1,0,-1));
         squares.add(new Property("Ottawa U", 1, 60,1,2,50));
         squares.add(new Property("Empty", 2, -1,-1,0,-1));
         squares.add(new Property("Carleton U", 3, 60,1,2,50));
@@ -63,9 +66,73 @@ public class Board implements Serializable {
         squares.add(new Property("Netflix", 34, 320,7,3,200));
         squares.add(new Railroad("Exo Train", 35, 200,9,4,-1));
         squares.add(new Property("Empty", 36, -1,-1,0,-1));
-        squares.add(new Property("Samsung", 37, 350,8,2,200));
+        squares.add(new Property("Samsung", 37, 350,8,2,-1));
         squares.add(new Property("Empty", 38, -1,-1,0,-1));
-        squares.add(new Property("Apple", 39, 400,8,2,200));
+        squares.add(new Property("Apple", 39, 400,8,2,-1));
+    }
+
+    public void initializeMap(String fileName) throws Exception {
+        JSONParser parser = new JSONParser();
+
+        try {
+
+            Reader reader = new FileReader(fileName);
+
+            Object obj = parser.parse(reader);
+            JSONObject jsonObject = (JSONObject) obj;
+
+            Set keys = jsonObject.keySet();
+
+            Object[] obArr = keys.toArray();
+            if(obArr.length ==41) {
+                int indexCheck = 0;
+                for (int i = 0; i <= obArr.length-2; i++) {
+                    JSONObject squareObject = (JSONObject) jsonObject.get(obArr[i]);
+                    Set attributes = squareObject.keySet();
+                     System.out.println(attributes);
+                    //attributesArr has order [set, numInSet, price, housePrice, name, index, squareType]
+
+                    Object[] attributesArr = attributes.toArray();
+                    //System.out.println(indexCheck);
+                    if(indexCheck ==Integer.parseInt(squareObject.get(attributesArr[5]).toString())) {
+                        if (squareObject.get(attributesArr[6]).toString().equals("Property")) {
+                            Property p = new Property(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
+                            squares.add(p);
+                        } else if (attributesArr[6].equals("Utility")) {
+                            Utility u = new Utility(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
+                            squares.add(u);
+                        } else if (attributesArr[6].equals("Railroad")) {
+                            Railroad r = new Railroad(squareObject.get(attributesArr[4]).toString(), Integer.parseInt(squareObject.get(attributesArr[5]).toString()), Integer.parseInt(squareObject.get(attributesArr[2]).toString()), Integer.parseInt(squareObject.get(attributesArr[0]).toString()), Integer.parseInt(squareObject.get(attributesArr[1]).toString()), Integer.parseInt(squareObject.get(attributesArr[3]).toString()));
+                            squares.add(r);
+                        } else if (attributesArr[0].equals("Jail")) {
+                            Jail j = new Jail(Integer.parseInt(squareObject.get(attributesArr[0]).toString()));
+                            squares.add(j);
+                        }
+                    }else{
+                        System.out.println("Invalid Map Format");
+                        System.out.println(squares);
+                        squares.clear();
+                        break;
+                    }
+                    indexCheck++;
+                }
+                JSONObject currencyJSONObject = (JSONObject) jsonObject.get(obArr[40]);
+                Set currencySet = currencyJSONObject.keySet();
+                // System.out.println(attributes);
+                Object[] currencyObj = currencySet.toArray();
+                currency = currencyJSONObject.get(currencyObj[0]).toString();
+            }else{
+                System.out.println("Not enough Squares in Map File");
+            }
+
+
+            //currency = (String)currencyArr[0];
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
     /**
@@ -73,29 +140,8 @@ public class Board implements Serializable {
      * @param index
      * @return Property object
      */
-    public Square getProperty(int index)
-    {
+    public Square getProperty(int index){
         return squares.get(index);
-    }
-
-    public void setPropertyList()
-    {
-        for(int i=0; i< squares.size();++i)
-        {
-            if(Railroad.class.isInstance(squares.get(i)))
-            {
-                System.out.println(squares.get(i).getName());
-            }
-            else if(Jail.class.isInstance(squares.get(i)))
-            {
-                // Do nothing
-            }
-            else
-            {
-                properties.add((Property) squares.get(i));
-            }
-        }
-        System.out.println(properties.size());
     }
 
     public ArrayList<Square> getPropertySet(int setNumber)

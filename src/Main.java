@@ -6,8 +6,7 @@ public class Main {
     private Player player2;
     private Board board;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws Exception {
 
         Game game = new Game();
         View view = new View();

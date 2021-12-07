@@ -12,7 +12,7 @@ public class BoardTest
      * (Called before every test case method.)
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         System.out.println("Invoked before each test method");
         board = new Board();
     }

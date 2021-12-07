@@ -566,9 +566,6 @@ class BuildPropertyController implements ActionListener
         {
            view.setBuyHouseButton();
         }
-
-        else if(model.canBuyHotel(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()==4)
-
         else if(model.canBuyHotel(model.getPropertyByName(s)) && model.getPropertyByName(s).getHouses()==4 && !(model.getPropertyByName(s).hasHotel()))
         {
             view.setBuyHotelButton();

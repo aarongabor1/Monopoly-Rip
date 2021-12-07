@@ -25,8 +25,7 @@ public class Game implements Serializable
      *
      *  Initiates: Board object, ArrayList of Player objects
      */
-    public Game()
-    {
+    public Game() throws Exception {
         board = new Board();
         players = new ArrayList<>();
     }
