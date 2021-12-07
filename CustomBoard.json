@@ -1,8 +1,8 @@
 {
-  "_comment": "To make a custom board for the game please go through this document a make all of the changes",
-  "_comment": "that it ask you to make in the _comment lines, please make sure that you to not change any",
-  "_comment": "values or any other aspect of this files that the _comment lines doesn't tell you to change.",
-  "_comment": "MAKING ANY UNAUTHORIZED CHANGES TO THIS FILE WILL RESULT IN CRASHING THE GAME WHEN IT IS RAN.",
+  "_comment": "To make a custom board for the game please go through this document and make all of the changes",
+  "_comment": "that it asks you to make in the _comment lines, please make sure that you to do not change any",
+  "_comment": "values or any other aspects of this file that the _comment lines doesn't tell you to change.",
+  "_comment": "MAKING ANY UNAUTHORIZED CHANGES TO THIS FILE WILL RESULT IN CRASHING THE GAME WHEN IT IS RUN.",
 
   "_comment": "DO NOT TOUCH",
   "0" : {
@@ -16,7 +16,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "1": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -39,7 +39,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "3": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -62,7 +62,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "5": {
     "squareType": "Railroad",
     "name": "NAME HERE",
@@ -74,7 +74,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "6": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -97,7 +97,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "8": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -109,7 +109,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "9": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -120,15 +120,15 @@
     "housePrice": -5
   },
 
-  "_comment": "Replace NAME HERE, for Jail.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Replace NAME HERE, with Jail or any other name you wish it to use.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "10": {
     "squareType": "NAME HERE",
     "index": 10
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "11": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -140,7 +140,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "12": {
     "squareType": "Utility",
     "name": "NAME HERE",
@@ -152,7 +152,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "13": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -164,7 +164,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "14": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -176,7 +176,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "15": {
     "squareType": "Railroad",
     "name": "NAME HERE",
@@ -188,7 +188,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "16": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -211,7 +211,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "18": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -223,7 +223,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "19": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -234,8 +234,8 @@
     "housePrice": -5
   },
 
-  "_comment": "Replace NAME HERE, for Free Parking.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Replace NAME HERE, with Free Parking or other name of your choice.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "20": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -247,7 +247,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "21": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -270,7 +270,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "23": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -282,7 +282,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "24": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -294,7 +294,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "25": {
     "squareType": "Railroad",
     "name": "NAME HERE",
@@ -306,7 +306,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "26": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -318,7 +318,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "27": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -330,7 +330,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "28": {
     "squareType": "Utility",
     "name": "NAME HERE",
@@ -342,7 +342,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "29": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -353,8 +353,8 @@
     "housePrice": -5
   },
 
-  "_comment": "Replace NAME HERE, for Go to Jail.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Replace NAME HERE, with Go to Jail or other name used for index 10.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "30": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -366,7 +366,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "31": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -378,7 +378,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "32": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -401,7 +401,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "34": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -413,7 +413,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "35": {
     "squareType": "Railroad",
     "name": "NAME HERE",
@@ -436,7 +436,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "37": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -459,7 +459,7 @@
   },
 
   "_comment": "Replace NAME HERE, and replace all of the -5 values with what you want the prices to be.",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "39": {
     "squareType": "Property",
     "name": "NAME HERE",
@@ -470,16 +470,17 @@
     "housePrice": -5
   },
 
-  "_comment": "Replace the $ with what you want the visual representation of the currency before,",
-  "_comment": "an example of what the outcome during the game will look like is $1000",
-  "_comment": "Do not touch any other value or words other than the ones stated above.",
+  "_comment": "Replace $ with the visual representation of the currency you prefer,",
+  "_comment": "an example of the display of the outcome during the game would be $1000",
+  "_comment": "Do not touch any other values or words other than the ones stated above.",
   "currency": {
     "type": "$"
   },
 
 
-  "_comment": "For this next part for each block of writing you are to replace NAME HERE",
-  "_comment": "Do not touch any other value or words other than the one stated above.",
+  "_comment": "For this next part you will need to replace NAME HERE with the name to be",
+  "_comment": "used for each player.",
+  "_comment": "Do not touch any other values or words other than the one stated above.",
 
   "player1": {
     "name": "NAME HERE"
